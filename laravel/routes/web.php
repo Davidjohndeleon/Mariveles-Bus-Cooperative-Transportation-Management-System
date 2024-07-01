@@ -35,12 +35,16 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::middleware('role:admin')->group(function () {
-    Route::get('/admin/buses', [AdminController::class, 'manageBuses'])->name('admin.manage.buses');
-    Route::post('/admin/buses', [AdminController::class, 'addBus'])->name('admin.add.bus');
-    Route::get('/admin/buses/{bus}/edit', [AdminController::class, 'editBus'])->name('admin.edit.bus');
-    Route::post('/admin/buses/{bus}/edit', [AdminController::class, 'updateBus'])->name('admin.update.bus');
-    Route::get('/admin/schedules', [AdminController::class, 'manageSchedules'])->name('admin.manage.schedules');
-    Route::post('/admin/schedules', [AdminController::class, 'addSchedule'])->name('admin.add.schedule');
+        Route::get('/admin/buses', [AdminController::class, 'manageBuses'])->name('admin.manage.buses');
+        Route::post('/admin/buses', [AdminController::class, 'addBus'])->name('admin.add.bus');
+        Route::get('/admin/buses/{bus}/edit', [AdminController::class, 'editBus'])->name('admin.edit.bus');
+        Route::post('/admin/buses/{bus}/edit', [AdminController::class, 'updateBus'])->name('admin.update.bus');
+        
+        Route::get('/admin/schedules', [AdminController::class, 'manageSchedules'])->name('admin.manage.schedules');
+        Route::post('/admin/schedules', [AdminController::class, 'addSchedule'])->name('admin.add.schedule');
+        Route::get('/admin/schedules/{schedule}/edit', [AdminController::class, 'editSchedule'])->name('admin.edit.schedule');
+        Route::post('/admin/schedules/{schedule}/edit', [AdminController::class, 'updateSchedule'])->name('admin.update.schedule');
+        Route::delete('/admin/schedules/{schedule}', [AdminController::class, 'deleteSchedule'])->name('admin.delete.schedule');
     });
 
     Route::middleware('role:driver')->group(function () {
