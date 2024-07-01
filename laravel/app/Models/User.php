@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -21,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'usertype',
     ];
 
     /**
@@ -42,4 +44,29 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function buses()
+    {
+        return $this->hasMany(Bus::class, 'driver_id');
+    }
+
+    public function isAdmin()
+    {
+        return $this->usertype === 'admin';
+    }
+
+    public function isDriver()
+    {
+        return $this->usertype === 'driver';
+    }
+
+    public function isCheckpointStaff()
+    {
+        return $this->usertype === 'checkpoint';
+    }
+
+    public function isPassenger()
+    {
+        return $this->usertype === 'passenger';
+    }
 }

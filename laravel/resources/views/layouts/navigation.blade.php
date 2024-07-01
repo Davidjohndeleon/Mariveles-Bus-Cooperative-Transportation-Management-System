@@ -15,6 +15,16 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    
+                    <!-- Admin Links -->
+                    @if(Auth::user()->isAdmin())
+                        <x-nav-link :href="route('admin.manage.buses')" :active="request()->routeIs('admin.manage.buses')">
+                            {{ __('Manage Buses') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('admin.manage.schedules')" :active="request()->routeIs('admin.manage.schedules')">
+                            {{ __('Manage Schedules') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -70,6 +80,16 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            
+            <!-- Admin Links (Responsive) -->
+            @if(Auth::user()->isAdmin())
+                <x-responsive-nav-link :href="route('admin.manage.buses')" :active="request()->routeIs('admin.manage.buses')">
+                    {{ __('Manage Buses') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.manage.schedules')" :active="request()->routeIs('admin.manage.schedules')">
+                    {{ __('Manage Schedules') }}
+                </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->
