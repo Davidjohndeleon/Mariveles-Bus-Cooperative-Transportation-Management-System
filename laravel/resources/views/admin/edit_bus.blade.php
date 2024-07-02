@@ -24,6 +24,17 @@
                         </select>
                     </div>
 
+                     <!-- Delete Bus Section -->
+                     <div class="mt-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Delete Bus</h3>
+                        <p class="text-sm text-gray-600">Deleting this bus cannot be undone. Are you sure?</p>
+                        <form action="{{ route('admin.delete.bus', $bus->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" onclick="return confirm('Are you sure you want to delete this bus?')" class="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-700 active:bg-red-700 focus:outline-none focus:border-red-700 focus:ring focus:ring-red-500 disabled:opacity-25 transition">Delete Bus</button>
+                        </form>
+                    </div>
+
                     <div class="mt-4">
                         <button type="submit" class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700 active:bg-indigo-700 focus:outline-none focus:border-indigo-700 focus:ring focus:ring-indigo-500 disabled:opacity-25 transition">Update Bus</button>
                     </div>

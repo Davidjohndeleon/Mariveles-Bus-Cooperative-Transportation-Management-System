@@ -9,6 +9,11 @@ use App\Models\Schedule;
 
 class AdminController extends Controller
 {
+    public function adminDashboard()
+    {
+        $buses = Bus::with('driver')->get();
+        return view('admin.admin_dashboard', compact('buses'));
+    }
     public function manageBuses()
     {
         $buses = Bus::with('driver')->get();
@@ -52,6 +57,14 @@ class AdminController extends Controller
         return redirect()->route('admin.buses')->with('success', 'Bus updated successfully.');
     }
 
+    public function deleteBus($id)
+    {
+        $bus = Bus::findOrFail($id);
+        $bus->delete();
+
+        return redirect()->route('admin.dashboard')->with('success', 'Bus deleted successfully.');
+    }
+
     public function manageSchedules()
     {
         $schedules = Schedule::with('bus', 'driver')->get();
@@ -90,7 +103,8 @@ class AdminController extends Controller
         $schedule = Schedule::findOrFail($id);
         $buses = Bus::all();
         $drivers = User::where('usertype', 'driver')->get();
-        return view('admin.edit-schedule', compact('schedule', 'buses', 'drivers'));
+
+        return view('admin.edit_schedule', compact('schedule', 'buses', 'drivers'));
     }
 
     public function updateSchedule(Request $request, $id)

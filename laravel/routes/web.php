@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DriverController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CheckpointController;
 use App\Http\Controllers\PassengerController;
 use App\Http\Controllers\ProfileController;
@@ -23,9 +24,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -35,12 +40,15 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::middleware('role:admin')->group(function () {
+        Route::get('/admin/dashboard', [AdminController::class, 'adminDashboard'])->name('admin.dashboard');
         Route::get('/admin/buses', [AdminController::class, 'manageBuses'])->name('admin.manage.buses');
         Route::post('/admin/buses', [AdminController::class, 'addBus'])->name('admin.add.bus');
         Route::get('/admin/buses/{bus}/edit', [AdminController::class, 'editBus'])->name('admin.edit.bus');
         Route::post('/admin/buses/{bus}/edit', [AdminController::class, 'updateBus'])->name('admin.update.bus');
         
-        Route::get('/admin/schedules', [AdminController::class, 'manageSchedules'])->name('admin.manage.schedules');
+        Route::delete('/admin/buses/{id}', [AdminController::class, 'deleteBus'])->name('admin.delete.bus');
+
+        Route::get('/admin/schedules', [AdminController::class, 'manageSchedules'])->name('admin.schedules');
         Route::post('/admin/schedules', [AdminController::class, 'addSchedule'])->name('admin.add.schedule');
         Route::get('/admin/schedules/{schedule}/edit', [AdminController::class, 'editSchedule'])->name('admin.edit.schedule');
         Route::post('/admin/schedules/{schedule}/edit', [AdminController::class, 'updateSchedule'])->name('admin.update.schedule');

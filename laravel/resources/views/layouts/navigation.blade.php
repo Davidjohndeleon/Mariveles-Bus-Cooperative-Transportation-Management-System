@@ -18,10 +18,13 @@
                     
                     <!-- Admin Links -->
                     @if(Auth::user()->isAdmin())
+                        <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                            {{ __('Admin Dashboard') }}
+                        </x-nav-link>
                         <x-nav-link :href="route('admin.manage.buses')" :active="request()->routeIs('admin.manage.buses')">
                             {{ __('Manage Buses') }}
                         </x-nav-link>
-                        <x-nav-link :href="route('admin.manage.schedules')" :active="request()->routeIs('admin.manage.schedules')">
+                        <x-nav-link :href="route('admin.schedules')" :active="request()->routeIs('admin.schedules')">
                             {{ __('Manage Schedules') }}
                         </x-nav-link>
                     @endif
@@ -83,10 +86,13 @@
             
             <!-- Admin Links (Responsive) -->
             @if(Auth::user()->isAdmin())
+                <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                    {{ __('Admin Dashboard') }}
+                </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('admin.manage.buses')" :active="request()->routeIs('admin.manage.buses')">
                     {{ __('Manage Buses') }}
                 </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('admin.manage.schedules')" :active="request()->routeIs('admin.manage.schedules')">
+                <x-responsive-nav-link :href="route('admin.schedules')" :active="request()->routeIs('admin.schedules')">
                     {{ __('Manage Schedules') }}
                 </x-responsive-nav-link>
             @endif
