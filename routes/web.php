@@ -57,9 +57,8 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/admin/schedules/{schedule}', [AdminController::class, 'deleteSchedule'])->name('admin.delete.schedule');
     });
 
-    Route::middleware('role:driver')->group(function () {
-        Route::get('/driver/schedules', [DriverController::class, 'viewSchedules']);
-        Route::post('/driver/schedules/{id}', [DriverController::class, 'updateSchedule']);
+    Route::middleware(['auth'])->group(function () {
+        Route::resource('drivers', DriverController::class);
     });
 
     Route::middleware('role:checkpoint')->group(function () {

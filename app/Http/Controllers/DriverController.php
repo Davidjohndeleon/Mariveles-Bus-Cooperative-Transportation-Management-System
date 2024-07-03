@@ -1,34 +1,33 @@
 <?php
-
 namespace App\Http\Controllers;
 
+use App\Models\Driver;
 use Illuminate\Http\Request;
-use App\Models\Schedule;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class DriverController extends Controller
 {
-    public function viewSchedules()
+    public function create()
     {
-        $schedules = Schedule::where('driver_id', auth()->id())->get();
-        return view('driver.schedules', compact('schedules'));
+        return view('drivers.create');
     }
 
-    public function updateSchedule(Request $request, $id)
+    public function store(Request $request)
     {
         $request->validate([
-            'status' => 'required|string',
+            'license_number' => 'required|string|max:255',
+            'license_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $schedule = Schedule::where('id', $id)->where('driver_id', auth()->id())->first();
+        $imagePath = $request->file('license_image')->store('licenses', 'public');
 
-        if (!$schedule) {
-            return redirect()->back()->with('error', 'Schedule not found.');
-        }
-
-        $schedule->update([
-            'status' => $request->status,
+        Driver::create([
+            'user_id' => Auth::id(),
+            'license_number' => $request->license_number,
+            'license_image_path' => $imagePath,
         ]);
 
-        return redirect()->route('driver.schedules')->with('success', 'Schedule updated successfully.');
+        return redirect()->route('drivers.create')->with('success', 'License uploaded successfully.');
     }
 }

@@ -6,7 +6,9 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+                    <div class="flex justify-center">
+                        <img src="{{ asset('images/logo.jpg') }}" alt="Logo" class="h-16 w-auto bg-gray-100 dark:bg-gray-900">
+                    </div>
                     </a>
                 </div>
 
@@ -31,6 +33,13 @@
                             {{ __('Register Driver') }}
                         </x-nav-link>
 
+                    @endif
+
+                    <!-- Driver Links -->
+                    @if(Auth::user()->isDriver())
+                        <x-nav-link :href="route('drivers.create')" :active="request()->routeIs('drivers.create')">
+                            {{ __('Upload License') }}
+                        </x-nav-link>
                     @endif
                 </div>
             </div>
@@ -103,6 +112,13 @@
                     {{ __('Register Driver') }}
                 </x-nav-link>
 
+            @endif
+
+            <!-- Driver Links (Responsive) -->
+            @if(Auth::user()->isDriver())
+                <x-responsive-nav-link :href="route('drivers.create')" :active="request()->routeIs('drivers.create')">
+                    {{ __('Upload License') }}
+                </x-responsive-nav-link>
             @endif
         </div>
 
