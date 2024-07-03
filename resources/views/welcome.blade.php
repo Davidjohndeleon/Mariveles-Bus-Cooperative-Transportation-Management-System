@@ -21,6 +21,7 @@
             font-family: 'Figtree', sans-serif;
             background-color: #ffffff;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
@@ -30,6 +31,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            margin-bottom: 250px; /* Increase the space between the logo and the buttons */
         }
         .nav-link {
             font-weight: 600;
@@ -39,15 +41,21 @@
             background-color: #000000;
             border-radius: 5px;
             transition: background-color 0.3s ease, color 0.3s ease;
+            margin: 5px; /* Add some space between the buttons */
         }
         .nav-link:hover {
             background-color: #1a1a1a;
             color: #ffffff;
         }
     </style>
+</head>
+<body>
+    <div class="logo-container">
+        <img src="{{ asset('images/backg.png') }}" alt="Logo" class="h-64">
+    </div>
 
     @if (Route::has('login'))
-        <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
+        <div class="buttons-container">
             @auth
                 <a href="{{ url('/dashboard') }}" class="nav-link">Dashboard</a>
             @else
@@ -59,11 +67,5 @@
             @endauth
         </div>
     @endif
-</head>
-<body>
-    <div class="logo-container">
-        <img src="{{ asset('images/backg.png') }}" alt="Logo" class="h-64">
-    </div>
-
 </body>
 </html>

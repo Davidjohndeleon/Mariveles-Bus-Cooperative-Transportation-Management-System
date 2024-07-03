@@ -40,6 +40,9 @@
                         <x-nav-link :href="route('drivers.create')" :active="request()->routeIs('drivers.create')">
                             {{ __('Upload License') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('driver.qrcode')" :active="request()->routeIs('driver.qrcode')">
+                            {{ __('QR Code') }}
+                        </x-nav-link>
                     @endif
                 </div>
             </div>
@@ -119,6 +122,9 @@
                 <x-responsive-nav-link :href="route('drivers.create')" :active="request()->routeIs('drivers.create')">
                     {{ __('Upload License') }}
                 </x-responsive-nav-link>
+                <x-nav-link :href="route('driver.qrcode')" :active="request()->routeIs('driver.qrcode')">
+                    {{ __('QR Code') }}
+                </x-nav-link>
             @endif
         </div>
 

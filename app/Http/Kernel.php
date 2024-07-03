@@ -10,6 +10,7 @@ class Kernel extends HttpKernel
         // Other middleware entries...
         'role' => \App\Http\Middleware\UserTypeMiddleware::class,
         'admin' => \App\Http\Middleware\AdminMiddleware::class,
+        'driver' => \App\Http\Middleware\DriverMiddleware::class,
     ];
     
     /**

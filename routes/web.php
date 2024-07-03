@@ -59,6 +59,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware(['auth'])->group(function () {
         Route::resource('drivers', DriverController::class);
+        Route::get('/driver/qrcode', [DriverController::class, 'generateQRCode'])->name('driver.qrcode');
     });
 
     Route::middleware('role:checkpoint')->group(function () {
