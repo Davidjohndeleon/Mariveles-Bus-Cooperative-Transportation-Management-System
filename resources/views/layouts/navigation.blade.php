@@ -27,6 +27,10 @@
                         <x-nav-link :href="route('admin.schedules')" :active="request()->routeIs('admin.schedules')">
                             {{ __('Manage Schedules') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('admin.register.driver.form')" :active="request()->routeIs('admin.register.driver.form')">
+                            {{ __('Register Driver') }}
+                        </x-nav-link>
+
                     @endif
                 </div>
             </div>
@@ -95,6 +99,10 @@
                 <x-responsive-nav-link :href="route('admin.schedules')" :active="request()->routeIs('admin.schedules')">
                     {{ __('Manage Schedules') }}
                 </x-responsive-nav-link>
+                <x-nav-link :href="route('admin.register.driver.form')" :active="request()->routeIs('admin.register.driver.form')">
+                    {{ __('Register Driver') }}
+                </x-nav-link>
+
             @endif
         </div>
 

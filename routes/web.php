@@ -45,8 +45,10 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/admin/buses', [AdminController::class, 'addBus'])->name('admin.add.bus');
         Route::get('/admin/buses/{bus}/edit', [AdminController::class, 'editBus'])->name('admin.edit.bus');
         Route::post('/admin/buses/{bus}/edit', [AdminController::class, 'updateBus'])->name('admin.update.bus');
-        
         Route::delete('/admin/buses/{id}', [AdminController::class, 'deleteBus'])->name('admin.delete.bus');
+
+        Route::get('/admin/register_driver', [AdminController::class, 'showRegisterDriverForm'])->name('admin.register.driver.form');
+        Route::post('/admin/register_driver', [AdminController::class, 'registerDriver'])->name('admin.register.driver');
 
         Route::get('/admin/schedules', [AdminController::class, 'manageSchedules'])->name('admin.schedules');
         Route::post('/admin/schedules', [AdminController::class, 'addSchedule'])->name('admin.add.schedule');

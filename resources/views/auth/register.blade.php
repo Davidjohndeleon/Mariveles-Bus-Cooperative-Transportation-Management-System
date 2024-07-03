@@ -45,7 +45,7 @@
                             <x-input-label for="usertype" :value="__('User Type')" />
                             <select id="usertype" name="usertype" class="block w-full mt-1 px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                                 <!-- <option value="admin">Admin</option> -->
-                                <option value="driver">Driver</option>
+                                <!-- <option value="driver">Driver</option> -->
                                 <option value="passenger">Passenger</option>
                             </select>
                             <x-input-error :messages="$errors->get('usertype')" class="mt-2" />

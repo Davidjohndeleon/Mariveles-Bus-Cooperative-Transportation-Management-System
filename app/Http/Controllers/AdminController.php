@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Bus;
 use App\Models\User;
 use App\Models\Schedule;
-
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 class AdminController extends Controller
 {
     public function adminDashboard()
@@ -133,4 +134,29 @@ class AdminController extends Controller
         $schedule->delete();
         return redirect()->route('admin.schedules')->with('success', 'Schedule deleted successfully.');
     }
+
+     // Method to show the registration form
+     public function showRegisterDriverForm()
+     {
+         return view('admin.register_driver');
+     }
+ 
+     // Method to handle the registration form submission
+     public function registerDriver(Request $request)
+     {
+         $request->validate([
+             'name' => ['required', 'string', 'max:255'],
+             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+             'password' => ['required', 'string', 'min:8', 'confirmed'],
+         ]);
+ 
+         User::create([
+             'name' => $request->name,
+             'email' => $request->email,
+             'password' => Hash::make($request->password),
+             'usertype' => 'driver', // Set the user type to driver
+         ]);
+ 
+         return redirect()->route('admin.register.driver.form')->with('status', 'Driver registered successfully!');
+     }
 }
