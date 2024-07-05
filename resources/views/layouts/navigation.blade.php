@@ -44,6 +44,14 @@
                             {{ __('QR Code') }}
                         </x-nav-link>
                     @endif
+
+                    <!-- Passenger Links -->
+                    @if(Auth::user()->isPassenger())
+                        <x-nav-link :href="route('passenger.report.form')" :active="request()->routeIs('passenger.report.form')">
+                            {{ __('Report a Bus') }}
+                        </x-nav-link>
+                    @endif
+
                 </div>
             </div>
 
@@ -126,6 +134,14 @@
                     {{ __('QR Code') }}
                 </x-nav-link>
             @endif
+
+            <!-- Passenger Links -->
+            @if(Auth::user()->isPassenger())
+                <x-responsive-nav-link :href="route('passenger.report.form')" :active="request()->routeIs('passenger.report.form')">
+                    {{ __('Report a Bus') }}
+                </x-responsive-nav-link>
+            @endif
+            
         </div>
 
         <!-- Responsive Settings Options -->

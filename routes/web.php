@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\PassengerReportController; //temporary for frontend only
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\DashboardController;
@@ -68,6 +68,12 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware('role:passenger')->group(function () {
         Route::get('/passenger/schedules', [PassengerController::class, 'viewBusSchedules']);
+    });
+
+    //temporary route for frontend passenger
+    Route::middleware(['auth'])->group(function () {
+        Route::get('/passenger/report', [PassengerReportController::class, 'showReportForm'])->name('passenger.report.form');
+        Route::post('/passenger/report', [PassengerReportController::class, 'submitReport'])->name('passenger.report.submit');
     });
 });
 
