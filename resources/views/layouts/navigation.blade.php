@@ -32,7 +32,10 @@
                         <x-nav-link :href="route('admin.register.driver.form')" :active="request()->routeIs('admin.register.driver.form')">
                             {{ __('Register Driver') }}
                         </x-nav-link>
-
+                        <!-- New Reports Link -->
+                        <x-nav-link :href="route('admin.reports.index')" :active="request()->routeIs('admin.reports.index')">
+                            {{ __('View Reports') }}
+                        </x-nav-link>
                     @endif
 
                     <!-- Driver Links -->
