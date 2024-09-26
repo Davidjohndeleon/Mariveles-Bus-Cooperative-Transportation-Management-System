@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Report;
+use App\Models\Bus;
 
 class PassengerReportController extends Controller
 {
@@ -25,4 +26,11 @@ class PassengerReportController extends Controller
 
         return redirect()->back()->with('status', 'Report submitted successfully!');
     }
+
+    public function showReportForm()
+    {
+        $buses = Bus::all();
+        return view('passenger.report_form', compact('buses'));
+    }
+    
 }
