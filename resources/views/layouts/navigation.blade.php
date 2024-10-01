@@ -6,9 +6,9 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                    <div class="flex justify-center">
-                        <img src="{{ asset('images/logo.jpg') }}" alt="Logo" class="h-16 w-auto bg-gray-100 dark:bg-gray-900">
-                    </div>
+                        <div class="flex justify-center">
+                            <img src="{{ asset('images/logo.jpg') }}" alt="Logo" class="h-16 w-auto bg-gray-100 dark:bg-gray-900">
+                        </div>
                     </a>
                 </div>
 
@@ -26,7 +26,7 @@
                         <x-nav-link :href="route('admin.manage.buses')" :active="request()->routeIs('admin.manage.buses')">
                             {{ __('Manage Buses') }}
                         </x-nav-link>
-                        <x-nav-link :href="route('admin.schedules')" :active="request()->routeIs('admin.schedules')">
+                        <x-nav-link :href="route('admin.manage.schedules')" :active="request()->routeIs('admin.manage.schedules')">
                             {{ __('Manage Schedules') }}
                         </x-nav-link>
                         <x-nav-link :href="route('admin.register.driver.form')" :active="request()->routeIs('admin.register.driver.form')">
@@ -64,7 +64,6 @@
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                             <div>{{ Auth::user()->name }}</div>
-
                             <div class="ms-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
@@ -81,7 +80,6 @@
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-
                             <x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
@@ -119,13 +117,15 @@
                 <x-responsive-nav-link :href="route('admin.manage.buses')" :active="request()->routeIs('admin.manage.buses')">
                     {{ __('Manage Buses') }}
                 </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('admin.schedules')" :active="request()->routeIs('admin.schedules')">
+                <x-responsive-nav-link :href="route('admin.manage.schedules')" :active="request()->routeIs('admin.manage.schedules')">
                     {{ __('Manage Schedules') }}
                 </x-responsive-nav-link>
-                <x-nav-link :href="route('admin.register.driver.form')" :active="request()->routeIs('admin.register.driver.form')">
+                <x-responsive-nav-link :href="route('admin.register.driver.form')" :active="request()->routeIs('admin.register.driver.form')">
                     {{ __('Register Driver') }}
-                </x-nav-link>
-
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.reports.index')" :active="request()->routeIs('admin.reports.index')">
+                    {{ __('View Reports') }}
+                </x-responsive-nav-link>
             @endif
 
             <!-- Driver Links (Responsive) -->
@@ -133,9 +133,9 @@
                 <x-responsive-nav-link :href="route('drivers.create')" :active="request()->routeIs('drivers.create')">
                     {{ __('Upload License') }}
                 </x-responsive-nav-link>
-                <x-nav-link :href="route('driver.qrcode')" :active="request()->routeIs('driver.qrcode')">
+                <x-responsive-nav-link :href="route('driver.qrcode')" :active="request()->routeIs('driver.qrcode')">
                     {{ __('QR Code') }}
-                </x-nav-link>
+                </x-responsive-nav-link>
             @endif
 
             <!-- Passenger Links -->
@@ -162,7 +162,6 @@
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-
                     <x-responsive-nav-link :href="route('logout')"
                             onclick="event.preventDefault();
                                         this.closest('form').submit();">

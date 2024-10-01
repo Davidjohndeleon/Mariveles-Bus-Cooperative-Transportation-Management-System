@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 use App\Http\Controllers\PassengerReportController;
 use App\Http\Controllers\AdminController;
@@ -45,17 +45,20 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     Route::get('/buses/{bus}/edit', [AdminController::class, 'editBus'])->name('admin.edit.bus');
     Route::post('/buses/{bus}/edit', [AdminController::class, 'updateBus'])->name('admin.update.bus');
     Route::delete('/buses/{id}', [AdminController::class, 'deleteBus'])->name('admin.delete.bus');
+    Route::get('/dashboard', [AdminController::class, 'showSchedules'])->name('dashboard');
+    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+
     
     // Driver registration
     Route::get('/register_driver', [AdminController::class, 'showRegisterDriverForm'])->name('admin.register.driver.form');
     Route::post('/register_driver', [AdminController::class, 'registerDriver'])->name('admin.register.driver');
 
     // Schedules management
-    Route::get('/schedules', [AdminController::class, 'manageSchedules'])->name('admin.schedules');
-    Route::post('/schedules', [AdminController::class, 'addSchedule'])->name('admin.add.schedule');
-    Route::get('/schedules/{schedule}/edit', [AdminController::class, 'editSchedule'])->name('admin.edit.schedule');
-    Route::post('/schedules/{schedule}/edit', [AdminController::class, 'updateSchedule'])->name('admin.update.schedule');
-    Route::delete('/schedules/{schedule}', [AdminController::class, 'deleteSchedule'])->name('admin.delete.schedule');
+    Route::get('/schedules', [AdminController::class, 'manageSchedules'])->name('admin.manage.schedules'); // Manage schedules view
+    Route::post('/schedules', [AdminController::class, 'addSchedule'])->name('admin.add.schedule'); // Add a new schedule
+    Route::get('/schedules/{schedule}/edit', [AdminController::class, 'editSchedule'])->name('admin.edit.schedule'); // Edit schedule
+    Route::post('/schedules/{schedule}/edit', [AdminController::class, 'updateSchedule'])->name('admin.update.schedule'); // Update schedule
+    Route::delete('/schedules/{schedule}', [AdminController::class, 'deleteSchedule'])->name('admin.delete.schedule'); // Delete schedule
 
     // Reports for Admin
     Route::get('/reports', [AdminReportController::class, 'index'])->name('admin.reports.index');
@@ -74,7 +77,7 @@ Route::middleware(['auth', 'role:checkpoint'])->group(function () {
 
 // Passenger Routes
 Route::middleware(['auth', 'role:passenger'])->group(function () {
-    Route::get('/passenger/schedules', [PassengerController::class, 'viewBusSchedules']);
+    Route::get('/passenger/schedules', [PassengerController::class, 'viewBusSchedules'])->name('passenger.schedules');
     Route::get('/passenger/report', [PassengerReportController::class, 'showReportForm'])->name('passenger.report.form');
     Route::post('/passenger/report', [PassengerReportController::class, 'submitReport'])->name('passenger.report.submit');
 });
