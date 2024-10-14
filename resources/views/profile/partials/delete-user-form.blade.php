@@ -9,10 +9,16 @@
         </p>
     </header>
 
-    <x-danger-button
-        x-data=""
-        x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')"
-    >{{ __('Delete Account') }}</x-danger-button>
+    @if (Auth::user()->usertype === 'admin')
+        <p class="mt-2 text-sm text-red-600">
+            {{ __('Admin accounts cannot be deleted.') }}
+        </p>
+    @else
+        <x-danger-button
+            x-data=""
+            x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')"
+        >{{ __('Delete Account') }}</x-danger-button>
+    @endif
 
     <x-modal name="confirm-user-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable>
         <form method="post" action="{{ route('profile.destroy') }}" class="p-6">

@@ -48,6 +48,10 @@ class ProfileController extends Controller
 
         $user = $request->user();
 
+        if ($user->user_type === 'admin') {
+            return redirect()->back()->with('error', 'Admin accounts cannot be deleted.');
+        }
+
         Auth::logout();
 
         $user->delete();

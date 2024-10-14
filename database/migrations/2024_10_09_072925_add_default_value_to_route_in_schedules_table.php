@@ -12,9 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('schedules', function (Blueprint $table) {
-            if (!Schema::hasColumn('schedules', 'route')) {
-                $table->string('route')->after('departure_time'); // Add the route column
-            }
+            $table->string('route')->default('Unknown Route')->change(); 
         });
     }
 
@@ -24,9 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('schedules', function (Blueprint $table) {
-            if (Schema::hasColumn('schedules', 'route')) {
-                $table->dropColumn('route');
-            }
+            $table->dropColumn('route'); 
         });
     }
 };

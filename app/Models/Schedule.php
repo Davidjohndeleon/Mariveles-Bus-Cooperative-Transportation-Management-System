@@ -24,7 +24,7 @@ class Schedule extends Model
         'bus_id',
         'driver_id',
         'departure_time',
-        'arrival_time',
+        'route'
     ];
 
     public function bus()

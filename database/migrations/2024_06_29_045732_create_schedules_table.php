@@ -13,12 +13,14 @@ return new class extends Migration
     {
         Schema::create('schedules', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('bus_id')->constrained();
-            $table->foreignId('driver_id')->constrained('users');
-            $table->dateTime('departure_time');
-            $table->dateTime('arrival_time');
-            $table->string('status')->default('pending');
+            $table->time('departure_time');
+            $table->string('route');
+            $table->unsignedBigInteger('bus_id')->nullable();
+            $table->unsignedBigInteger('driver_id')->nullable();
             $table->timestamps();
+        
+            $table->foreign('bus_id')->references('id')->on('buses')->onDelete('set null');
+            $table->foreign('driver_id')->references('id')->on('users')->onDelete('set null');
         });
     }
 

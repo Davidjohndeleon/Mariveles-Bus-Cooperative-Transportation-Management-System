@@ -39,7 +39,7 @@ Route::middleware('auth')->group(function () {
 
 // Admin Routes
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
-    Route::get('/dashboard', [AdminController::class, 'adminDashboard'])->name('admin.dashboard');
+    
     Route::get('/buses', [AdminController::class, 'manageBuses'])->name('admin.manage.buses');
     Route::post('/buses', [AdminController::class, 'addBus'])->name('admin.add.bus');
     Route::get('/buses/{bus}/edit', [AdminController::class, 'editBus'])->name('admin.edit.bus');
@@ -47,7 +47,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     Route::delete('/buses/{id}', [AdminController::class, 'deleteBus'])->name('admin.delete.bus');
     Route::get('/dashboard', [AdminController::class, 'showSchedules'])->name('dashboard');
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
-
+    Route::post('/admin/schedule/add', [AdminController::class, 'addSchedule'])->name('admin.add.schedule');
+    Route::post('/admin/schedule/update/{id}', [AdminController::class, 'updateSchedule'])->name('admin.update.schedule');
+    
     
     // Driver registration
     Route::get('/register_driver', [AdminController::class, 'showRegisterDriverForm'])->name('admin.register.driver.form');
@@ -59,7 +61,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     Route::get('/schedules/{schedule}/edit', [AdminController::class, 'editSchedule'])->name('admin.edit.schedule'); // Edit schedule
     Route::post('/schedules/{schedule}/edit', [AdminController::class, 'updateSchedule'])->name('admin.update.schedule'); // Update schedule
     Route::delete('/schedules/{schedule}', [AdminController::class, 'deleteSchedule'])->name('admin.delete.schedule'); // Delete schedule
-
+    Route::get('/admin/add-default-schedules', [AdminController::class, 'addDefaultBalangaToMarivelesSchedules'])->name('admin.add.default.schedules');
+    Route::post('/admin/add-default-schedules', [AdminController::class, 'addDefaultBalangaToMarivelesSchedules'])
+    ->name('admin.add.default.schedules');
     // Reports for Admin
     Route::get('/reports', [AdminReportController::class, 'index'])->name('admin.reports.index');
 });

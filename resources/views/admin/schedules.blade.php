@@ -9,11 +9,39 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
 
-                <!-- Current Date -->
-                <h3 class="text-lg font-semibold mb-4">{{ \Carbon\Carbon::now()->format('F j, Y') }}</h3>
-
                 <!-- Balanga to Mariveles Schedule -->
                 <h3 class="text-lg font-semibold mt-8 mb-4">Balanga to Mariveles Schedule</h3>
+
+                <form action="{{ route('admin.add.schedule') }}" method="POST" class="mb-6">
+                    @csrf
+                    <input type="hidden" name="route" value="Balanga to Mariveles">
+                    <div class="grid grid-cols-3 gap-4">
+                        <div>
+                            <label for="departure_time" class="block text-sm font-medium">Departure Time</label>
+                            <input type="time" name="departure_time" required class="w-full border-gray-300 rounded-md">
+                        </div>
+                        <div>
+                            <label for="bus_id" class="block text-sm font-medium">Select Bus</label>
+                            <select name="bus_id" required class="w-full border-gray-300 rounded-md">
+                                @foreach ($buses as $bus)
+                                    <option value="{{ $bus->id }}">{{ $bus->bus_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div>
+                            <label for="driver_id" class="block text-sm font-medium">Select Driver</label>
+                            <select name="driver_id" required class="w-full border-gray-300 rounded-md">
+                                @foreach ($drivers as $driver)
+                                    <option value="{{ $driver->id }}">{{ $driver->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-md">
+                        Add Schedule
+                    </button>
+                </form>
+
                 <table class="min-w-full bg-white border border-gray-300 mb-6">
                     <thead>
                         <tr>
@@ -24,42 +52,43 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @php
-                            // Define static departure times for Balanga to Mariveles
-                            $departureTimes = [
-                                '03:50', '04:50', '05:50', '06:50',
-                                '07:50', '08:50', '09:50', '10:50',
-                                '11:50', '12:50', '13:50', '14:50',
-                                '15:50', '16:50', '17:50', '18:50',
-                                '19:50', '20:50', '21:20'
-                            ];
-                        @endphp
-
-                        @foreach ($departureTimes as $time)
+                        @foreach ($balangaToMarivelesSchedules as $schedule)
                             <tr>
-                                <form action="{{ route('admin.add.schedule') }}" method="POST">
-                                    @csrf
-                                    <td class="border px-4 py-2">
-                                        <input type="time" name="departure_time" value="{{ $time }}" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" readonly>
-                                    </td>
-                                    <td class="border px-4 py-2">
-                                        <select name="bus_id" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                            @foreach ($buses as $bus)
-                                                <option value="{{ $bus->id }}">{{ $bus->bus_name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </td>
-                                    <td class="border px-4 py-2">
-                                        <select name="driver_id" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                            @foreach ($drivers as $driver)
-                                                <option value="{{ $driver->id }}">{{ $driver->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </td>
-                                    <td class="border px-4 py-2">
-                                        <button type="submit" class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700 active:bg-indigo-700 focus:outline-none focus:border-indigo-700 focus:ring focus:ring-indigo-500 disabled:opacity-25 transition">Add</button>
-                                    </td>
-                                </form>
+                                <td class="border px-4 py-2">
+                                    {{ \Carbon\Carbon::parse($schedule->departure_time)->format('g:i A') }}
+                                </td>
+                                <td class="border px-4 py-2">
+                                    <select name="bus_id_{{ $schedule->id }}" class="w-full py-2 px-3 border border-gray-300 rounded-md">
+                                        @if ($schedule->bus)
+                                            <option value="{{ $schedule->bus->id }}">{{ $schedule->bus->bus_name }}</option>
+                                        @else
+                                            <option value="" disabled>No bus assigned yet</option>
+                                        @endif
+                                        @foreach ($buses as $bus)
+                                            <option value="{{ $bus->id }}">{{ $bus->bus_name }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td class="border px-4 py-2">
+                                    <select name="driver_id_{{ $schedule->id }}" class="w-full py-2 px-3 border border-gray-300 rounded-md">
+                                        @if ($schedule->driver)
+                                            <option value="{{ $schedule->driver->id }}">{{ $schedule->driver->name }}</option>
+                                        @else
+                                            <option value="" disabled>No driver assigned yet</option>
+                                        @endif
+                                        @foreach ($drivers as $driver)
+                                            <option value="{{ $driver->id }}">{{ $driver->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td class="border px-4 py-2 flex justify-between">
+                                    <a href="{{ route('admin.edit.schedule', $schedule->id) }}" class="text-blue-500 hover:underline">Edit</a>
+                                    <form action="{{ route('admin.delete.schedule', $schedule->id) }}" method="POST" class="inline-block">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="text-red-500 hover:underline ml-4">Delete</button>
+                                    </form>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -67,6 +96,37 @@
 
                 <!-- Mariveles to Balanga Schedule -->
                 <h3 class="text-lg font-semibold mt-8 mb-4">Mariveles to Balanga Schedule</h3>
+
+                <form action="{{ route('admin.add.schedule') }}" method="POST" class="mb-6">
+                    @csrf
+                    <input type="hidden" name="route" value="Mariveles to Balanga">
+                    <div class="grid grid-cols-3 gap-4">
+                        <div>
+                            <label for="departure_time" class="block text-sm font-medium">Departure Time</label>
+                            <input type="time" name="departure_time" required class="w-full border-gray-300 rounded-md">
+                        </div>
+                        <div>
+                            <label for="bus_id" class="block text-sm font-medium">Select Bus</label>
+                            <select name="bus_id" required class="w-full border-gray-300 rounded-md">
+                                @foreach ($buses as $bus)
+                                    <option value="{{ $bus->id }}">{{ $bus->bus_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div>
+                            <label for="driver_id" class="block text-sm font-medium">Select Driver</label>
+                            <select name="driver_id" required class="w-full border-gray-300 rounded-md">
+                                @foreach ($drivers as $driver)
+                                    <option value="{{ $driver->id }}">{{ $driver->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-md">
+                        Add Schedule
+                    </button>
+                </form>
+
                 <table class="min-w-full bg-white border border-gray-300 mb-6">
                     <thead>
                         <tr>
@@ -77,42 +137,25 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @php
-                            // Define static departure times for Mariveles to Balanga
-                            $departureTimesMariveles = [
-                                '05:00', '06:00', '07:00', '08:00',
-                                '09:00', '10:00', '11:00', '12:00',
-                                '13:00', '14:00', '15:00', '16:00',
-                                '17:00', '18:00', '19:00', '20:00',
-                                '20:30'
-                            ];
-                        @endphp
-
-                        @foreach ($departureTimesMariveles as $time)
+                        @foreach ($marivelesToBalangaSchedules as $schedule)
                             <tr>
-                                <form action="{{ route('admin.add.schedule') }}" method="POST">
-                                    @csrf
-                                    <td class="border px-4 py-2">
-                                        <input type="time" name="departure_time" value="{{ $time }}" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" readonly>
-                                    </td>
-                                    <td class="border px-4 py-2">
-                                        <select name="bus_id" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                            @foreach ($buses as $bus)
-                                                <option value="{{ $bus->id }}">{{ $bus->bus_name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </td>
-                                    <td class="border px-4 py-2">
-                                        <select name="driver_id" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                            @foreach ($drivers as $driver)
-                                                <option value="{{ $driver->id }}">{{ $driver->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </td>
-                                    <td class="border px-4 py-2">
-                                        <button type="submit" class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700 active:bg-indigo-700 focus:outline-none focus:border-indigo-700 focus:ring focus:ring-indigo-500 disabled:opacity-25 transition">Add</button>
-                                    </td>
-                                </form>
+                                <td class="border px-4 py-2">
+                                    {{ \Carbon\Carbon::parse($schedule->departure_time)->format('g:i A') }}
+                                </td>
+                                <td class="border px-4 py-2">
+                                    {{ $schedule->bus->bus_name ?? 'No bus assigned yet' }}
+                                </td>
+                                <td class="border px-4 py-2">
+                                    {{ $schedule->driver->name ?? 'No driver assigned yet' }}
+                                </td>
+                                <td class="border px-4 py-2 flex justify-between">
+                                    <a href="{{ route('admin.edit.schedule', $schedule->id) }}" class="text-blue-500 hover:underline">Edit</a>
+                                    <form action="{{ route('admin.delete.schedule', $schedule->id) }}" method="POST" class="inline-block">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="text-red-500 hover:underline ml-4">Delete</button>
+                                    </form>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
