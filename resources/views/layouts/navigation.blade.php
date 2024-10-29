@@ -32,9 +32,14 @@
                         <x-nav-link :href="route('admin.register.driver.form')" :active="request()->routeIs('admin.register.driver.form')">
                             {{ __('Register Driver') }}
                         </x-nav-link>
-                        <!-- New Reports Link -->
+                        <x-nav-link :href="route('admin.register.conductor.form')" :active="request()->routeIs('admin.register.conductor.form')">
+                            {{ __('Register Conductor') }}
+                        </x-nav-link>
                         <x-nav-link :href="route('admin.reports.index')" :active="request()->routeIs('admin.reports.index')">
                             {{ __('View Reports') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('admin.register.checkpoint.user.form')" :active="request()->routeIs('admin.register.checkpoint.user.form')">
+                            {{ __('Register Checkpoint User') }}
                         </x-nav-link>
                     @endif
 
@@ -48,13 +53,19 @@
                         </x-nav-link>
                     @endif
 
+                    <!-- Checkpoint Links -->
+                    @if(Auth::user()->isCheckpoint())
+                        <x-nav-link :href="route('checkpoint.scan')" :active="request()->routeIs('checkpoint.scan')">
+                            {{ __('Scan QR Code') }}
+                        </x-nav-link>
+                    @endif
+
                     <!-- Passenger Links -->
                     @if(Auth::user()->isPassenger())
                         <x-nav-link :href="route('passenger.report.form')" :active="request()->routeIs('passenger.report.form')">
                             {{ __('Report a Bus') }}
                         </x-nav-link>
                     @endif
-
                 </div>
             </div>
 
@@ -123,9 +134,15 @@
                 <x-responsive-nav-link :href="route('admin.register.driver.form')" :active="request()->routeIs('admin.register.driver.form')">
                     {{ __('Register Driver') }}
                 </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.register.conductor.form')" :active="request()->routeIs('admin.register.conductor.form')">
+                    {{ __('Register Conductor') }}
+                </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('admin.reports.index')" :active="request()->routeIs('admin.reports.index')">
                     {{ __('View Reports') }}
                 </x-responsive-nav-link>
+                <x-nav-link :href="route('admin.register.checkpoint.user.form')" :active="request()->routeIs('admin.register.checkpoint.user.form')">
+                    {{ __('Register Checkpoint User') }}
+                </x-nav-link>
             @endif
 
             <!-- Driver Links (Responsive) -->
@@ -138,13 +155,19 @@
                 </x-responsive-nav-link>
             @endif
 
-            <!-- Passenger Links -->
+            <!-- Checkpoint Links (Responsive) -->
+            @if(Auth::user()->isCheckpoint())
+                <x-responsive-nav-link :href="route('checkpoint.scan')" :active="request()->routeIs('checkpoint.scan')">
+                    {{ __('Scan QR Code') }}
+                </x-responsive-nav-link>
+            @endif
+
+            <!-- Passenger Links (Responsive) -->
             @if(Auth::user()->isPassenger())
                 <x-responsive-nav-link :href="route('passenger.report.form')" :active="request()->routeIs('passenger.report.form')">
                     {{ __('Report a Bus') }}
                 </x-responsive-nav-link>
             @endif
-            
         </div>
 
         <!-- Responsive Settings Options -->
@@ -159,7 +182,7 @@
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
 
-                <!-- Authentication -->
+                <!-- Responsive Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <x-responsive-nav-link :href="route('logout')"

@@ -17,10 +17,12 @@ return new class extends Migration
             $table->string('route');
             $table->unsignedBigInteger('bus_id')->nullable();
             $table->unsignedBigInteger('driver_id')->nullable();
+            $table->unsignedBigInteger('conductor_id')->nullable(); // Add conductor_id column
             $table->timestamps();
         
             $table->foreign('bus_id')->references('id')->on('buses')->onDelete('set null');
             $table->foreign('driver_id')->references('id')->on('users')->onDelete('set null');
+            $table->foreign('conductor_id')->references('id')->on('users')->onDelete('set null'); // Add foreign key constraint
         });
     }
 

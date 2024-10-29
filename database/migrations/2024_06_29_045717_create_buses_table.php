@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('bus_name');
             $table->unsignedBigInteger('driver_id')->nullable();
             $table->foreign('driver_id')->references('id')->on('users')->onDelete('set null');
+            $table->unsignedBigInteger('conductor_id')->nullable(); 
+            $table->foreign('conductor_id')->references('id')->on('users')->onDelete('set null');
             $table->timestamps();
         });
     }

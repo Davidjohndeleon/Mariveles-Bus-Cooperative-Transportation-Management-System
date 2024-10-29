@@ -18,6 +18,7 @@
                             @endforeach
                         </select>
                     </div>
+
                     <div class="mb-4">
                         <label for="driver_id" class="block text-sm font-medium text-gray-700">Driver</label>
                         <select name="driver_id" id="driver_id" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
@@ -26,12 +27,22 @@
                             @endforeach
                         </select>
                     </div>
+
+                    
+                    <div class="mb-4">
+                        <label for="conductor_id" class="block text-sm font-medium text-gray-700">Conductor</label>
+                        <select name="conductor_id" id="conductor_id" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            @foreach ($conductors as $conductor)
+                                <option value="{{ $conductor->id }}" {{ $schedule->conductor_id == $conductor->id ? 'selected' : '' }}>{{ $conductor->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
                     <div class="mb-4">
                         <label for="departure_time" class="block text-sm font-medium text-gray-700">Departure Time</label>
                         <input type="datetime-local" name="departure_time" id="departure_time" value="{{ date('Y-m-d\TH:i', strtotime($schedule->departure_time)) }}" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                     </div>
                     
-
                     <div class="mt-4">
                         <button type="submit" class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700 active:bg-indigo-700 focus:outline-none focus:border-indigo-700 focus:ring focus:ring-indigo-500 disabled:opacity-25 transition">Update Schedule</button>
                     </div>

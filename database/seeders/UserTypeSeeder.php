@@ -40,5 +40,12 @@ class UserTypeSeeder extends Seeder
             'password' => Hash::make('password'),
             'usertype' => 'passenger',
         ]);
+
+        User::create([
+            'name' => 'Conductor User',
+            'email' => 'conductor@example.com',
+            'password' => Hash::make('password'),
+            'usertype' => 'conductor',
+        ]);
     }
 }

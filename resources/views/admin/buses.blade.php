@@ -43,15 +43,35 @@
 
                 <!-- Add Bus Form Section -->
                 <h3 class="text-lg font-semibold mb-4">Add New Bus</h3>
+                
+                @if ($errors->any())
+                    <div class="mb-4">
+                        <div class="font-medium text-red-600">
+                            {{ __('Whoops! Something went wrong.') }}
+                        </div>
+                        <ul class="mt-3 list-disc list-inside text-sm text-red-600">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+                
+                @if (session('success'))
+                    <div class="mb-4 text-green-600">
+                        {{ session('success') }}
+                    </div>
+                @endif
+
                 <form action="{{ route('admin.add.bus') }}" method="POST">
                     @csrf
                     <div class="mb-4">
                         <label for="bus_name" class="block text-sm font-medium text-gray-700">Bus Name</label>
-                        <input type="text" name="bus_name" id="bus_name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                        <input type="text" name="bus_name" id="bus_name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
                     </div>
                     <div class="mb-4">
                         <label for="driver_id" class="block text-sm font-medium text-gray-700">Driver</label>
-                        <select name="driver_id" id="driver_id" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        <select name="driver_id" id="driver_id" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
                             <option value="">Select a driver</option>
                             @foreach ($drivers as $driver)
                                 <option value="{{ $driver->id }}">{{ $driver->name }}</option>

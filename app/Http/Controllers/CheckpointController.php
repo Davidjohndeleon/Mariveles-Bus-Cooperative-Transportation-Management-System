@@ -7,14 +7,25 @@ use App\Models\User;
 
 class CheckpointController extends Controller
 {
-    public function scanQRCode($driverId)
-    {
-        $driver = User::where('id', $driverId)->where('usertype', 'driver')->first();
+    public function scanQRCode(Request $request)
+{
+    $request->validate(['driver_id' => 'required|exists:users,id',]);
 
-        if (!$driver) {
-            return redirect()->back()->with('error', 'Driver not found.');
-        }
+    $driverId = $request->input('driver_id'); 
+    $driver = User::where('id', $driverId)->where('usertype', 'driver')->first();
 
-        return view('checkpoint.scan', compact('driver'));
+    if (!$driver) {
+        return redirect()->back()->with('error', 'Driver not found.');
     }
+
+    return redirect()->route('checkpoint.success')->with('success', 'QR Code scanned successfully for driver: ' . $driver->name);
+}
+
+public function success()
+{
+    return view('checkpoint.success'); 
+}
+
+
+    
 }

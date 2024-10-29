@@ -60,13 +60,25 @@ class User extends Authenticatable
         return $this->usertype === 'driver';
     }
 
-    public function isCheckpointStaff()
-    {
-        return $this->usertype === 'checkpoint';
-    }
+    public function isCheckpoint()
+{
+    return $this->usertype === 'checkpoint';
+}
 
     public function isPassenger()
     {
         return $this->usertype === 'passenger';
     }
+
+    public function isConductor()
+    {
+        return $this->usertype === 'conductor';
+    }
+
+    public function checkpoints()
+{
+    return $this->hasMany(Checkpoint::class);
+}
+
+    
 }

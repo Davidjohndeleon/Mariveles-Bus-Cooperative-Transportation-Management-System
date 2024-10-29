@@ -36,6 +36,14 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div>
+                            <label for="conductor_id" class="block text-sm font-medium">Select Conductor</label>
+                            <select name="conductor_id" required class="w-full border-gray-300 rounded-md">
+                                @foreach ($conductors as $conductor)
+                                    <option value="{{ $conductor->id }}">{{ $conductor->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                     <button type="submit" class="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-md">
                         Add Schedule
@@ -48,6 +56,7 @@
                             <th class="px-4 py-2 border-b">Departure Time</th>
                             <th class="px-4 py-2 border-b">Bus</th>
                             <th class="px-4 py-2 border-b">Driver</th>
+                            <th class="px-4 py-2 border-b">Conductor</th>
                             <th class="px-4 py-2 border-b">Actions</th>
                         </tr>
                     </thead>
@@ -58,28 +67,13 @@
                                     {{ \Carbon\Carbon::parse($schedule->departure_time)->format('g:i A') }}
                                 </td>
                                 <td class="border px-4 py-2">
-                                    <select name="bus_id_{{ $schedule->id }}" class="w-full py-2 px-3 border border-gray-300 rounded-md">
-                                        @if ($schedule->bus)
-                                            <option value="{{ $schedule->bus->id }}">{{ $schedule->bus->bus_name }}</option>
-                                        @else
-                                            <option value="" disabled>No bus assigned yet</option>
-                                        @endif
-                                        @foreach ($buses as $bus)
-                                            <option value="{{ $bus->id }}">{{ $bus->bus_name }}</option>
-                                        @endforeach
-                                    </select>
+                                    {{ $schedule->bus->bus_name ?? 'No bus assigned yet' }}
                                 </td>
                                 <td class="border px-4 py-2">
-                                    <select name="driver_id_{{ $schedule->id }}" class="w-full py-2 px-3 border border-gray-300 rounded-md">
-                                        @if ($schedule->driver)
-                                            <option value="{{ $schedule->driver->id }}">{{ $schedule->driver->name }}</option>
-                                        @else
-                                            <option value="" disabled>No driver assigned yet</option>
-                                        @endif
-                                        @foreach ($drivers as $driver)
-                                            <option value="{{ $driver->id }}">{{ $driver->name }}</option>
-                                        @endforeach
-                                    </select>
+                                    {{ $schedule->driver->name ?? 'No driver assigned yet' }}
+                                </td>
+                                <td class="border px-4 py-2">
+                                    {{ $schedule->conductor->name ?? 'No conductor assigned yet' }}
                                 </td>
                                 <td class="border px-4 py-2 flex justify-between">
                                     <a href="{{ route('admin.edit.schedule', $schedule->id) }}" class="text-blue-500 hover:underline">Edit</a>
@@ -121,6 +115,14 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div>
+                            <label for="conductor_id" class="block text-sm font-medium">Select Conductor</label>
+                            <select name="conductor_id" required class="w-full border-gray-300 rounded-md">
+                                @foreach ($conductors as $conductor)
+                                    <option value="{{ $conductor->id }}">{{ $conductor->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                     <button type="submit" class="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-md">
                         Add Schedule
@@ -133,11 +135,12 @@
                             <th class="px-4 py-2 border-b">Departure Time</th>
                             <th class="px-4 py-2 border-b">Bus</th>
                             <th class="px-4 py-2 border-b">Driver</th>
+                            <th class="px-4 py-2 border-b">Conductor</th>
                             <th class="px-4 py-2 border-b">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($marivelesToBalangaSchedules as $schedule)
+                        @foreach ($balangaToMarivelesSchedules as $schedule)
                             <tr>
                                 <td class="border px-4 py-2">
                                     {{ \Carbon\Carbon::parse($schedule->departure_time)->format('g:i A') }}
@@ -147,6 +150,9 @@
                                 </td>
                                 <td class="border px-4 py-2">
                                     {{ $schedule->driver->name ?? 'No driver assigned yet' }}
+                                </td>
+                                <td class="border px-4 py-2">
+                                    {{ $schedule->conductor->name ?? 'No conductor assigned yet' }}
                                 </td>
                                 <td class="border px-4 py-2 flex justify-between">
                                     <a href="{{ route('admin.edit.schedule', $schedule->id) }}" class="text-blue-500 hover:underline">Edit</a>

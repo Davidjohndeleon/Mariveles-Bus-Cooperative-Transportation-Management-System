@@ -1,6 +1,7 @@
 <?php 
 
 namespace App\Http\Controllers;
+use App\Models\Conductor;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
@@ -35,11 +36,13 @@ class AdminController extends Controller
     $request->validate([
         'bus_name' => 'required|string|max:255',
         'driver_id' => 'required|exists:users,id',
+        'conductor_id' => 'nullable|exists:users,id',
     ]);
 
     Bus::create([
         'bus_name' => $request->bus_name,
         'driver_id' => $request->driver_id,
+        'conductor_id' => $request->conductor_id,
     ]);
 
     // Redirect to the correct route name
@@ -50,7 +53,8 @@ class AdminController extends Controller
     {
         $bus = Bus::findOrFail($id);
         $drivers = User::where('usertype', 'driver')->get();
-        return view('admin.edit_bus', compact('bus', 'drivers'));
+        $conductors = User::where('usertype', 'conductor')->get();
+        return view('admin.edit_bus', compact('bus', 'drivers', 'conductors'));
     }
 
     public function updateBus(Request $request, $id)
@@ -58,12 +62,14 @@ class AdminController extends Controller
         $request->validate([
             'bus_name' => 'required|string|max:255',
             'driver_id' => 'required|exists:users,id',
+            'conductor_id' => 'nullable|exists:users,id',
         ]);
 
         $bus = Bus::findOrFail($id);
         $bus->update([
             'bus_name' => $request->bus_name,
             'driver_id' => $request->driver_id,
+            'conductor_id' => $request->conductor_id,
         ]);
 
         return redirect()->route('admin.buses')->with('success', 'Bus updated successfully.');
@@ -85,13 +91,14 @@ class AdminController extends Controller
 
         // Fetch all buses and drivers
         $buses = Bus::all();  
-        $drivers = User::where('usertype', 'driver')->get();  
+        $drivers = User::where('usertype', 'driver')->get();
+        $conductors = User::where('usertype', 'conductor')->get();  
 
         // Log information for debugging
         Log::info('Balanga to Mariveles Schedules:', $balangaToMarivelesSchedules->toArray());
         Log::info('Mariveles to Balanga Schedules:', $marivelesToBalangaSchedules->toArray());
 
-        return view('admin.schedules', compact('balangaToMarivelesSchedules', 'marivelesToBalangaSchedules', 'buses', 'drivers'));
+        return view('admin.schedules', compact('balangaToMarivelesSchedules', 'marivelesToBalangaSchedules', 'buses', 'drivers','conductors'));
     }
 
     public function addSchedule(Request $request)
@@ -99,8 +106,9 @@ class AdminController extends Controller
     $formFields = $request->validate([
         'departure_time' => 'required|date_format:H:i',
         'bus_id' => 'required|exists:buses,id',
-        'driver_id' => 'nullable|exists:users,id',  // Optional
-        'route' => 'required|string|max:255',      // Dynamic route input
+        'driver_id' => 'nullable|exists:users,id',
+        'conductor_id' => 'nullable|exists:users,id',  
+        'route' => 'required|string|max:255',     
     ]);
 
     Schedule::create($formFields);
@@ -113,6 +121,7 @@ class AdminController extends Controller
         $schedule = Schedule::findOrFail($id);
         $buses = Bus::all();
         $drivers = User::where('usertype', 'driver')->get();
+        $conductors = User::where('usertype', 'conductor')->get();
 
         return view('admin.edit_schedule', compact('schedule', 'buses', 'drivers'));
     }
@@ -122,6 +131,7 @@ class AdminController extends Controller
         $request->validate([
             'bus_id' => 'required|exists:buses,id',
             'driver_id' => 'required|exists:users,id',
+            'conductor_id' => 'nullable|exists:users,id',
             'departure_time' => 'required|time',
         ]);
 
@@ -129,6 +139,7 @@ class AdminController extends Controller
         $schedule->update([
             'bus_id' => $request->bus_id,
             'driver_id' => $request->driver_id,
+            'conductor_id' => $request->conductor_id,
             'departure_time' => $request->departure_time,
         ]);
 
@@ -145,7 +156,11 @@ class AdminController extends Controller
     // Method to show the registration form
     public function showRegisterDriverForm()
     {
-        return view('admin.register_driver');
+        // Fetch all users with 'driver' usertype
+    $drivers = User::where('usertype', 'driver')->get();
+
+    // Pass the $drivers variable to the view
+    return view('admin.register_driver', compact('drivers'));
     }
 
     // Method to handle the registration form submission
@@ -176,6 +191,8 @@ class AdminController extends Controller
         // Fetch buses and drivers for the select dropdowns
         $buses = Bus::all();
         $drivers = Driver::all();
+        $conductors = Conductor::all();
+        
     
         // Pass the schedules, buses, and drivers to the view
         return view('dashboard', [
@@ -183,31 +200,81 @@ class AdminController extends Controller
             'marivelesToBalangaSchedules' => $marivelesToBalangaSchedules,
             'buses' => $buses,
             'drivers' => $drivers,
+            'conductors' => $conductors,
         ]);
     }
 
-    public function addDefaultBalangaToMarivelesSchedules()
+//     public function addDefaultBalangaToMarivelesSchedules()
+// {
+//     try {
+//         $startTime = Carbon::createFromTime(3, 50, 0); // 3:50 AM
+//         $endTime = Carbon::createFromTime(21, 20, 0); // 9:20 PM
+//         $interval = 60; // 1-hour interval
+
+//         while ($startTime->lte($endTime)) {
+//             Schedule::create([
+//                 'departure_time' => $startTime->format('H:i'), // Store in 24-hour format for the database
+//                 'bus_id' => 1,
+//                 'driver_id' => 1,
+//                 'route' => 'Balanga to Mariveles',
+//             ]);
+
+//             $startTime->addMinutes($interval);
+//         }
+
+//         return redirect()->route('admin.manage.schedules')->with('message', 'Default Balanga to Mariveles schedules added.');
+//     } catch (\Exception $e) {
+//         Log::error('Error adding default schedules: ' . $e->getMessage());
+//         return back()->with('error', 'Failed to add schedules.');
+//     }
+// }
+
+public function showRegisterConductorForm()
 {
-    try {
-        $startTime = Carbon::createFromTime(3, 50, 0); // 3:50 AM
-        $endTime = Carbon::createFromTime(21, 20, 0); // 9:20 PM
-        $interval = 60; // 1-hour interval
+    $conductors = User::where('usertype', 'conductor')->get();
+    return view('admin.register_conductor', compact('conductors'));
+}
 
-        while ($startTime->lte($endTime)) {
-            Schedule::create([
-                'departure_time' => $startTime->format('H:i'), // Store in 24-hour format for the database
-                'bus_id' => 1,
-                'driver_id' => 1,
-                'route' => 'Balanga to Mariveles',
-            ]);
+public function registerConductor(Request $request)
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
 
-            $startTime->addMinutes($interval);
-        }
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'usertype' => 'conductor', 
+        ]);
 
-        return redirect()->route('admin.manage.schedules')->with('message', 'Default Balanga to Mariveles schedules added.');
-    } catch (\Exception $e) {
-        Log::error('Error adding default schedules: ' . $e->getMessage());
-        return back()->with('error', 'Failed to add schedules.');
+        return redirect()->route('admin.register.conductor.form')->with('status', 'Conductor registered successfully!');
     }
+
+    public function showRegisterCheckpointForm()
+{
+    $checkpoints = User::where('usertype', 'checkpoint')->get();
+
+    return view('admin.register_checkpoint_user', compact('checkpoints'));
+}
+
+public function registerCheckpointUser(Request $request)
+{
+    $request->validate([
+        'name' => ['required', 'string', 'max:255'],
+        'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+        'password' => ['required', 'string', 'min:8', 'confirmed'],
+    ]);
+
+    User::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'password' => Hash::make($request->password),
+        'usertype' => 'checkpoint', 
+    ]);
+
+    return redirect()->route('admin.register.checkpoint.user.form')->with('status', 'Checkpoint user registered successfully!');
 }
 }

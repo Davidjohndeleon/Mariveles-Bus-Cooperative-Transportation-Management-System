@@ -19,5 +19,10 @@ class Bus extends Model
     {
         return $this->belongsTo(User::class, 'driver_id');
     }
+
+    public function conductor()
+{
+    return $this->belongsTo(User::class, 'conductor_id');
+}
     
 }

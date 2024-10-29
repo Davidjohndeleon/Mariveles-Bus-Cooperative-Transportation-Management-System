@@ -50,7 +50,10 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     Route::post('/admin/schedule/add', [AdminController::class, 'addSchedule'])->name('admin.add.schedule');
     Route::post('/admin/schedule/update/{id}', [AdminController::class, 'updateSchedule'])->name('admin.update.schedule');
     
-    
+    // Conductor registration
+    Route::post('/admin/register/conductor', [AdminController::class, 'registerConductor'])->name('admin.register.conductor');
+    Route::get('/admin/register/conductor', [AdminController::class, 'showRegisterConductorForm'])->name('admin.register.conductor.form');
+
     // Driver registration
     Route::get('/register_driver', [AdminController::class, 'showRegisterDriverForm'])->name('admin.register.driver.form');
     Route::post('/register_driver', [AdminController::class, 'registerDriver'])->name('admin.register.driver');
@@ -66,6 +69,10 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     ->name('admin.add.default.schedules');
     // Reports for Admin
     Route::get('/reports', [AdminReportController::class, 'index'])->name('admin.reports.index');
+
+    //Registration for checkpoint users
+    Route::get('/admin/register-checkpoint', [AdminController::class, 'showRegisterCheckpointForm'])->name('admin.register.checkpoint.user.form');
+    Route::post('/admin/register-checkpoint', [AdminController::class, 'registerCheckpointUser'])->name('admin.register.checkpoint.user');
 });
 
 // Driver Routes
@@ -76,7 +83,8 @@ Route::middleware(['auth', 'role:driver'])->group(function () {
 
 // Checkpoint Routes
 Route::middleware(['auth', 'role:checkpoint'])->group(function () {
-    Route::get('/checkpoint/scan/{driverId}', [CheckpointController::class, 'scanQRCode']);
+    Route::match(['get', 'post'], '/checkpoint/scan', [CheckpointController::class, 'scanQRCode'])->name('checkpoint.scan');
+   
 });
 
 // Passenger Routes
