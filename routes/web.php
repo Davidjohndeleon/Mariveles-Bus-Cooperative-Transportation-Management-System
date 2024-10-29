@@ -26,7 +26,7 @@ Route::get('/', function () {
 });
 
 // Dashboard Route
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
 
@@ -45,8 +45,8 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     Route::get('/buses/{bus}/edit', [AdminController::class, 'editBus'])->name('admin.edit.bus');
     Route::post('/buses/{bus}/edit', [AdminController::class, 'updateBus'])->name('admin.update.bus');
     Route::delete('/buses/{id}', [AdminController::class, 'deleteBus'])->name('admin.delete.bus');
-    Route::get('/dashboard', [AdminController::class, 'showSchedules'])->name('dashboard');
-    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('/schedules', [AdminController::class, 'showSchedules'])->name('schedules');
+    Route::get('/admin/admin_dashboard', [AdminController::class, 'gps'])->name('admin.admin.dashboard');
     Route::post('/admin/schedule/add', [AdminController::class, 'addSchedule'])->name('admin.add.schedule');
     Route::post('/admin/schedule/update/{id}', [AdminController::class, 'updateSchedule'])->name('admin.update.schedule');
     
@@ -83,8 +83,9 @@ Route::middleware(['auth', 'role:driver'])->group(function () {
 
 // Checkpoint Routes
 Route::middleware(['auth', 'role:checkpoint'])->group(function () {
-    Route::match(['get', 'post'], '/checkpoint/scan', [CheckpointController::class, 'scanQRCode'])->name('checkpoint.scan');
-   
+    Route::get('/checkpoint/scan', [CheckpointController::class, 'showScanForm'])->name('checkpoint.scan.form');
+    Route::post('/checkpoint/scan', [CheckpointController::class, 'scanQRCode'])->name('checkpoint.scan');
+    Route::get('/checkpoint/success', [CheckpointController::class, 'success'])->name('checkpoint.success');
 });
 
 // Passenger Routes

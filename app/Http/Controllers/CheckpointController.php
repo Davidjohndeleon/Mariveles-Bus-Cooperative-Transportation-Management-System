@@ -7,6 +7,10 @@ use App\Models\User;
 
 class CheckpointController extends Controller
 {
+    public function showScanForm()
+{
+    return view('checkpoint.scan'); 
+}
     public function scanQRCode(Request $request)
 {
     $request->validate(['driver_id' => 'required|exists:users,id',]);

@@ -19,7 +19,7 @@ class AdminController extends Controller
     //     return view('admin.admin_dashboard', compact('buses'));
     // }
 
-    public function index()
+    public function gps()
     {
         return view('admin.admin_dashboard');
     }

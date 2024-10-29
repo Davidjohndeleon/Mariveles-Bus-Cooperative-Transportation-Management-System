@@ -20,7 +20,7 @@
                     
                     <!-- Admin Links -->
                     @if(Auth::user()->isAdmin())
-                        <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                        <x-nav-link :href="route('admin.admin.dashboard')" :active="request()->routeIs('admin.admin.dashboard')">
                             {{ __('Admin Dashboard') }}
                         </x-nav-link>
                         <x-nav-link :href="route('admin.manage.buses')" :active="request()->routeIs('admin.manage.buses')">
@@ -122,7 +122,7 @@
             
             <!-- Admin Links (Responsive) -->
             @if(Auth::user()->isAdmin())
-                <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                <x-responsive-nav-link :href="route('admin.admin.dashboard')" :active="request()->routeIs('admin.admin.dashboard')">
                     {{ __('Admin Dashboard') }}
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('admin.manage.buses')" :active="request()->routeIs('admin.manage.buses')">
