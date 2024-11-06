@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Bus;
 use App\Models\Driver;
 use App\Models\User;
+use App\Models\Fare;
 use App\Models\Schedule;
 use Illuminate\Support\Facades\Hash;
 
@@ -260,21 +261,29 @@ public function registerConductor(Request $request)
     return view('admin.register_checkpoint_user', compact('checkpoints'));
 }
 
-public function registerCheckpointUser(Request $request)
-{
-    $request->validate([
-        'name' => ['required', 'string', 'max:255'],
-        'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-        'password' => ['required', 'string', 'min:8', 'confirmed'],
-    ]);
+    public function registerCheckpointUser(Request $request)
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
 
-    User::create([
-        'name' => $request->name,
-        'email' => $request->email,
-        'password' => Hash::make($request->password),
-        'usertype' => 'checkpoint', 
-    ]);
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'usertype' => 'checkpoint', 
+        ]);
 
-    return redirect()->route('admin.register.checkpoint.user.form')->with('status', 'Checkpoint user registered successfully!');
-}
+        return redirect()->route('admin.register.checkpoint.user.form')->with('status', 'Checkpoint user registered successfully!');
+    }
+    public function manageFares()
+    {
+        
+        $fares = Fare::all();
+
+        
+        return view('admin.fares', compact('fares'));
+    }
 }

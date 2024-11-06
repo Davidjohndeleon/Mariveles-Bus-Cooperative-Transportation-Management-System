@@ -9,6 +9,7 @@ use App\Http\Controllers\PassengerController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminReportController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FareController;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,6 +70,15 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     ->name('admin.add.default.schedules');
     // Reports for Admin
     Route::get('/reports', [AdminReportController::class, 'index'])->name('admin.reports.index');
+
+    //Fare Matrix
+    Route::get('/admin/fares', [FareController::class, 'index'])->name('fares.index');
+    Route::get('/admin/fares/create', [FareController::class, 'create'])->name('fares.create');
+    Route::post('/admin/fares', [FareController::class, 'store'])->name('fares.store');
+    Route::get('/admin/fares/{id}/edit', [FareController::class, 'edit'])->name('fares.edit');
+    Route::put('/admin/fares/{id}', [FareController::class, 'update'])->name('fares.update');
+    Route::delete('/admin/fares/{id}', [FareController::class, 'destroy'])->name('fares.destroy');
+
 
     //Registration for checkpoint users
     Route::get('/admin/register-checkpoint', [AdminController::class, 'showRegisterCheckpointForm'])->name('admin.register.checkpoint.user.form');

@@ -5,6 +5,8 @@
         </h2>
     </x-slot>
 
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
@@ -20,49 +22,41 @@
                     </div>
                 @endif
 
-                <div id="reader" style="width: 600px; display: none;"></div>
-
-                <button id="start-camera" class="bg-blue-500 text-white p-2 rounded">
-                    Start Camera
-                </button>
+                <!-- Video element for Instascan preview -->
+                <video id="reader" style="width: 100%; max-width: 600px; height: 400px;"></video>
                 
+                <div id="result"></div>
+
                 <form id="driverForm" action="{{ route('checkpoint.scan') }}" method="POST" style="display: none;">
                     @csrf
                     <input type="hidden" name="driver_id" id="driver_id" required>
-                    <button type="submit">Submit</button>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- Include html5-qrcode library -->
-    <script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script>
-    <script>
-        const html5QrCode = new Html5Qrcode("reader");
+    <!-- Include instascan.min.js script -->
+    <script src="{{ asset('path_to/instascan.min.js') }}"></script> <!-- Update path as needed -->
 
-        const qrCodeSuccessCallback = (decodedText, decodedResult) => {
-            console.log("QR Code scanned:", decodedText);
-            document.getElementById('driver_id').value = decodedText;
+    <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', () => {
+        let scanner = new Instascan.Scanner({ video: document.getElementById('reader') });
+
+        scanner.addListener('scan', function (content) {
+            console.log("QR Code scanned:", content);
+            document.getElementById('driver_id').value = content;
             document.getElementById('driverForm').submit();
-        };
-
-        const config = { fps: 10, qrbox: { width: 250, height: 250 } };
-
-        document.getElementById('start-camera').addEventListener('click', () => {
-            document.getElementById('reader').style.display = "block";
-            console.log("Starting camera...");
-
-            html5QrCode.start(
-                { facingMode: "environment" },
-                config,
-                qrCodeSuccessCallback
-            ).then(() => {
-                console.log("Camera started successfully.");
-            }).catch(err => {
-                console.error("Unable to start scanning:", err);
-                alert("Error accessing the camera. Please allow camera access and try again.");
-                document.getElementById('reader').style.display = "none"; // Hide if failed
-            });
         });
+
+        Instascan.Camera.getCameras().then(function (cameras) {
+            if (cameras.length > 0) {
+                scanner.start(cameras[0]);
+            } else {
+                console.error('No cameras found.');
+            }
+        }).catch(function (e) {
+            console.error("Error starting the camera:", e);
+        });
+    });
     </script>
 </x-app-layout>

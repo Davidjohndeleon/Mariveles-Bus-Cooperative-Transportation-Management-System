@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Schedule;
+use App\Models\Fare;
 use App\Models\Driver;
 use App\Models\Bus;
 use Illuminate\Http\Request;
@@ -17,8 +18,10 @@ class DashboardController extends Controller
         // Assuming you have Bus and Driver models
         $buses = Bus::all();
         $drivers = Driver::all();
+        $fares = Fare::all();
+        
 
         // Pass the data to the view
-        return view('dashboard', compact('balangaToMarivelesSchedules', 'marivelesToBalangaSchedules', 'buses', 'drivers'));
+        return view('dashboard', compact('balangaToMarivelesSchedules', 'marivelesToBalangaSchedules', 'buses','fares', 'drivers'));
     }
 }

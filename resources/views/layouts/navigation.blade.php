@@ -41,13 +41,14 @@
                         <x-nav-link :href="route('admin.register.checkpoint.user.form')" :active="request()->routeIs('admin.register.checkpoint.user.form')">
                             {{ __('Register Checkpoint User') }}
                         </x-nav-link>
+                        <x-responsive-nav-link :href="route('fares.index')" :active="request()->routeIs('fares.*')">
+                            {{ __('Manage Fares') }}
+                        </x-responsive-nav-link>
                     @endif
 
                     <!-- Driver Links -->
                     @if(Auth::user()->isDriver())
-                        <x-nav-link :href="route('drivers.create')" :active="request()->routeIs('drivers.create')">
-                            {{ __('Upload License') }}
-                        </x-nav-link>
+                        
                         <x-nav-link :href="route('driver.qrcode')" :active="request()->routeIs('driver.qrcode')">
                             {{ __('QR Code') }}
                         </x-nav-link>
@@ -143,13 +144,14 @@
                 <x-nav-link :href="route('admin.register.checkpoint.user.form')" :active="request()->routeIs('admin.register.checkpoint.user.form')">
                     {{ __('Register Checkpoint User') }}
                 </x-nav-link>
+                <x-responsive-nav-link :href="route('fares.index')" :active="request()->routeIs('fares.*')">
+                    {{ __('Manage Fares') }}
+                </x-responsive-nav-link>
             @endif
 
             <!-- Driver Links (Responsive) -->
             @if(Auth::user()->isDriver())
-                <x-responsive-nav-link :href="route('drivers.create')" :active="request()->routeIs('drivers.create')">
-                    {{ __('Upload License') }}
-                </x-responsive-nav-link>
+                
                 <x-responsive-nav-link :href="route('driver.qrcode')" :active="request()->routeIs('driver.qrcode')">
                     {{ __('QR Code') }}
                 </x-responsive-nav-link>

@@ -5,16 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Driver extends Model
+class Fare extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
+        'landmark',
+        'distance',
+        'regular_fare',
+        'elderly_student_disabled_fare'
     ];
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
 }
