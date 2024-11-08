@@ -35,28 +35,38 @@
         </div>
     </div>
 
+  <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+    <script>
+    // Enable pusher logging - don't include this in production
+    Pusher.logToConsole = true;
+
+    var pusher = new Pusher('4a417eafa97b91c0b841', {
+      cluster: 'ap1'
+    });
+
+    var channel = pusher.subscribe('my-channel');
+    channel.bind('my-event', function(data) {
+      alert(JSON.stringify(data));
+    });
+  </script>
+
+  <h1>Pusher Test</h1>
+  <p>
+    Try publishing an event to channel <code>my-channel</code>
+    with event name <code>my-event</code>.
+  </p>
     <!-- Include instascan.min.js script -->
-    <script src="{{ asset('path_to/instascan.min.js') }}"></script> <!-- Update path as needed -->
 
     <script type="text/javascript">
-    document.addEventListener('DOMContentLoaded', () => {
-        let scanner = new Instascan.Scanner({ video: document.getElementById('reader') });
+        setTimeout(function(){
+                    // To enforce the use of the new api with detailed scan results, call the constructor with an options object, see below.
+const qrScanner = new QrScanner(
+    document.getElementById('reader'),
+    result => console.log('decoded qr code:', result),
+    { /* your options or returnDetailedScanResult: true if you're not specifying any other options */ },
+);
 
-        scanner.addListener('scan', function (content) {
-            console.log("QR Code scanned:", content);
-            document.getElementById('driver_id').value = content;
-            document.getElementById('driverForm').submit();
-        });
-
-        Instascan.Camera.getCameras().then(function (cameras) {
-            if (cameras.length > 0) {
-                scanner.start(cameras[0]);
-            } else {
-                console.error('No cameras found.');
-            }
-        }).catch(function (e) {
-            console.error("Error starting the camera:", e);
-        });
-    });
+qrScanner.start();
+        }, 1000);
     </script>
 </x-app-layout>
