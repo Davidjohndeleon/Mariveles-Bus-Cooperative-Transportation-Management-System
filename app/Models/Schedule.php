@@ -22,6 +22,7 @@ class Schedule extends Model
 
     protected $fillable = [
         'bus_id',
+        'departure_time',
         'driver_id',
         'conductor_id',
         'departure_time',

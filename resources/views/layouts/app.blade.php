@@ -1,37 +1,117 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>{{ config('app.name', 'Laravel') }}</title>
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('app.css') }}">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="font-sans antialiased">
+    <div x-data="{ open: false }" class="min-h-screen bg-gray-100 flex">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <!-- Sidebar -->
+        <div :class="open ? 'translate-x-0' : '-translate-x-full'" class="fixed inset-y-0 left-0 z-30 w-64 bg-white overflow-y-auto transition-transform duration-300 transform lg:translate-x-0 lg:static lg:inset-0 shadow-lg">
+            <div class="flex items-center justify-center h-16 border-b border-gray-200">
+                <!-- Logo -->
+                <a href="{{ route('dashboard') }}" class="flex items-center">
+                    <img src="{{ asset('images/logo.jpg') }}" alt="Logo" class="h-16 w-auto">
+                </a>
+            </div>
+            <nav class="mt-5">
+                <ul class="space-y-2">
+                    <!-- Common Link -->
+                    <li>
+                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                            {{ __('Schedules') }}
+                        </x-nav-link>
+                    </li>
+                    <!-- Admin Links -->
+                    @if(Auth::user()->isAdmin())
+                        <li><x-nav-link :href="route('admin.manage.schedules')" :active="request()->routeIs('admin.manage.schedules')">{{ __('Manage Schedules') }}</x-nav-link></li>
+                        <li><x-nav-link :href="route('admin.admin.dashboard')" :active="request()->routeIs('admin.admin.dashboard')">{{ __('Bus GPS') }}</x-nav-link></li>
+                        <li><x-nav-link :href="route('admin.manage.buses')" :active="request()->routeIs('admin.manage.buses')">{{ __('Manage Buses') }}</x-nav-link></li>
+                        <li><x-nav-link :href="route('admin.register.driver.form')" :active="request()->routeIs('admin.register.driver.form')">{{ __('Register Driver') }}</x-nav-link></li>
+                        <li><x-nav-link :href="route('admin.register.conductor.form')" :active="request()->routeIs('admin.register.conductor.form')">{{ __('Register Conductor') }}</x-nav-link></li>
+                        <li><x-nav-link :href="route('admin.reports.index')" :active="request()->routeIs('admin.reports.index')">{{ __('View Reports') }}</x-nav-link></li>
+                        <li><x-nav-link :href="route('admin.register.checkpoint.user.form')" :active="request()->routeIs('admin.register.checkpoint.user.form')">{{ __('Register Checkpoint User') }}</x-nav-link></li>
+                        <li><x-nav-link :href="route('fares.index')" :active="request()->routeIs('fares.*')">{{ __('Manage Fares') }}</x-nav-link></li>
+                    @endif
+                    <!-- Driver Links -->
+                    @if(Auth::user()->isDriver())
+                        <li><x-nav-link :href="route('driver.qrcode')" :active="request()->routeIs('driver.qrcode')">{{ __('QR Code') }}</x-nav-link></li>
+                        <li><x-nav-link :href="route('driver.checkpoints')" :active="request()->routeIs('driver.checkpoints')">{{ __('Checkpoints') }}</x-nav-link></li>
+                    @endif
+                    <!-- Checkpoint Links -->
+                    @if(Auth::user()->isCheckpoint())
+                        <li><x-nav-link :href="route('checkpoint.scan')" :active="request()->routeIs('checkpoint.scan')">{{ __('Scan QR Code') }}</x-nav-link></li>
+                    @endif
+                    <!-- Passenger Links -->
+                    @if(Auth::user()->isPassenger())
+                        <li><x-nav-link :href="route('passenger.report.form')" :active="request()->routeIs('passenger.report.form')">{{ __('Report a Bus') }}</x-nav-link></li>
+                    @endif
+                </ul>
+            </nav>
+        </div>
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-        <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
-        
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
-
+        <div class="flex-1">
             <!-- Page Heading -->
-            @if (isset($header))
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endif
+            <header class="flex items-center justify-between px-4 py-2 bg-white border-b shadow-md">
+                <!-- Sidebar Toggle (visible on small screens) -->
+                <button @click="open = !open" class="text-gray-500 hover:text-gray-700 focus:outline-none lg:hidden">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                    </svg>
+                </button>
+
+                <!-- Page Title -->
+                @if (isset($header))
+                    <header class="bg-white">
+                        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                            {{ $header }}
+                        </div>
+                    </header>
+                @endif
+
+                <!-- Profile Dropdown -->
+                <div class="relative">
+                    <x-dropdown align="right" width="48">
+                        <x-slot name="trigger">
+                            <button class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring">
+                                <span>{{ Auth::user()->name }}</span>
+                                <svg class="w-4 h-4 ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a 1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                </svg>
+                            </button>
+                        </x-slot>
+
+                        <x-slot name="content">
+                            <!-- Profile Link -->
+                            <x-dropdown-link :href="route('profile.edit')">
+                                {{ __('Profile') }}
+                            </x-dropdown-link>
+
+                            <!-- Logout -->
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <x-dropdown-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();">
+                                    {{ __('Log Out') }}
+                                </x-dropdown-link>
+                            </form>
+                        </x-slot>
+                    </x-dropdown>
+                </div>
+            </header>
 
             <!-- Page Content -->
             <main>
                 {{ $slot }}
             </main>
         </div>
-    </body>
+    </div>
+</body>
 </html>

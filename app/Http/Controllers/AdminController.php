@@ -92,8 +92,8 @@ class AdminController extends Controller
 
         // Fetch all buses and drivers
         $buses = Bus::all();  
-        $drivers = User::where('usertype', 'driver')->get();
-        $conductors = User::where('usertype', 'conductor')->get();  
+        $drivers = Driver::all();
+        $conductors = Conductor::all(); 
 
         // Log information for debugging
         Log::info('Balanga to Mariveles Schedules:', $balangaToMarivelesSchedules->toArray());
@@ -124,7 +124,7 @@ class AdminController extends Controller
         $drivers = User::where('usertype', 'driver')->get();
         $conductors = User::where('usertype', 'conductor')->get();
 
-        return view('admin.edit_schedule', compact('schedule', 'buses', 'drivers'));
+        return view('admin.edit_schedule', compact('schedule', 'buses', 'drivers','conductors'));
     }
 
     public function updateSchedule(Request $request, $id)
@@ -133,7 +133,10 @@ class AdminController extends Controller
             'bus_id' => 'required|exists:buses,id',
             'driver_id' => 'required|exists:users,id',
             'conductor_id' => 'nullable|exists:users,id',
-            'departure_time' => 'required|time',
+            'departure_time' => [
+                'required',
+                'regex:/^([01]\d|2[0-3]):([0-5]\d)(:[0-5]\d)?$/', 
+            ],
         ]);
 
         $schedule = Schedule::findOrFail($id);
@@ -186,15 +189,15 @@ class AdminController extends Controller
     public function showSchedules()
     {
         // Fetch schedules for Balanga to Mariveles and Mariveles to Balanga
-        $balangaToMarivelesSchedules = Schedule::where('route', 'Balanga to Mariveles')->with(['bus', 'driver'])->get();
-        $marivelesToBalangaSchedules = Schedule::where('route', 'Mariveles to Balanga')->with(['bus', 'driver'])->get();
+        $balangaToMarivelesSchedules = Schedule::where('route', 'Balanga to Mariveles')->with(['bus', 'driver','conductor'])->get();
+        $marivelesToBalangaSchedules = Schedule::where('route', 'Mariveles to Balanga')->with(['bus', 'driver','conductor'])->get();
     
         // Fetch buses and drivers for the select dropdowns
         $buses = Bus::all();
         $drivers = Driver::all();
         $conductors = Conductor::all();
         
-    
+        
         // Pass the schedules, buses, and drivers to the view
         return view('dashboard', [
             'balangaToMarivelesSchedules' => $balangaToMarivelesSchedules,
@@ -205,30 +208,7 @@ class AdminController extends Controller
         ]);
     }
 
-//     public function addDefaultBalangaToMarivelesSchedules()
-// {
-//     try {
-//         $startTime = Carbon::createFromTime(3, 50, 0); // 3:50 AM
-//         $endTime = Carbon::createFromTime(21, 20, 0); // 9:20 PM
-//         $interval = 60; // 1-hour interval
 
-//         while ($startTime->lte($endTime)) {
-//             Schedule::create([
-//                 'departure_time' => $startTime->format('H:i'), // Store in 24-hour format for the database
-//                 'bus_id' => 1,
-//                 'driver_id' => 1,
-//                 'route' => 'Balanga to Mariveles',
-//             ]);
-
-//             $startTime->addMinutes($interval);
-//         }
-
-//         return redirect()->route('admin.manage.schedules')->with('message', 'Default Balanga to Mariveles schedules added.');
-//     } catch (\Exception $e) {
-//         Log::error('Error adding default schedules: ' . $e->getMessage());
-//         return back()->with('error', 'Failed to add schedules.');
-//     }
-// }
 
 public function showRegisterConductorForm()
 {

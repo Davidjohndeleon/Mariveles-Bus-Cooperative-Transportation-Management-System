@@ -27,8 +27,11 @@ Route::get('/', function () {
 });
 
 // Dashboard Route
+// Route accessible by everyone
+//Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
 Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
 
 // Profile Routes
@@ -46,7 +49,8 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     Route::get('/buses/{bus}/edit', [AdminController::class, 'editBus'])->name('admin.edit.bus');
     Route::post('/buses/{bus}/edit', [AdminController::class, 'updateBus'])->name('admin.update.bus');
     Route::delete('/buses/{id}', [AdminController::class, 'deleteBus'])->name('admin.delete.bus');
-    Route::get('/schedules', [AdminController::class, 'showSchedules'])->name('schedules');
+    
+    //Route::get('/schedules', [AdminController::class, 'showSchedules'])->name('schedules');
     Route::get('/admin/admin_dashboard', [AdminController::class, 'gps'])->name('admin.admin.dashboard');
     Route::post('/admin/schedule/add', [AdminController::class, 'addSchedule'])->name('admin.add.schedule');
     Route::post('/admin/schedule/update/{id}', [AdminController::class, 'updateSchedule'])->name('admin.update.schedule');
@@ -89,6 +93,8 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
 Route::middleware(['auth', 'role:driver'])->group(function () {
     Route::resource('drivers', DriverController::class);
     Route::get('/driver/qrcode', [DriverController::class, 'generateQRCode'])->name('driver.qrcode');
+    Route::get('/driver/checkpoints', [DriverController::class, 'viewCheckpoints'])->name('driver.checkpoints');
+    Route::post('/driver/checkpoints/{checkpoint}', [DriverController::class, 'markCheckpointComplete'])->name('driver.completeCheckpoint');
 });
 
 // Checkpoint Routes
@@ -96,6 +102,7 @@ Route::middleware(['auth', 'role:checkpoint'])->group(function () {
     Route::get('/checkpoint/scan', [CheckpointController::class, 'showScanForm'])->name('checkpoint.scan.form');
     Route::post('/checkpoint/scan', [CheckpointController::class, 'scanQRCode'])->name('checkpoint.scan');
     Route::get('/checkpoint/success', [CheckpointController::class, 'success'])->name('checkpoint.success');
+    Route::post('/checkpoint/complete/{id}', [CheckpointController::class, 'markComplete'])->name('checkpoint.complete');
 });
 
 // Passenger Routes

@@ -1,0 +1,86 @@
+/* Sidebar Background Color */
+.sidebar {
+    background-color: #2D3748; /* Darker shade for contrast */
+    color: #fff;
+    transition: transform 0.3s ease;
+}
+
+/* Sidebar Logo */
+.sidebar img {
+    transition: transform 0.3s ease;
+}
+
+.sidebar img:hover {
+    transform: scale(1.1);
+}
+
+/* Navigation Link Styles */
+nav ul li a {
+    padding: 12px 20px; /* More padding for easier clicks */
+    font-size: 1.125rem; /* Larger font for better readability */
+    transition: background-color 0.3s ease, color 0.3s ease;
+    display: block;
+    text-decoration: none;
+    color: #edf2f7; /* Light text color */
+}
+
+/* Hover Effect */
+nav ul li a:hover {
+    background-color: #4A5568; /* Darker gray when hovered */
+    color: #EDF2F7; /* Light text color */
+    border-radius: 5px; /* Rounded corners */
+}
+
+/* Active Link */
+nav ul li a.active {
+    background-color: #3182CE; /* Blue for active state */
+    color: #fff; /* White text for active link */
+    border-left: 4px solid #63B3ED; /* Border to highlight active link */
+}
+
+/* Sidebar Mobile Button */
+button {
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #4A5568; /* Darker background for better hover visibility */
+}
+
+/* Profile Dropdown */
+.x-dropdown button {
+    border: none;
+    background-color: transparent;
+    color: #EDF2F7;
+    display: flex;
+    align-items: center;
+}
+
+.x-dropdown button:hover {
+    background-color: #4A5568;
+    color: #fff;
+}
+
+/* Sidebar Links Styling */
+nav ul li {
+    margin-bottom: 12px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+    .sidebar {
+        width: 100%;
+        max-width: 250px;
+    }
+
+    .x-dropdown button {
+        display: none; /* Hide dropdown for mobile */
+    }
+
+    /* Menu Button Styles */
+    button {
+        background-color: #3182CE;
+        border-radius: 5px;
+    }
+}
+

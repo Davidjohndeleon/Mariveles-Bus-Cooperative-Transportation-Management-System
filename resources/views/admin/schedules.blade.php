@@ -30,7 +30,8 @@
                         </div>
                         <div>
                             <label for="driver_id" class="block text-sm font-medium">Select Driver</label>
-                            <select name="driver_id" required class="w-full border-gray-300 rounded-md">
+                            <input type="text" id="driver-filter" placeholder="Search Driver" class="w-full border-gray-300 rounded-md mb-2">
+                            <select name="driver_id" id="driver-dropdown" required class="w-full border-gray-300 rounded-md">
                                 @foreach ($drivers as $driver)
                                     <option value="{{ $driver->id }}">{{ $driver->name }}</option>
                                 @endforeach
@@ -38,7 +39,8 @@
                         </div>
                         <div>
                             <label for="conductor_id" class="block text-sm font-medium">Select Conductor</label>
-                            <select name="conductor_id" required class="w-full border-gray-300 rounded-md">
+                            <input type="text" id="conductor-filter" placeholder="Search Conductor" class="w-full border-gray-300 rounded-md mb-2">
+                            <select name="conductor_id" id="conductor-dropdown" required class="w-full border-gray-300 rounded-md">
                                 @foreach ($conductors as $conductor)
                                     <option value="{{ $conductor->id }}">{{ $conductor->name }}</option>
                                 @endforeach
@@ -109,7 +111,8 @@
                         </div>
                         <div>
                             <label for="driver_id" class="block text-sm font-medium">Select Driver</label>
-                            <select name="driver_id" required class="w-full border-gray-300 rounded-md">
+                            <input type="text" id="driver-filter-2" placeholder="Search Driver" class="w-full border-gray-300 rounded-md mb-2">
+                            <select name="driver_id" id="driver-dropdown-2" required class="w-full border-gray-300 rounded-md">
                                 @foreach ($drivers as $driver)
                                     <option value="{{ $driver->id }}">{{ $driver->name }}</option>
                                 @endforeach
@@ -117,7 +120,8 @@
                         </div>
                         <div>
                             <label for="conductor_id" class="block text-sm font-medium">Select Conductor</label>
-                            <select name="conductor_id" required class="w-full border-gray-300 rounded-md">
+                            <input type="text" id="conductor-filter-2" placeholder="Search Conductor" class="w-full border-gray-300 rounded-md mb-2">
+                            <select name="conductor_id" id="conductor-dropdown-2" required class="w-full border-gray-300 rounded-md">
                                 @foreach ($conductors as $conductor)
                                     <option value="{{ $conductor->id }}">{{ $conductor->name }}</option>
                                 @endforeach
@@ -140,7 +144,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($balangaToMarivelesSchedules as $schedule)
+                        @foreach ($marivelesToBalangaSchedules as $schedule)
                             <tr>
                                 <td class="border px-4 py-2">
                                     {{ \Carbon\Carbon::parse($schedule->departure_time)->format('g:i A') }}
@@ -166,6 +170,34 @@
                         @endforeach
                     </tbody>
                 </table>
+
+
+                <!-- Dynamic Name Filter Script -->
+                <script>
+                    // Filter function for dropdowns
+                    function filterDropdown(inputId, dropdownId) {
+                        const input = document.getElementById(inputId);
+                        const dropdown = document.getElementById(dropdownId);
+                        const options = dropdown.querySelectorAll('option');
+
+                        input.addEventListener('input', () => {
+                            const filter = input.value.toLowerCase();
+
+                            options.forEach(option => {
+                                const text = option.textContent.toLowerCase();
+                                option.style.display = text.includes(filter) ? '' : 'none';
+                            });
+                        });
+                    }
+
+                    // Initialize filters for all dropdowns
+                    document.addEventListener('DOMContentLoaded', () => {
+                        filterDropdown('driver-filter', 'driver-dropdown');
+                        filterDropdown('conductor-filter', 'conductor-dropdown');
+                        filterDropdown('driver-filter-2', 'driver-dropdown-2');
+                        filterDropdown('conductor-filter-2', 'conductor-dropdown-2');
+                    });
+                </script>
 
             </div>
         </div>

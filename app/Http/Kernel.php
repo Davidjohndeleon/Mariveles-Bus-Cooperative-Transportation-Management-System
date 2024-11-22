@@ -6,13 +6,6 @@ use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
 {
-    protected $routeMiddleware = [
-        // Other middleware entries...
-        'role' => \App\Http\Middleware\UserTypeMiddleware::class,
-        'admin' => \App\Http\Middleware\AdminMiddleware::class,
-        'driver' => \App\Http\Middleware\DriverMiddleware::class,
-    ];
-    
     /**
      * The application's global HTTP middleware stack.
      *
@@ -70,6 +63,9 @@ class Kernel extends HttpKernel
         'precognitive' => \Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests::class,
         'signed' => \App\Http\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class, // Email verification middleware
+        'role' => \App\Http\Middleware\UserTypeMiddleware::class, // Custom role middleware
+        'admin' => \App\Http\Middleware\AdminMiddleware::class, // Custom admin middleware
+        'driver' => \App\Http\Middleware\DriverMiddleware::class, // Custom driver middleware
     ];
 }

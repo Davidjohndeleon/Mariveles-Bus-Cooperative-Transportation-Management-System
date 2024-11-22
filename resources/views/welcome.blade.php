@@ -11,7 +11,7 @@
 
     <!-- Styles -->
     <style>
-        /* Reset and custom styles */
+        
         * {
             margin: 0;
             padding: 0;
@@ -27,11 +27,11 @@
             min-height: 100vh;
         }
         .logo-container {
-            height: 32px; /* Adjust size as needed */
+            height: 32px; 
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-bottom: 250px; /* Increase the space between the logo and the buttons */
+            margin-bottom: 250px;
         }
         .nav-link {
             font-weight: 600;
@@ -41,7 +41,7 @@
             background-color: #000000;
             border-radius: 5px;
             transition: background-color 0.3s ease, color 0.3s ease;
-            margin: 5px; /* Add some space between the buttons */
+            margin: 5px; 
         }
         .nav-link:hover {
             background-color: #1a1a1a;

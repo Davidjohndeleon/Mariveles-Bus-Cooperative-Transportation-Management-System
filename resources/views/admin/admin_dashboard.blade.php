@@ -16,7 +16,7 @@
     <x-app-layout>
         <x-slot name="header">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Admin Dashboard') }}
+                {{ __('Bus GPS') }}
             </h2>
         </x-slot>
 
@@ -77,5 +77,30 @@
             }, 2000); // Update every 2 seconds
         });
     </script>
+
+<!-- <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+    <script>
+    // Enable pusher logging - don't include this in production
+    Pusher.logToConsole = true;
+
+    var pusher = new Pusher('4a417eafa97b91c0b841', {
+      cluster: 'ap1'
+    });
+
+    var channel = pusher.subscribe('my-channel');
+    channel.bind('my-event', function(data) {
+      alert(JSON.stringify(data));
+    });
+  </script>
+
+  <h1>Pusher Test</h1>
+  <p>
+    Try publishing an event to channel <code>my-channel</code>
+    with event name <code>my-event</code>.
+  </p> -->
+
+
+
+
 </body>
 </html>
