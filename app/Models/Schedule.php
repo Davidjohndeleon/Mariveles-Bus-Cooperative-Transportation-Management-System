@@ -43,4 +43,9 @@ class Schedule extends Model
     {
         return $this->belongsTo(User::class, 'conductor_id'); 
     }
+
+    public function busBookings()
+    {
+        return $this->hasMany(BusBooking::class);
+    }
 }

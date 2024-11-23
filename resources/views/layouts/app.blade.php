@@ -4,18 +4,107 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <title>{{ config('app.name', 'Laravel') }}</title>
+
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('app.css') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <style>
+       
+        .sidebar {
+            background-color: #2D3748; 
+            color: #fff;
+            transition: transform 0.3s ease;
+        }
+
+        
+        .sidebar img {
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar img:hover {
+            transform: scale(1.1);
+        }
+
+        
+        nav ul li a {
+            padding: 12px 20px; 
+            font-size: 1.125rem; 
+            transition: background-color 0.3s ease, color 0.3s ease;
+            display: block;
+            text-decoration: none;
+            color: #edf2f7; 
+        }
+
+       
+        nav ul li a:hover {
+            background-color: #4A5568; 
+            color: #ffffff !important; 
+            border-radius: 5px; 
+        }
+
+       
+        nav ul li a.active {
+            background-color: #3182CE; 
+            color: #ffffff !important; 
+            border-left: 4px solid #63B3ED; 
+        }
+
+        
+        button {
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #4A5568; 
+        }
+
+        .x-dropdown button {
+            border: none;
+            background-color: transparent;
+            color: #EDF2F7;
+            display: flex;
+            align-items: center;
+        }
+
+        .x-dropdown button:hover {
+            background-color: #4A5568;
+            color: #fff;
+        }
+
+    
+        nav ul li {
+            margin-bottom: 12px;
+        }
+
+        
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 100%;
+                max-width: 250px;
+            }
+
+            .x-dropdown button {
+                display: none; 
+            }
+
+            
+            button {
+                background-color: #3182CE;
+                border-radius: 5px;
+            }
+        }
+    </style>
 </head>
 <body class="font-sans antialiased">
     <div x-data="{ open: false }" class="min-h-screen bg-gray-100 flex">
-
         <!-- Sidebar -->
-        <div :class="open ? 'translate-x-0' : '-translate-x-full'" class="fixed inset-y-0 left-0 z-30 w-64 bg-white overflow-y-auto transition-transform duration-300 transform lg:translate-x-0 lg:static lg:inset-0 shadow-lg">
+        <div :class="open ? 'translate-x-0' : '-translate-x-full'" 
+             class="fixed inset-y-0 left-0 z-30 w-64 bg-white overflow-y-auto transition-transform duration-300 transform lg:translate-x-0 lg:static lg:inset-0 shadow-lg">
             <div class="flex items-center justify-center h-16 border-b border-gray-200">
                 <!-- Logo -->
                 <a href="{{ route('dashboard') }}" class="flex items-center">
@@ -40,6 +129,7 @@
                         <li><x-nav-link :href="route('admin.reports.index')" :active="request()->routeIs('admin.reports.index')">{{ __('View Reports') }}</x-nav-link></li>
                         <li><x-nav-link :href="route('admin.register.checkpoint.user.form')" :active="request()->routeIs('admin.register.checkpoint.user.form')">{{ __('Register Checkpoint User') }}</x-nav-link></li>
                         <li><x-nav-link :href="route('fares.index')" :active="request()->routeIs('fares.*')">{{ __('Manage Fares') }}</x-nav-link></li>
+                        <li><x-nav-link :href="route('admin.bus.bookings')" :active="request()->routeIs('admin.bus.bookings')">{{ __('Manage Bookings') }}</x-nav-link></li>
                     @endif
                     <!-- Driver Links -->
                     @if(Auth::user()->isDriver())
@@ -53,6 +143,7 @@
                     <!-- Passenger Links -->
                     @if(Auth::user()->isPassenger())
                         <li><x-nav-link :href="route('passenger.report.form')" :active="request()->routeIs('passenger.report.form')">{{ __('Report a Bus') }}</x-nav-link></li>
+                        <li><x-nav-link :href="route('passenger.bookings')" :active="request()->routeIs('passenger.bookings')">{{ __('My Bus Bookings') }}</x-nav-link></li>
                     @endif
                 </ul>
             </nav>
@@ -68,15 +159,6 @@
                     </svg>
                 </button>
 
-                <!-- Page Title -->
-                @if (isset($header))
-                    <header class="bg-white">
-                        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                            {{ $header }}
-                        </div>
-                    </header>
-                @endif
-
                 <!-- Profile Dropdown -->
                 <div class="relative">
                     <x-dropdown align="right" width="48">
@@ -88,14 +170,10 @@
                                 </svg>
                             </button>
                         </x-slot>
-
                         <x-slot name="content">
-                            <!-- Profile Link -->
                             <x-dropdown-link :href="route('profile.edit')">
                                 {{ __('Profile') }}
                             </x-dropdown-link>
-
-                            <!-- Logout -->
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
                                 <x-dropdown-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();">
@@ -108,7 +186,7 @@
             </header>
 
             <!-- Page Content -->
-            <main>
+            <main class="p-4">
                 {{ $slot }}
             </main>
         </div>

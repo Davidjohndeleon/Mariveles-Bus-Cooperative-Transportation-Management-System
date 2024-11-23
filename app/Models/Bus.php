@@ -24,5 +24,10 @@ class Bus extends Model
 {
     return $this->belongsTo(User::class, 'conductor_id');
 }
+
+    public function bookings()
+    {
+        return $this->hasMany(BusBooking::class);
+    }
     
 }

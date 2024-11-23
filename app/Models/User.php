@@ -80,6 +80,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Checkpoint::class);
     }
 
+    public function busBookings()
+    {
+        return $this->hasMany(BusBooking::class, 'passenger_id');
+    }
 
 
     

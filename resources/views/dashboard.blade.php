@@ -27,7 +27,7 @@
                                 <tbody>
                                     @forelse ($balangaToMarivelesSchedules as $schedule)
                                         <tr class="hover:bg-gray-100 odd:bg-gray-50 even:bg-white">
-                                            <td class="border px-4 py-2">{{ \Carbon\Carbon::parse($schedule->departure_time)->format('F j, Y, g:i A') }}</td>
+                                            <td class="border px-4 py-2">{{ \Carbon\Carbon::parse($schedule->departure_time)->format('g:i A') }}</td>
                                             <td class="border px-4 py-2">{{ $schedule->bus->bus_name ?? 'N/A' }}</td>
                                             <td class="border px-4 py-2">{{ $schedule->driver->name ?? 'N/A' }}</td>
                                             <td class="border px-4 py-2">{{ $schedule->conductor->name ?? 'N/A' }}</td>
@@ -78,7 +78,7 @@
                                 <tbody>
                                     @forelse ($marivelesToBalangaSchedules  as $schedule)
                                         <tr class="hover:bg-gray-100 odd:bg-gray-50 even:bg-white">
-                                            <td class="border px-4 py-2">{{ \Carbon\Carbon::parse($schedule->departure_time)->format('F j, Y, g:i A') }}</td>
+                                            <td class="border px-4 py-2">{{ \Carbon\Carbon::parse($schedule->departure_time)->format('g:i A') }}</td>
                                             <td class="border px-4 py-2">{{ $schedule->bus->bus_name ?? 'N/A' }}</td>
                                             <td class="border px-4 py-2">{{ $schedule->driver->name ?? 'N/A' }}</td>
                                             <td class="border px-4 py-2">{{ $schedule->conductor->name ?? 'N/A' }}</td>

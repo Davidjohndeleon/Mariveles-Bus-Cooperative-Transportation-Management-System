@@ -3,16 +3,35 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Schedule;
+use App\Models\BusBooking;
+use App\Models\Bus;
+
 class PassengerController extends Controller
 {
-    public function viewBusSchedules()
+    public function viewBusBookings()
     {
-        // Fetch schedules for both routes
-        $balangaToMarivelesSchedules = Schedule::where('route', 'Balanga to Mariveles')->with('bus', 'driver')->get();
-        $marivelesToBalangaSchedules = Schedule::where('route', 'Mariveles to Balanga')->with('bus', 'driver')->get();
+        // Fetch bookings for the logged-in passenger
+        $bookings = BusBooking::where('user_id', auth()->id())->with('bus')->get();
 
-        // Pass both schedules to the view
-        return view('passenger.schedules', compact('balangaToMarivelesSchedules', 'marivelesToBalangaSchedules'));
+        // Fetch all available buses
+        $buses = Bus::all();
+
+        return view('passenger.bookings', compact('bookings', 'buses'));
     }
+
+    public function requestBusBooking($busId)
+    {
+        // Find the bus and create a booking request
+        $bus = Bus::findOrFail($busId);
+        
+        // Create the booking for the logged-in passenger
+        $booking = new BusBooking();
+        $booking->user_id = auth()->id();
+        $booking->bus_id = $bus->id;
+        $booking->status = 'pending'; // Set the status to pending by default
+        $booking->save();
+    
+        return redirect()->route('passenger.bookings')->with('success', 'Booking request submitted.');
+    }
+    
 }

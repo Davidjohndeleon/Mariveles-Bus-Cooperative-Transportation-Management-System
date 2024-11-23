@@ -10,6 +10,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminReportController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FareController;
+use App\Http\Controllers\AdminBusBookingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -87,6 +88,11 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     //Registration for checkpoint users
     Route::get('/admin/register-checkpoint', [AdminController::class, 'showRegisterCheckpointForm'])->name('admin.register.checkpoint.user.form');
     Route::post('/admin/register-checkpoint', [AdminController::class, 'registerCheckpointUser'])->name('admin.register.checkpoint.user');
+
+    //Admin bus booking requests
+    Route::get('/admin/bus.bookings', [AdminBusBookingController::class, 'index'])->name('admin.bus.bookings');
+    Route::put('/admin/bookings/{booking}', [AdminBusBookingController::class, 'updateStatus'])->name('admin.bookings.update');
+
 });
 
 // Driver Routes
@@ -110,7 +116,11 @@ Route::middleware(['auth', 'role:passenger'])->group(function () {
     Route::get('/passenger/schedules', [PassengerController::class, 'viewBusSchedules'])->name('passenger.schedules');
     Route::get('/passenger/report', [PassengerReportController::class, 'showReportForm'])->name('passenger.report.form');
     Route::post('/passenger/report', [PassengerReportController::class, 'submitReport'])->name('passenger.report.submit');
+
+    Route::get('/passenger/bookings', [PassengerController::class, 'viewBusBookings'])->name('passenger.bookings');
+    Route::post('/passenger/bus-booking/{busId}', [PassengerController::class, 'requestBusBooking'])->name('passenger.requestBusBooking');
 });
+
 
 // Auth Routes (like login, register, etc.)
 require __DIR__.'/auth.php';
