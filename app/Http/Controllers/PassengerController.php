@@ -17,6 +17,7 @@ class PassengerController extends Controller
 
         return view('passenger.bookings', compact('bookings', 'buses'));
     }
+
     public function requestBusBooking(Request $request, $busId)
     {
         $user = auth()->user();
@@ -53,5 +54,18 @@ class PassengerController extends Controller
         $booking->save();
 
         return redirect()->route('passenger.bookings')->with('success', 'Booking request submitted successfully. Please wait for approval.');
+    }
+
+    public function deleteBooking($id)
+    {
+        $user = auth()->user();
+
+        // Find the booking by ID and ensure it belongs to the authenticated user
+        $booking = BusBooking::where('id', $id)->where('user_id', $user->id)->firstOrFail();
+
+        // Delete the booking
+        $booking->delete();
+
+        return redirect()->route('passenger.bookings')->with('success', 'Booking deleted successfully.');
     }
 }

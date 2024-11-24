@@ -36,4 +36,17 @@ class AdminBusBookingController extends Controller
 
         return redirect()->back()->with('success', 'Booking status updated successfully.');
     }
+
+    public function deleteBooking($id)
+    {
+        // Find the bus booking by ID
+        $booking = BusBooking::findOrFail($id);
+
+        // Delete the booking
+        $booking->delete();
+
+        // Redirect back with a success message
+        return redirect()->route('admin.bookings.index')->with('success', 'Bus booking deleted successfully.');
+    }
+
 }

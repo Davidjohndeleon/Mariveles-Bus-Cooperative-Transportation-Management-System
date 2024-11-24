@@ -92,6 +92,8 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     //Admin bus booking requests
     Route::get('/admin/bus.bookings', [AdminBusBookingController::class, 'index'])->name('admin.bus.bookings');
     Route::put('/admin/bookings/{booking}', [AdminBusBookingController::class, 'updateStatus'])->name('admin.bookings.update');
+    Route::delete('/admin/bookings/{id}', [AdminBusBookingController::class, 'deleteBooking'])->name('admin.bookings.delete');
+
 
 });
 
@@ -119,6 +121,8 @@ Route::middleware(['auth', 'role:passenger'])->group(function () {
 
     Route::get('/passenger/bookings', [PassengerController::class, 'viewBusBookings'])->name('passenger.bookings');
     Route::post('/passenger/bus-booking/{busId}', [PassengerController::class, 'requestBusBooking'])->name('passenger.requestBusBooking');
+    Route::delete('/passenger/bookings/{id}', [PassengerController::class, 'deleteBooking'])->name('passenger.bookings.delete');
+
 });
 
 

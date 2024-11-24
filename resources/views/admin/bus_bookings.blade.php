@@ -83,7 +83,13 @@
                                                         <input type="hidden" name="status" value="rejected">
                                                         <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Reject</button>
                                                     </form>
-                                                @else
+                                                @endif
+                                                <form action="{{ route('admin.bookings.delete', $userBooking->id) }}" method="POST" class="inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Delete</button>
+                                                </form>
+                                                @if($userBooking->status !== 'pending')
                                                     <span class="text-gray-600">No actions available</span>
                                                 @endif
                                             </td>

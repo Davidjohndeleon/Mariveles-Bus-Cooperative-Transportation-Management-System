@@ -30,6 +30,7 @@
                                     <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Bus</th>
                                     <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                                     <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Remarks</th>
+                                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
@@ -47,6 +48,15 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                             {{ $booking->remarks ?? 'N/A' }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            <form action="{{ route('passenger.bookings.delete', $booking->id) }}" method="POST" class="inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+                                                    Delete
+                                                </button>
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -72,7 +82,7 @@
                                         <form action="{{ route('passenger.requestBusBooking', $bus->id) }}" method="POST" class="mt-2 w-full sm:w-3/4 lg:w-1/2">
                                             @csrf
                                             <div class="space-y-2">
-                                                <textarea name="remarks" placeholder="Add your remarks here" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300" required></textarea>
+                                                <textarea name="remarks" placeholder="Add contact information here" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300" required></textarea>
                                                 <button type="submit" class="w-full text-white bg-blue-500 hover:bg-blue-700 px-4 py-2 rounded focus:outline-none focus:ring">
                                                     Book This Bus
                                                 </button>
