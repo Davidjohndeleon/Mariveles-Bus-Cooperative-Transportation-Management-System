@@ -9,31 +9,33 @@ class AdminBusBookingController extends Controller
 {
     public function index()
     {
-        // Fetch all bus bookings with related data and group by passenger
-        $bookings = BusBooking::with(['bus', 'passenger'])
+        // Fetch all bus bookings with related data and group by user (passenger)
+        $bookings = BusBooking::with(['bus', 'user'])
             ->get()
             ->groupBy('user_id');
 
-        // Pass grouped bookings to the view
+        // Pass the grouped bookings to the admin view
         return view('admin.bus_bookings', compact('bookings'));
     }
 
     public function updateStatus(Request $request, $id)
     {
-        // Find the booking
+        // Find the booking by ID
         $booking = BusBooking::findOrFail($id);
 
-                // Validate the incoming status and remarks
+        // Validate the incoming status and remarks
         $request->validate([
-           'status' => 'required|in:pending,approved,rejected',
-           'remarks' => 'nullable|string|max:255',
+            'status' => 'required|in:approved,rejected',
+            'remarks' => 'nullable|string|max:255',
         ]);
 
-        // Update the status based on the request
+        // Update the booking status and remarks
         $booking->status = $request->status;
         $booking->remarks = $request->remarks;
         $booking->save();
 
-        return redirect()->back()->with('success', 'Booking status updated successfully.');
+        // Provide feedback to the admin
+        return redirect()->route('admin.bookings')->with('success', 'Booking status updated successfully.');
     }
 }
+
