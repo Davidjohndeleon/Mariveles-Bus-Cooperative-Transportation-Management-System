@@ -48,8 +48,9 @@
                         @foreach ($buses as $bus)
                             <div class="flex justify-between items-center py-2">
                                 <span>{{ $bus->bus_name }}</span>
-                                <form action="{{ route('passenger.requestBusBooking', $bus->id) }}" method="POST">
+                                <form action="{{ route('passenger.requestBusBooking', $bus->id) }}" method="POST" class="mt-2">
                                     @csrf
+                                    <textarea name="remarks" placeholder="Add your remarks here" required class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"></textarea>
                                     <button type="submit" class="text-white bg-blue-500 hover:bg-blue-700 px-4 py-2 rounded">
                                         Book This Bus
                                     </button>

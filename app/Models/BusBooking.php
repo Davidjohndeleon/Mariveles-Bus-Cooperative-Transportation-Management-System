@@ -9,7 +9,7 @@ class BusBooking extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['bus_id', 'user_id', 'status', 'remarks'];
+    protected $fillable = ['bus_id','bus_name', 'user_id', 'status', 'remarks'];
 
     protected $table = 'bookings';
 

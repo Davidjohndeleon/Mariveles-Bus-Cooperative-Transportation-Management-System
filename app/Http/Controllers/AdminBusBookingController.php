@@ -9,9 +9,12 @@ class AdminBusBookingController extends Controller
 {
     public function index()
     {
-        // Fetch all bus bookings with their related data
-        $bookings = BusBooking::with('bus', 'passenger')->get();
+        // Fetch all bus bookings with related data and group by passenger
+        $bookings = BusBooking::with(['bus', 'passenger'])
+            ->get()
+            ->groupBy('user_id');
 
+        // Pass grouped bookings to the view
         return view('admin.bus_bookings', compact('bookings'));
     }
 
