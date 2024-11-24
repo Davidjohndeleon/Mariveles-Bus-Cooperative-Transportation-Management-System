@@ -9,8 +9,8 @@ class AdminBusBookingController extends Controller
 {
     public function index()
     {
-        // Fetch all bus bookings with related data and group by user (passenger)
-        $bookings = BusBooking::with(['bus', 'user'])
+        // Fetch all bus bookings with related data and group by passenger
+        $bookings = BusBooking::with(['bus', 'passenger'])
             ->get()
             ->groupBy('user_id');
 
@@ -29,13 +29,11 @@ class AdminBusBookingController extends Controller
             'remarks' => 'nullable|string|max:255',
         ]);
 
-        // Update the booking status and remarks
+        // Update the status and remarks
         $booking->status = $request->status;
         $booking->remarks = $request->remarks;
         $booking->save();
 
-        // Provide feedback to the admin
-        return redirect()->route('admin.bookings')->with('success', 'Booking status updated successfully.');
+        return redirect()->back()->with('success', 'Booking status updated successfully.');
     }
 }
-
