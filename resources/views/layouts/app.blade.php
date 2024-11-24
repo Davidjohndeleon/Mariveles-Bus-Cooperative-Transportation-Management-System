@@ -294,7 +294,14 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                         </svg>
                     </button>
-
+                            <!-- Page Title -->
+                            @if (isset($header))
+                                <header class="bg-white">
+                                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                                        {{ $header }}
+                                    </div>
+                                </header>
+                            @endif
                     <!-- Profile Dropdown -->
                     <div class="relative">
                         <x-dropdown align="right" width="48">
@@ -329,7 +336,6 @@
                     </div>
                 </div>
             </header>
-
             <!-- Main Content -->
             <main class="flex-1 overflow-y-auto bg-gray-50 p-4 sm:p-6 lg:p-8">
                 {{ $slot }}
