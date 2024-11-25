@@ -157,6 +157,14 @@
                             </x-nav-link>
                             </li>
                             <li>
+                            <x-nav-link :href="route('fares.index')" :active="request()->routeIs('fares.*')" class="nav-link">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/>
+                                </svg>
+                                <span>{{ __('Manage Fares') }}</span>
+                            </x-nav-link>
+                            </li>
+                            <li>
                             <x-nav-link :href="route('admin.admin.dashboard')" :active="request()->routeIs('admin.admin.dashboard')" class="nav-link">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
@@ -174,6 +182,15 @@
                             </x-nav-link>
                             </li>
                             <li>
+                            <x-nav-link :href="route('admin.reports.index')" :active="request()->routeIs('admin.reports.index')" class="nav-link">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                                </svg>
+                                <span>{{ __('View Reports') }}</span>
+                            </x-nav-link>
+                            </li>
+
+                            <li>
                             <x-nav-link :href="route('admin.register.driver.form')" :active="request()->routeIs('admin.register.driver.form')" class="nav-link">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
@@ -188,17 +205,9 @@
                                 </svg>
                                 <span>{{ __('Register Conductor') }}</span>
                             </x-nav-link>
-                            </li>
-                            <li>
-                            <x-nav-link :href="route('admin.reports.index')" :active="request()->routeIs('admin.reports.index')" class="nav-link">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-                                </svg>
-                                <span>{{ __('View Reports') }}</span>
-                            </x-nav-link>
-                            </li>
-                            <li>
 
+                            </li>
+                            <li>
                             <x-nav-link :href="route('admin.register.checkpoint.user.form')" :active="request()->routeIs('admin.register.checkpoint.user.form')" class="nav-link">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"/>
@@ -206,15 +215,7 @@
                                 <span>{{ __('Register Checkpoint User') }}</span>
                             </x-nav-link>
                             </li>
-                            <li>
 
-                            <x-nav-link :href="route('fares.index')" :active="request()->routeIs('fares.*')" class="nav-link">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/>
-                                </svg>
-                                <span>{{ __('Manage Fares') }}</span>
-                            </x-nav-link>
-                            </li>
                             <li>
                             <x-nav-link :href="route('admin.bus.bookings')" :active="request()->routeIs('admin.bus.bookings')" class="nav-link">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

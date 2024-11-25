@@ -1,83 +1,210 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>{{ config('app.name', 'Laravel') }}</title>
+    
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet" />
+    
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    
+    <style>
+        :root {
+            --primary-color: #1e3c72;
+            --secondary-color: #2a5298;
+            --accent-color: #ff6b6b;
+        }
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            font-family: 'Figtree', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        .page-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-        
-        <!-- Custom Styles -->
-        <style>
-            body {
-                background: linear-gradient(to bottom, #ffffff, #1e3c72); /* Gradient background */
-                font-family: 'Figtree', sans-serif;
+        .app-logo {
+            margin-bottom: 2rem;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .app-logo a {
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .app-logo a:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 2rem;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .logo-container h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            letter-spacing: 1px;
+        }
+
+        .logo-container h2 {
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-top: 0.5rem;
+            font-weight: 500;
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 450px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .form-input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(30, 60, 114, 0.1);
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 0.875rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-button:hover {
+            background: var(--secondary-color);
+            transform: translateY(-1px);
+        }
+
+        .forgot-password {
+            display: block;
+            text-align: right;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .forgot-password:hover {
+            color: var(--accent-color);
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .remember-me input[type="checkbox"] {
+            width: 1rem;
+            height: 1rem;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
             }
-
-            .logo-container {
-                text-align: center;
-                margin-top: 20px;
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
+        }
 
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 640px) {
             .logo-container h1 {
-                font-size: 2.5em;
-                font-weight: bold;
-                color: #1e3c72;
+                font-size: 2rem;
             }
-
-            .logo-container h2 {
-                font-size: 1.5em;
-                color: #1e3c72;
-                margin-bottom: 40px;
-            }
-
-            .login-container {
-                background: rgba(255, 255, 255, 0.8); /* White background with some transparency */
-                padding: 30px;
-                border-radius: 8px;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-                max-width: 400px;
-                margin: auto;
-            }
-
-            .login-container label {
-                color: #1e3c72;
-                font-weight: bold;
-            }
-
-            .login-container a {
-                color: #1e3c72;
-            }
-
-            .login-container .btn-primary {
-                background-color: #1e3c72;
-                color: #fff;
-            }
-        </style>
-    </head>
-    <body class="font-sans text-gray-900 antialiased">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
-            <div class="logo-container">
-                <h1>BALANGA - MARIVELES</h1>
-                <h2>MINI BUS TRANSPORTATION SYSTEM</h2>
-            </div>
             
-            <div>
-                <a href="/">
-                    <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-                </a>
-            </div>
-
-            <div class="login-container">
-                {{ $slot }}
-            </div>
+            .logo-container h2 {
+                font-size: 1.25rem;
+            }
+            
+            .login-container {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <div class="logo-container">
+            <h1>BALANGA - MARIVELES</h1>
+            <h2>MINI BUS TRANSPORTATION SYSTEM</h2>
         </div>
-    </body>
+
+        <div class="app-logo">
+            <a href="/">
+                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+            </a>
+        </div>
+
+        <div class="login-container">
+            {{ $slot }}
+        </div>
+    </div>
+</body>
 </html>
