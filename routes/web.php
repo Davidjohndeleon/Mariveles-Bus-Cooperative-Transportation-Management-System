@@ -123,8 +123,8 @@ Route::middleware(['auth', 'role:passenger'])->group(function () {
     Route::post('/passenger/bus-booking/{busId}', [PassengerController::class, 'requestBusBooking'])->name('passenger.requestBusBooking');
     Route::delete('/passenger/bookings/{id}', [PassengerController::class, 'deleteBooking'])->name('passenger.bookings.delete');
 
-
     Route::get('/admin/admin_dashboard', [AdminController::class, 'gps'])->name('admin.admin.dashboard');
+    
 
 });
 

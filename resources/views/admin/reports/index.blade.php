@@ -22,6 +22,11 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @if($reports->isEmpty())
+                            <tr class="px-6 py-4 border-b border-gray-300">
+                                <td class="px-6 py-4 border-b border-gray-300">No Reports Yet</td>
+                            </tr>
+                        @else
                         @foreach ($reports as $report)
                             <tr>
                                 <td class="px-6 py-4 border-b border-gray-300">{{ $report->bus->bus_name }}</td>
@@ -31,6 +36,7 @@
                                 <td class="px-6 py-4 border-b border-gray-300">{{ $report->created_at->format('Y-m-d') }}</td>
                             </tr>
                         @endforeach
+                        @endif
                     </tbody>
                 </table>
             </div>
