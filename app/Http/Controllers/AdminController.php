@@ -14,16 +14,15 @@ use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
-    // public function adminDashboard()
-    // {
-    //     $buses = Bus::with('driver')->get();
-    //     return view('admin.admin_dashboard', compact('buses'));
-    // }
-
     public function gps()
     {
+        if (!auth()->user()->hasRole('admin') && !auth()->user()->hasRole('passenger')) {
+            abort(403, 'Unauthorized access.');
+        }
+    
         return view('admin.admin_dashboard');
     }
+    
 
     public function manageBuses()
     {
