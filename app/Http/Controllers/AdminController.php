@@ -16,6 +16,7 @@ class AdminController extends Controller
 {
     public function gps()
     {
+        $user = auth()->user();
         return view('admin.admin_dashboard');
     }
 
