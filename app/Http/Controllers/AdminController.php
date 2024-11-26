@@ -66,7 +66,7 @@ class AdminController extends Controller
             
         ]);
 
-        return redirect()->route('admin..manage.buses')->with('success', 'Bus updated successfully.');
+        return redirect()->route('admin.manage.buses')->with('success', 'Bus updated successfully.');
     }
 
     public function deleteBus($id)
