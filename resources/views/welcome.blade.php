@@ -11,8 +11,8 @@
     
     <style>
         :root {
-            --primary-color: #1e3c72;
-            --secondary-color: #2a5298;
+            --primary-color: #ffffff;
+            --secondary-color: #f0f0f0;
             --accent-color: #ff6b6b;
             --text-color: #2d3748;
         }
@@ -25,7 +25,7 @@
 
         body {
             font-family: 'Figtree', sans-serif;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            background-color: var(--primary-color);
             color: var(--text-color);
             min-height: 100vh;
             display: flex;
@@ -35,17 +35,6 @@
             padding: 2rem;
             position: relative;
             overflow-x: hidden;
-        }
-
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-            z-index: 0;
         }
 
         .welcome-container {
@@ -59,21 +48,16 @@
             animation: fadeIn 1s ease-out;
         }
 
-        .logo-container {
-            margin-bottom: 3rem;
-            animation: floatAnimation 3s ease-in-out infinite;
-            position: relative;
-        }
-
-        .logo-container img {
+        .logo {
+            margin-bottom: 2rem;
+            max-width: 150px; /* Smaller logo */
             height: auto;
-            max-width: 100%;
             border-radius: 12px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease;
         }
 
-        .logo-container img:hover {
+        .logo:hover {
             transform: scale(1.02);
         }
 
@@ -87,46 +71,26 @@
 
         .nav-link {
             font-weight: 600;
-            color: #ffffff;
+            color: var(--text-color);
             text-decoration: none;
             padding: 1rem 2rem;
-            background-color: rgba(255, 255, 255, 0.1);
-            border: 2px solid rgba(255, 255, 255, 0.2);
+            background-color: rgba(0, 0, 0, 0.05);
+            border: 2px solid rgba(0, 0, 0, 0.1);
             border-radius: 12px;
             transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
             position: relative;
             overflow: hidden;
         }
 
-        .nav-link::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.6s ease, height 0.6s ease;
-        }
-
         .nav-link:hover {
             transform: translateY(-2px);
-            background-color: rgba(255, 255, 255, 0.2);
-            border-color: rgba(255, 255, 255, 0.3);
+            background-color: rgba(0, 0, 0, 0.1);
+            border-color: rgba(0, 0, 0, 0.2);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .nav-link:hover::before {
-            width: 300px;
-            height: 300px;
         }
 
         .welcome-text {
             text-align: center;
-            color: white;
             margin-bottom: 3rem;
             animation: fadeIn 1s ease-out;
         }
@@ -135,23 +99,18 @@
             font-size: 2.5rem;
             font-weight: 700;
             margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
         }
 
         .welcome-text p {
             font-size: 1.2rem;
-            opacity: 0.9;
+            opacity: 0.8;
             max-width: 600px;
             margin: 0 auto;
         }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         @keyframes slideUp {
@@ -161,18 +120,6 @@
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes floatAnimation {
-            0% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-            100% {
                 transform: translateY(0);
             }
         }
@@ -190,62 +137,17 @@
                 padding: 0.875rem 1.5rem;
             }
             
-            .logo-container {
-                margin-bottom: 2rem;
-            }
-        }
-
-        /* Add a subtle particle effect */
-        .particles {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            z-index: 0;
-        }
-
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            animation: moveParticle 8s infinite linear;
-        }
-
-        @keyframes moveParticle {
-            0% {
-                transform: translateY(0) translateX(0);
-                opacity: 0;
-            }
-            50% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100vh) translateX(100vw);
-                opacity: 0;
+            .logo {
+                max-width: 100px; /* Even smaller on mobile */
             }
         }
     </style>
 </head>
 <body>
-    <!-- Particle effect container -->
-    <div class="particles">
-        @for ($i = 0; $i < 20; $i++)
-            <div class="particle" style="
-                left: {{ rand(0, 100) }}%;
-                top: {{ rand(0, 100) }}%;
-                animation-delay: {{ $i * 0.5 }}s;
-            "></div>
-        @endfor
-    </div>
-
     <div class="welcome-container">
-        <div class="logo-container">
-            <img src="{{ asset('images/backg.png') }}" alt="Logo" class="h-64">
-        </div>
+        <a href="login" class="flex justify-center">
+            <img src="{{ asset('images/busnobg.png') }}" alt="Logo" class="logo">
+        </a>
 
         <div class="welcome-text">
             <h1>Welcome to Balanga-Mariveles</h1>

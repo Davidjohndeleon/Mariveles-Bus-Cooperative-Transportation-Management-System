@@ -48,7 +48,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     Route::get('/buses', [AdminController::class, 'manageBuses'])->name('admin.manage.buses');
     Route::post('/buses', [AdminController::class, 'addBus'])->name('admin.add.bus');
     Route::get('/buses/{bus}/edit', [AdminController::class, 'editBus'])->name('admin.edit.bus');
-    Route::post('/buses/{bus}/edit', [AdminController::class, 'updateBus'])->name('admin.update.bus');
+    Route::put('/buses/{bus}', [AdminController::class, 'updateBus'])->name('admin.update.bus');
     Route::delete('/buses/{id}', [AdminController::class, 'deleteBus'])->name('admin.delete.bus');
     
     //Route::get('/schedules', [AdminController::class, 'showSchedules'])->name('schedules');

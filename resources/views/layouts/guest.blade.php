@@ -17,11 +17,14 @@
             --primary-color: #1e3c72;
             --secondary-color: #2a5298;
             --accent-color: #ff6b6b;
+            --text-primary: #2c3e50;
+            --text-secondary: #34495e;
         }
 
         body {
             min-height: 100vh;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            background: white;
+            color: var(--text-primary);
             font-family: 'Figtree', sans-serif;
             margin: 0;
             padding: 0;
@@ -34,6 +37,7 @@
             align-items: center;
             justify-content: center;
             padding: 2rem;
+            background: white;
         }
 
         .app-logo {
@@ -59,27 +63,28 @@
         .logo-container h1 {
             font-size: 2.5rem;
             font-weight: 700;
-            color: white;
+            color: var(--primary-color);
             margin: 0;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
             letter-spacing: 1px;
         }
 
         .logo-container h2 {
             font-size: 1.5rem;
-            color: rgba(255, 255, 255, 0.9);
+            color: var(--text-secondary);
             margin-top: 0.5rem;
             font-weight: 500;
         }
 
         .login-container {
-            background: rgba(255, 255, 255, 0.95);
+            background: white;
             padding: 2.5rem;
             border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             width: 100%;
             max-width: 450px;
             animation: fadeInUp 1s ease-out;
+            border: 1px solid #e2e8f0;
         }
 
         .form-group {
@@ -100,6 +105,7 @@
             border-radius: 8px;
             transition: all 0.3s ease;
             font-size: 1rem;
+            color: var(--text-primary);
         }
 
         .form-input:focus {
@@ -145,6 +151,7 @@
             align-items: center;
             gap: 0.5rem;
             margin: 1rem 0;
+            color: var(--text-secondary);
         }
 
         .remember-me input[type="checkbox"] {
@@ -198,7 +205,7 @@
 
         <div class="app-logo">
             <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+                <x-application-logo/>
             </a>
         </div>
 

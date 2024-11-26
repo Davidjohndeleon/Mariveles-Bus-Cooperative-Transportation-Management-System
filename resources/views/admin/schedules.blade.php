@@ -22,29 +22,24 @@
                         </div>
                         <div>
                             <label for="bus_id" class="block text-sm font-medium">Select Bus</label>
-                            <select name="bus_id" required class="w-full border-gray-300 rounded-md">
+                            <select name="bus_id" id="bus-select" required class="w-full border-gray-300 rounded-md">
+                                <option value="" disabled selected>Select a Bus</option>
                                 @foreach ($buses as $bus)
-                                    <option value="{{ $bus->id }}">{{ $bus->bus_name }}</option>
+                                    <option value="{{ $bus->id }}"
+                                            data-driver="{{ $bus->driver->name ?? 'No driver assigned' }}"
+                                            data-conductor="{{ $bus->conductor->name ?? 'No conductor assigned' }}">
+                                        {{ $bus->bus_name }}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
                         <div>
-                            <label for="driver_id" class="block text-sm font-medium">Select Driver</label>
-                            <input type="text" id="driver-filter" placeholder="Search Driver" class="w-full border-gray-300 rounded-md mb-2">
-                            <select name="driver_id" id="driver-dropdown" required class="w-full border-gray-300 rounded-md">
-                                @foreach ($drivers as $driver)
-                                    <option value="{{ $driver->id }}">{{ $driver->name }}</option>
-                                @endforeach
-                            </select>
+                            <label for="driver" class="block text-sm font-medium">Driver</label>
+                            <input type="text" id="driver-name" readonly class="w-full border-gray-300 rounded-md bg-gray-100">
                         </div>
                         <div>
-                            <label for="conductor_id" class="block text-sm font-medium">Select Conductor</label>
-                            <input type="text" id="conductor-filter" placeholder="Search Conductor" class="w-full border-gray-300 rounded-md mb-2">
-                            <select name="conductor_id" id="conductor-dropdown" required class="w-full border-gray-300 rounded-md">
-                                @foreach ($conductors as $conductor)
-                                    <option value="{{ $conductor->id }}">{{ $conductor->name }}</option>
-                                @endforeach
-                            </select>
+                            <label for="conductor" class="block text-sm font-medium">Conductor</label>
+                            <input type="text" id="conductor-name" readonly class="w-full border-gray-300 rounded-md bg-gray-100">
                         </div>
                     </div>
                     <button type="submit" class="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-md">
@@ -103,29 +98,24 @@
                         </div>
                         <div>
                             <label for="bus_id" class="block text-sm font-medium">Select Bus</label>
-                            <select name="bus_id" required class="w-full border-gray-300 rounded-md">
+                            <select name="bus_id" id="bus-select-2" required class="w-full border-gray-300 rounded-md">
+                                <option value="" disabled selected>Select a Bus</option>
                                 @foreach ($buses as $bus)
-                                    <option value="{{ $bus->id }}">{{ $bus->bus_name }}</option>
+                                    <option value="{{ $bus->id }}"
+                                            data-driver="{{ $bus->driver->name ?? 'No driver assigned' }}"
+                                            data-conductor="{{ $bus->conductor->name ?? 'No conductor assigned' }}">
+                                        {{ $bus->bus_name }}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
                         <div>
-                            <label for="driver_id" class="block text-sm font-medium">Select Driver</label>
-                            <input type="text" id="driver-filter-2" placeholder="Search Driver" class="w-full border-gray-300 rounded-md mb-2">
-                            <select name="driver_id" id="driver-dropdown-2" required class="w-full border-gray-300 rounded-md">
-                                @foreach ($drivers as $driver)
-                                    <option value="{{ $driver->id }}">{{ $driver->name }}</option>
-                                @endforeach
-                            </select>
+                            <label for="driver" class="block text-sm font-medium">Driver</label>
+                            <input type="text" id="driver-name-2" readonly class="w-full border-gray-300 rounded-md bg-gray-100">
                         </div>
                         <div>
-                            <label for="conductor_id" class="block text-sm font-medium">Select Conductor</label>
-                            <input type="text" id="conductor-filter-2" placeholder="Search Conductor" class="w-full border-gray-300 rounded-md mb-2">
-                            <select name="conductor_id" id="conductor-dropdown-2" required class="w-full border-gray-300 rounded-md">
-                                @foreach ($conductors as $conductor)
-                                    <option value="{{ $conductor->id }}">{{ $conductor->name }}</option>
-                                @endforeach
-                            </select>
+                            <label for="conductor" class="block text-sm font-medium">Conductor</label>
+                            <input type="text" id="conductor-name-2" readonly class="w-full border-gray-300 rounded-md bg-gray-100">
                         </div>
                     </div>
                     <button type="submit" class="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-md">
@@ -171,7 +161,6 @@
                     </tbody>
                 </table>
 
-
                 <!-- Dynamic Name Filter Script -->
                 <script>
                     // Filter function for dropdowns
@@ -194,11 +183,8 @@
                     document.addEventListener('DOMContentLoaded', () => {
                         filterDropdown('driver-filter', 'driver-dropdown');
                         filterDropdown('conductor-filter', 'conductor-dropdown');
-                        filterDropdown('driver-filter-2', 'driver-dropdown-2');
-                        filterDropdown('conductor-filter-2', 'conductor-dropdown-2');
                     });
                 </script>
-
             </div>
         </div>
     </div>

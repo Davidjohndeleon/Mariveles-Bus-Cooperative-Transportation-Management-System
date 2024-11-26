@@ -17,6 +17,7 @@
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Bus Name</th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Driver</th>
+
                                 <th scope="col" class="relative px-6 py-3"></th>
                             </tr>
                         </thead>
@@ -32,6 +33,7 @@
                                         Not Assigned
                                     @endif
                                 </td>
+
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                     <a href="{{ route('admin.edit.bus', $bus->id) }}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
                                 </td>
@@ -78,6 +80,8 @@
                             @endforeach
                         </select>
                     </div>
+
+
 
                     <div class="mt-4">
                         <button type="submit" class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700 active:bg-indigo-700 focus:outline-none focus:border-indigo-700 focus:ring focus:ring-indigo-500 disabled:opacity-25 transition">Add Bus</button>

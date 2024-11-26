@@ -31,13 +31,13 @@ class AdminController extends Controller
     $request->validate([
         'bus_name' => 'required|string|max:255',
         'driver_id' => 'required|exists:users,id',
-        'conductor_id' => 'nullable|exists:users,id',
+        
     ]);
 
     Bus::create([
         'bus_name' => $request->bus_name,
         'driver_id' => $request->driver_id,
-        'conductor_id' => $request->conductor_id,
+        
     ]);
 
     // Redirect to the correct route name
@@ -48,8 +48,7 @@ class AdminController extends Controller
     {
         $bus = Bus::findOrFail($id);
         $drivers = User::where('usertype', 'driver')->get();
-        $conductors = User::where('usertype', 'conductor')->get();
-        return view('admin.edit_bus', compact('bus', 'drivers', 'conductors'));
+        return view('admin.edit_bus', compact('bus', 'drivers',));
     }
 
     public function updateBus(Request $request, $id)
@@ -57,17 +56,17 @@ class AdminController extends Controller
         $request->validate([
             'bus_name' => 'required|string|max:255',
             'driver_id' => 'required|exists:users,id',
-            'conductor_id' => 'nullable|exists:users,id',
+            
         ]);
 
         $bus = Bus::findOrFail($id);
         $bus->update([
             'bus_name' => $request->bus_name,
             'driver_id' => $request->driver_id,
-            'conductor_id' => $request->conductor_id,
+            
         ]);
 
-        return redirect()->route('admin.buses')->with('success', 'Bus updated successfully.');
+        return redirect()->route('admin..manage.buses')->with('success', 'Bus updated successfully.');
     }
 
     public function deleteBus($id)

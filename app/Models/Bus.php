@@ -9,7 +9,7 @@ class Bus extends Model
 {
     use HasFactory;
     
-    protected $fillable = ['bus_name', 'driver_id'];
+    protected $fillable = ['bus_name', 'driver_id','conductor_id'];
     public function schedules()
     {
         return $this->hasMany(Schedule::class);

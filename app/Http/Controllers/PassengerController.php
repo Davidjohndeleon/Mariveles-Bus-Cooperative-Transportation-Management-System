@@ -68,4 +68,12 @@ class PassengerController extends Controller
 
         return redirect()->route('passenger.bookings')->with('success', 'Booking deleted successfully.');
     }
+
+    public function viewBusGPS()
+    {
+        
+        $buses = Bus::all(); 
+
+        return view('passenger.gps', compact('buses'));
+    }
 }
