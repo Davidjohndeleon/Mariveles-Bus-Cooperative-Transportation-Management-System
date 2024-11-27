@@ -8,32 +8,44 @@ use App\Models\Bus;
 use App\Models\User;
 use Carbon\Carbon;
 
-
 class ScheduleTableSeeder extends Seeder
 {
     public function run()
     {
-        $busIds = Bus::pluck('id')->toArray();
-        $driverIds = User::where('usertype', 'driver')->pluck('id')->toArray();
+        // Fetch all buses along with their assigned drivers
+        $buses = Bus::with('driver')->get();
         $conductorIds = User::where('usertype', 'conductor')->pluck('id')->toArray();
+
+        if ($buses->isEmpty()) {
+            $this->command->error('No buses found. Please add buses with assigned drivers first.');
+            return;
+        }
+
+        if (empty($conductorIds)) {
+            $this->command->error('No conductors found. Please add users with usertype conductor.');
+            return;
+        }
+
         // Define start, end times, and interval in minutes
         $startTime = Carbon::createFromTime(3, 50, 0); // 3:50 AM
         $endTime = Carbon::createFromTime(21, 20, 0);  // 9:20 PM
         $interval = 60;  // Interval in minutes (1 hour)
 
-        // Routes data for schedules (you can expand this array)
+        // Routes data for schedules
         $routes = ['Balanga to Mariveles', 'Mariveles to Balanga'];
 
         // Generate schedules with departure times
         while ($startTime <= $endTime) {
             foreach ($routes as $route) {
-                Schedule::create([
-                    'departure_time' => $startTime->format('H:i:s'),  // Use 24-hour format (HH:MM:SS)
-                    'route' => $route,
-                    'bus_id' => $busIds[array_rand($busIds)],          // Random existing bus ID
-                    'driver_id' => $driverIds[array_rand($driverIds)], // Random existing driver ID
-                    'conductor_id' => $conductorIds[array_rand($conductorIds)], // Random existing conductor ID
-                ]);
+                foreach ($buses as $bus) {
+                    Schedule::create([
+                        'departure_time' => $startTime->format('H:i:s'), // 24-hour format (HH:MM:SS)
+                        'route' => $route,
+                        'bus_id' => $bus->id,                          // Assigned bus ID
+                        'driver_id' => $bus->driver->id,               // Driver assigned to the bus
+                        'conductor_id' => $conductorIds[array_rand($conductorIds)], // Random conductor
+                    ]);
+                }
             }
 
             // Increment the start time by the interval

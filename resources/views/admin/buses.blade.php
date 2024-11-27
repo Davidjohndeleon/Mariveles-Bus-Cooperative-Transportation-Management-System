@@ -17,27 +17,25 @@
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Bus Name</th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Driver</th>
-
                                 <th scope="col" class="relative px-6 py-3"></th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
                             @foreach ($buses as $bus)
-                            <tr>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $bus->id }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $bus->bus_name }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    @if ($bus->driver)
-                                        {{ $bus->driver->name }}
-                                    @else
-                                        Not Assigned
-                                    @endif
-                                </td>
-
-                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <a href="{{ route('admin.edit.bus', $bus->id) }}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ $bus->id }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ $bus->bus_name }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        @if ($bus->driver)
+                                            {{ $bus->driver->name }}
+                                        @else
+                                            Not Assigned
+                                        @endif
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <a href="{{ route('admin.edit.bus', $bus->id) }}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                                    </td>
+                                </tr>
                             @endforeach
                         </tbody>
                     </table>
@@ -45,7 +43,6 @@
 
                 <!-- Add Bus Form Section -->
                 <h3 class="text-lg font-semibold mb-4">Add New Bus</h3>
-                
                 @if ($errors->any())
                     <div class="mb-4">
                         <div class="font-medium text-red-600">
@@ -65,6 +62,12 @@
                     </div>
                 @endif
 
+                @if (session('error'))
+                    <div class="mb-4 text-red-600">
+                        {{ session('error') }}
+                    </div>
+                @endif
+
                 <form action="{{ route('admin.add.bus') }}" method="POST">
                     @csrf
                     <div class="mb-4">
@@ -80,9 +83,6 @@
                             @endforeach
                         </select>
                     </div>
-
-
-
                     <div class="mt-4">
                         <button type="submit" class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700 active:bg-indigo-700 focus:outline-none focus:border-indigo-700 focus:ring focus:ring-indigo-500 disabled:opacity-25 transition">Add Bus</button>
                     </div>

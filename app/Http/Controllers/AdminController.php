@@ -28,22 +28,28 @@ class AdminController extends Controller
     }
 
     public function addBus(Request $request)
-{
-    $request->validate([
-        'bus_name' => 'required|string|max:255',
-        'driver_id' => 'required|exists:users,id',
-        
-    ]);
-
-    Bus::create([
-        'bus_name' => $request->bus_name,
-        'driver_id' => $request->driver_id,
-        
-    ]);
-
-    // Redirect to the correct route name
-    return redirect()->route('admin.manage.buses')->with('success', 'Bus added successfully.');
-}
+    {
+        $request->validate([
+            'bus_name' => 'required|string|max:255',
+            'driver_id' => 'required|exists:users,id',
+        ]);
+    
+        // Check if the driver is already assigned to another bus
+        $driverAssignedBus = Bus::where('driver_id', $request->driver_id)->first();
+    
+        if ($driverAssignedBus) {
+            return redirect()->back()->with('error', 'The selected driver is already assigned to another bus.');
+        }
+    
+        // Create the bus
+        Bus::create([
+            'bus_name' => $request->bus_name,
+            'driver_id' => $request->driver_id,
+        ]);
+    
+        return redirect()->route('admin.manage.buses')->with('success', 'Bus added successfully.');
+    }
+    
 
     public function editBus($id)
     {
