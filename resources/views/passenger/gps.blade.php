@@ -43,7 +43,7 @@
 
             // Simulate real-time GPS tracking with sample data
             var busIcon = L.icon({
-                iconUrl: 'path/to/bus-icon.png', // Change to the path of your bus icon
+                iconUrl: 'path/to/bus-icon.png', // Change bus icon
                 iconSize: [38, 38],
                 iconAnchor: [22, 22],
                 popupAnchor: [-3, -26]

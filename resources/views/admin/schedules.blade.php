@@ -25,21 +25,20 @@
                             <select name="bus_id" id="bus-select" required class="w-full border-gray-300 rounded-md">
                                 <option value="" disabled selected>Select a Bus</option>
                                 @foreach ($buses as $bus)
-                                    <option value="{{ $bus->id }}"
-                                            data-driver="{{ $bus->driver->name ?? 'No driver assigned' }}"
-                                            data-conductor="{{ $bus->conductor->name ?? 'No conductor assigned' }}">
+                                    <option value="{{ $bus->id }}" data-driver="{{ $bus->driver->name ?? 'No driver assigned' }}">
                                         {{ $bus->bus_name }}
                                     </option>
                                 @endforeach
                             </select>
                         </div>
                         <div>
-                            <label for="driver" class="block text-sm font-medium">Driver</label>
-                            <input type="text" id="driver-name" readonly class="w-full border-gray-300 rounded-md bg-gray-100">
-                        </div>
-                        <div>
-                            <label for="conductor" class="block text-sm font-medium">Conductor</label>
-                            <input type="text" id="conductor-name" readonly class="w-full border-gray-300 rounded-md bg-gray-100">
+                            <label for="conductor" class="block text-sm font-medium">Select Conductor</label>
+                            <select name="conductor_id" id="conductor-dropdown" required class="w-full border-gray-300 rounded-md">
+                                <option value="" disabled selected>Select a Conductor</option>
+                                @foreach ($conductors as $conductor)
+                                    <option value="{{ $conductor->id }}">{{ $conductor->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <button type="submit" class="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-md">
@@ -67,7 +66,7 @@
                                     {{ $schedule->bus->bus_name ?? 'No bus assigned yet' }}
                                 </td>
                                 <td class="border px-4 py-2">
-                                    {{ $schedule->driver->name ?? 'No driver assigned yet' }}
+                                    {{ $schedule->bus->driver->name ?? 'No driver assigned yet' }}
                                 </td>
                                 <td class="border px-4 py-2">
                                     {{ $schedule->conductor->name ?? 'No conductor assigned yet' }}
@@ -101,21 +100,20 @@
                             <select name="bus_id" id="bus-select-2" required class="w-full border-gray-300 rounded-md">
                                 <option value="" disabled selected>Select a Bus</option>
                                 @foreach ($buses as $bus)
-                                    <option value="{{ $bus->id }}"
-                                            data-driver="{{ $bus->driver->name ?? 'No driver assigned' }}"
-                                            data-conductor="{{ $bus->conductor->name ?? 'No conductor assigned' }}">
+                                    <option value="{{ $bus->id }}" data-driver="{{ $bus->driver->name ?? 'No driver assigned' }}">
                                         {{ $bus->bus_name }}
                                     </option>
                                 @endforeach
                             </select>
                         </div>
                         <div>
-                            <label for="driver" class="block text-sm font-medium">Driver</label>
-                            <input type="text" id="driver-name-2" readonly class="w-full border-gray-300 rounded-md bg-gray-100">
-                        </div>
-                        <div>
-                            <label for="conductor" class="block text-sm font-medium">Conductor</label>
-                            <input type="text" id="conductor-name-2" readonly class="w-full border-gray-300 rounded-md bg-gray-100">
+                            <label for="conductor" class="block text-sm font-medium">Select Conductor</label>
+                            <select name="conductor_id" id="conductor-dropdown-2" required class="w-full border-gray-300 rounded-md">
+                                <option value="" disabled selected>Select a Conductor</option>
+                                @foreach ($conductors as $conductor)
+                                    <option value="{{ $conductor->id }}">{{ $conductor->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <button type="submit" class="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-md">
@@ -143,7 +141,7 @@
                                     {{ $schedule->bus->bus_name ?? 'No bus assigned yet' }}
                                 </td>
                                 <td class="border px-4 py-2">
-                                    {{ $schedule->driver->name ?? 'No driver assigned yet' }}
+                                    {{ $schedule->bus->driver->name ?? 'No driver assigned yet' }}
                                 </td>
                                 <td class="border px-4 py-2">
                                     {{ $schedule->conductor->name ?? 'No conductor assigned yet' }}
@@ -161,31 +159,8 @@
                     </tbody>
                 </table>
 
-                <!-- Dynamic Name Filter Script -->
-                <script>
-                    // Filter function for dropdowns
-                    function filterDropdown(inputId, dropdownId) {
-                        const input = document.getElementById(inputId);
-                        const dropdown = document.getElementById(dropdownId);
-                        const options = dropdown.querySelectorAll('option');
-
-                        input.addEventListener('input', () => {
-                            const filter = input.value.toLowerCase();
-
-                            options.forEach(option => {
-                                const text = option.textContent.toLowerCase();
-                                option.style.display = text.includes(filter) ? '' : 'none';
-                            });
-                        });
-                    }
-
-                    // Initialize filters for all dropdowns
-                    document.addEventListener('DOMContentLoaded', () => {
-                        filterDropdown('driver-filter', 'driver-dropdown');
-                        filterDropdown('conductor-filter', 'conductor-dropdown');
-                    });
-                </script>
             </div>
         </div>
     </div>
+
 </x-app-layout>

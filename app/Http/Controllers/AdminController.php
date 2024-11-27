@@ -87,7 +87,7 @@ class AdminController extends Controller
         // Fetch all buses and drivers
         $buses = Bus::all();  
         $drivers = Driver::all();
-        $conductors = Conductor::all(); 
+        $conductors = User::where('usertype', 'conductor')->get();
 
         // Log information for debugging
         Log::info('Balanga to Mariveles Schedules:', $balangaToMarivelesSchedules->toArray());
@@ -183,13 +183,13 @@ class AdminController extends Controller
     public function showSchedules()
     {
         // Fetch schedules for Balanga to Mariveles and Mariveles to Balanga
-        $balangaToMarivelesSchedules = Schedule::where('route', 'Balanga to Mariveles')->with(['bus', 'driver','conductor'])->get();
-        $marivelesToBalangaSchedules = Schedule::where('route', 'Mariveles to Balanga')->with(['bus', 'driver','conductor'])->get();
+        $balangaToMarivelesSchedules = Schedule::where('route', 'Balanga to Mariveles')->with(['bus.driver','conductor'])->get();
+        $marivelesToBalangaSchedules = Schedule::where('route', 'Mariveles to Balanga')->with(['bus.driver','conductor'])->get();
     
         // Fetch buses and drivers for the select dropdowns
         $buses = Bus::all();
         $drivers = Driver::all();
-        $conductors = Conductor::all();
+        $conductors = User::where('usertype', 'conductor')->get();
         
         
         // Pass the schedules, buses, and drivers to the view

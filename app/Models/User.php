@@ -50,6 +50,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Bus::class, 'driver_id');
     }
 
+    public function conductor()
+    {
+        return $this->hasOne(Conductor::class);
+    }
+
     public function isAdmin()
     {
         return $this->usertype === 'admin';
