@@ -24,6 +24,5 @@ class DashboardController extends Controller
         
 
         // Pass the data to the view
-        return view('dashboard', compact('balangaToMarivelesSchedules', 'marivelesToBalangaSchedules', 'buses','fares', 'drivers','conductors'));
     }
 }
