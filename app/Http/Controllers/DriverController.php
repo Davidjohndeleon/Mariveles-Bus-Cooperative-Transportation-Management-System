@@ -6,6 +6,7 @@ use App\Models\ScannedQR;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Events\LocationUpdate;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class DriverController extends Controller
@@ -20,6 +21,11 @@ class DriverController extends Controller
     }
 
 
+    public function locPing(Request $request) {
+        event(new LocationUpdate($request->busId, $request->lat, $request->lng));
+        
+        return response()->json('Ping successful');
+    }
 
     public function viewCheckpoints()
     {

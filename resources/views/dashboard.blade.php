@@ -119,4 +119,48 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+  <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+  <script>
+    let id;
+    let target;
+    let options;
+
+    function success(pos) {
+      const crd = pos.coords;
+      
+      $.post({
+        headers: {
+          'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        },
+        url: '/driver/locping',
+        data: {
+          busId: 1,
+          lat: crd.latitude,
+          lng: crd.longitude
+        }
+      }).then((data) => {
+        console.log(data);
+      });
+    }
+
+    function error(err) {
+      console.error(`ERROR(${err.code}): ${err.message}`);
+    }
+
+    target = {
+      latitude: 0,
+      longitude: 0,
+    };
+
+    options = {
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0,
+    };
+
+    id = navigator.geolocation.watchPosition(success, error, options);
+
+  </script>
+</x-app-layout>∏
