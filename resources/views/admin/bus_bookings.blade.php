@@ -17,7 +17,7 @@
         <table class="table-auto w-full border-collapse border border-gray-200">
             <thead>
                 <tr class="bg-gray-100">
-                    <th class="border border-gray-200 px-4 py-2">Bookings Appointment</th>
+                    <th class="border border-gray-200 px-4 py-2">Bookings Appointments</th>
                 </tr>
             </thead>
             <tbody>
@@ -52,7 +52,7 @@
                                 <thead>
                                     <tr class="bg-gray-200">
                                         <th class="border border-gray-200 px-4 py-2">Bus Name</th>
-                                        <th class="border border-gray-200 px-4 py-2">Remarks</th>
+                                        <th class="border border-gray-200 px-4 py-2">Contacts</th>
                                         <th class="border border-gray-200 px-4 py-2">Status</th>
                                         <th class="border border-gray-200 px-4 py-2">Actions</th>
                                     </tr>

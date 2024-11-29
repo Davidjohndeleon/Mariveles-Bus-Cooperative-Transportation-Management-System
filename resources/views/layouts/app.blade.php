@@ -29,7 +29,7 @@
         }
 
         .nav-spacing {
-            margin-bottom: 20px; 
+            margin-bottom: 50px; 
         }
 
         .nav-container {
@@ -40,7 +40,7 @@
         }
 
         .nav-link {
-            @apply flex items-center gap-4 px-8 py-8 text-gray-600 rounded-lg transition-all duration-200 ease-in-out my-1 mb-4;
+            @apply flex items-center gap-4 px-8 py-8 text-gray-600 rounded-lg transition-all duration-200 ease-in-out my-4 mb-4;
         }
 
         .nav-link:hover {
@@ -137,21 +137,20 @@
             </div>
 
             <!-- Navigation -->
-            <nav class="flex-1 px-4 py-10 space-y-1 overflow-y-auto" role="navigation" aria-label="Main Navigation">
+            <nav class="flex-1 px-10 py-2 overflow-y-auto" role="navigation" aria-label="Main Navigation">
                     <!-- Dashboard Link -->
-                     <div class="space-y-1 pt-2">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="nav-link group">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
-                        </svg>
-                        <span>{{ __('Schedules') }}</span>
-                    </x-nav-link>
-                    
+                    <div>
+                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="nav-link group">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
+                            </svg>
+                            <span>{{ __('Schedules') }}</span>
+                        </x-nav-link>
                     </div>
                     <!-- Role-based Navigation -->
                     @if(Auth::user()->isAdmin())
                     <!-- Admin Links with Icons -->
-                        <div class="space-y-4 pt-2">
+                        <div class="space-y-2">
                             <x-nav-link :href="route('admin.manage.schedules')" 
                                         :active="request()->routeIs('admin.manage.schedules')" 
                                         class="nav-link">
@@ -187,10 +186,10 @@
                             <x-nav-link :href="route('admin.manage.buses')" 
                                         :active="request()->routeIs('admin.manage.buses')" 
                                         class="nav-link">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                        d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
-                                </svg>
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                                d="M7 16A2 2 0 1 0 7 20A2 2 0 1 0 7 16ZM17 16A2 2 0 1 0 17 20A2 2 0 1 0 17 16ZM16 10L4 10C2.9 10 2 10.9 2 12V16H4V19C4 19.6 4.4 20 5 20H6C6.6 20 7 19.6 7 19V16H17V19C17 19.6 17.4 20 18 20H19C19.6 20 20 19.6 20 19V16H22V12C22 10.9 21.1 10 20 10L16 10ZM16 7L16 5C16 3.9 15.1 3 14 3L10 3C8.9 3 8 3.9 8 5V10L16 10V7Z"/>
+                                        </svg>
                                 <span>{{ __('Manage Buses') }}</span>
                             </x-nav-link>
 
@@ -219,7 +218,7 @@
                                         class="nav-link">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                                 </svg>
                                 <span>{{ __('Register Conductor') }}</span>
                             </x-nav-link>
@@ -229,7 +228,7 @@
                                         class="nav-link">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                        d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"/>
+                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                                 </svg>
                                 <span>{{ __('Register Checkpoint User') }}</span>
                             </x-nav-link>
@@ -248,7 +247,7 @@
 
 
                         @if(Auth::user()->isDriver())
-                                <div class="space-y-1 pt-2">
+                                <div class="space-y-2">
                                 
                                     <x-nav-link :href="route('driver.qrcode')" :active="request()->routeIs('driver.qrcode')" class="nav-link">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -270,40 +269,40 @@
 
                             <!-- Checkpoint Links -->
                             @if(Auth::user()->isCheckpoint())
-                                <li>
+                                <div class="space-y-2">
                                     <x-nav-link :href="route('checkpoint.scan')" :active="request()->routeIs('checkpoint.scan')" class="text-lg">
                                         <svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/>
                                         </svg>
                                         {{ __('Scan QR Code') }}
                                     </x-nav-link>
-                                </li>
+                                </div>
                             @endif
 
                             <!-- Passenger Links -->
                             @if(Auth::user()->isPassenger())
-                                
-                                    <x-nav-link :href="route('passenger.report.form')" :active="request()->routeIs('passenger.report.form')" class="text-lg">
-                                        <svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
-                                        </svg>
-                                        {{ __('Report a Bus') }}
-                                    </x-nav-link>
-                                                               
-                                    <x-nav-link :href="route('passenger.bookings')" :active="request()->routeIs('passenger.bookings')" class="text-lg">
-                                        <svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
-                                        </svg>
-                                        {{ __('My Bus Bookings') }}
-                                    </x-nav-link>
+                                <div class="space-y-2">
+                                        <x-nav-link :href="route('passenger.report.form')" :active="request()->routeIs('passenger.report.form')" class="text-lg">
+                                            <svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                                            </svg>
+                                            {{ __('Report a Bus') }}
+                                        </x-nav-link>
+                                                                
+                                        <x-nav-link :href="route('passenger.bookings')" :active="request()->routeIs('passenger.bookings')" class="text-lg">
+                                            <svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                                            </svg>
+                                            {{ __('My Bus Bookings') }}
+                                        </x-nav-link>
 
-                                    <x-nav-link :href="route('passenger.gps')" :active="request()->routeIs('passenger.gps')" class="text-lg">
-                                        <svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                        </svg>
-                                        {{ __('View GPS') }}
-                                    </x-nav-link>
-
+                                        <x-nav-link :href="route('passenger.gps')" :active="request()->routeIs('passenger.gps')" class="text-lg">
+                                            <svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                            </svg>
+                                            {{ __('View GPS') }}
+                                        </x-nav-link>
+                                </div>
                             @endif
             </nav>
         </div>

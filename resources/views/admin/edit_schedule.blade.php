@@ -23,9 +23,10 @@
                         </select>
                     </div>
 
+                    <!-- Driver selection -->
                     <div class="mb-4">
                         <label for="driver_id" class="block text-sm font-medium text-gray-700">Driver</label>
-                        <select name="driver_id" id="driver_id" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" {{ $schedule->bus->driver_id ? 'disabled' : '' }}>
+                        <select name="driver_id" id="driver_id" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                             @foreach ($drivers as $driver)
                                 <option value="{{ $driver->id }}" {{ $schedule->driver_id == $driver->id ? 'selected' : '' }}>
                                     {{ $driver->name }}
