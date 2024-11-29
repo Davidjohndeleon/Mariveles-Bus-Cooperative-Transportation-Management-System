@@ -30,8 +30,10 @@
         </div>
     </x-app-layout>
 
+
     
     <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
