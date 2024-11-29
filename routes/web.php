@@ -100,6 +100,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
 // Driver Routes
 Route::middleware(['auth', 'role:driver'])->group(function () {
     Route::resource('drivers', DriverController::class);
+    Route::post('/driver/locping', [DriverController::class, 'locPing'])->name('driver.locping');
     Route::get('/driver/qrcode', [DriverController::class, 'generateQRCode'])->name('driver.qrcode');
     Route::get('/driver/checkpoints', [DriverController::class, 'viewCheckpoints'])->name('driver.checkpoints');
     Route::post('/driver/checkpoints/{checkpoint}', [DriverController::class, 'markCheckpointComplete'])->name('driver.completeCheckpoint');
