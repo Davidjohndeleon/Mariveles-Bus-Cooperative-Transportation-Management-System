@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout> 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Manage Schedules') }}
@@ -8,7 +8,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
-
+            
                 <!-- Balanga to Mariveles Schedule -->
                 <h3 class="text-lg font-semibold mt-8 mb-4">Balanga to Mariveles Schedule</h3>
 
@@ -25,9 +25,16 @@
                             <select name="bus_id" id="bus-select" required class="w-full border-gray-300 rounded-md">
                                 <option value="" disabled selected>Select a Bus</option>
                                 @foreach ($buses as $bus)
-                                    <option value="{{ $bus->id }}" data-driver="{{ $bus->driver->name ?? 'No driver assigned' }}">
-                                        {{ $bus->bus_name }}
-                                    </option>
+                                <option value="{{ $bus->id }}">{{ $bus->bus_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div>
+                            <label for="driver_id" class="block text-sm font-medium">Select Driver</label>
+                            <select name="driver_id" id="driver-dropdown" required class="w-full border-gray-300 rounded-md">
+                                <option value="" disabled selected>Select a Driver</option>
+                                @foreach ($drivers as $driver)
+                                    <option value="{{ $driver->id }}">{{ $driver->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -66,7 +73,7 @@
                                     {{ $schedule->bus->bus_name ?? 'No bus assigned yet' }}
                                 </td>
                                 <td class="border px-4 py-2">
-                                    {{ $schedule->bus->driver->name ?? 'No driver assigned yet' }}
+                                    {{ $schedule->driver->name ?? 'No driver assigned yet' }}
                                 </td>
                                 <td class="border px-4 py-2">
                                     {{ $schedule->conductor->name ?? 'No conductor assigned yet' }}
@@ -100,9 +107,16 @@
                             <select name="bus_id" id="bus-select-2" required class="w-full border-gray-300 rounded-md">
                                 <option value="" disabled selected>Select a Bus</option>
                                 @foreach ($buses as $bus)
-                                    <option value="{{ $bus->id }}" data-driver="{{ $bus->driver->name ?? 'No driver assigned' }}">
-                                        {{ $bus->bus_name }}
-                                    </option>
+                                <option value="{{ $bus->id }}">{{ $bus->bus_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div>
+                            <label for="driver_id" class="block text-sm font-medium">Select Driver</label>
+                            <select name="driver_id" id="driver-dropdown" required class="w-full border-gray-300 rounded-md">
+                                <option value="" disabled selected>Select a Driver</option>
+                                @foreach ($drivers as $driver)
+                                    <option value="{{ $driver->id }}">{{ $driver->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -141,7 +155,7 @@
                                     {{ $schedule->bus->bus_name ?? 'No bus assigned yet' }}
                                 </td>
                                 <td class="border px-4 py-2">
-                                    {{ $schedule->bus->driver->name ?? 'No driver assigned yet' }}
+                                    {{ $schedule->driver->name ?? 'No driver assigned yet' }}
                                 </td>
                                 <td class="border px-4 py-2">
                                     {{ $schedule->conductor->name ?? 'No conductor assigned yet' }}
@@ -162,5 +176,4 @@
             </div>
         </div>
     </div>
-
 </x-app-layout>

@@ -31,50 +31,43 @@ class AdminController extends Controller
     {
         $request->validate([
             'bus_name' => 'required|string|max:255',
-            'driver_id' => 'required|exists:users,id',
+            'plate_number' => 'required|string|max:255|unique:buses,plate_number',
         ]);
     
-        // Check if the driver is already assigned to another bus
-        $driverAssignedBus = Bus::where('driver_id', $request->driver_id)->first();
-    
-        if ($driverAssignedBus) {
-            return redirect()->back()->with('error', 'The selected driver is already assigned to another bus.');
-        }
-    
-        // Create the bus
         Bus::create([
             'bus_name' => $request->bus_name,
-            'driver_id' => $request->driver_id,
+            'plate_number' => $request->plate_number,
         ]);
     
-        return redirect()->route('admin.manage.buses')->with('success', 'Bus added successfully.');
+        return redirect()->back()->with('success', 'Bus registered successfully.');
     }
+    
     
 
     public function editBus($id)
     {
         $bus = Bus::findOrFail($id);
-        $drivers = User::where('usertype', 'driver')->get();
-        return view('admin.edit_bus', compact('bus', 'drivers',));
+        return view('admin.edit_bus', compact('bus'));
     }
+    
 
     public function updateBus(Request $request, $id)
     {
         $request->validate([
             'bus_name' => 'required|string|max:255',
-            'driver_id' => 'required|exists:users,id',
-            
+            'plate_number' => 'required|string|max:255|unique:buses,plate_number,' . $id, 
         ]);
-
+    
         $bus = Bus::findOrFail($id);
         $bus->update([
             'bus_name' => $request->bus_name,
-            'driver_id' => $request->driver_id,
-            
+            'plate_number' => $request->plate_number,
         ]);
-
+    
         return redirect()->route('admin.manage.buses')->with('success', 'Bus updated successfully.');
     }
+    
+    
 
     public function deleteBus($id)
     {
@@ -92,7 +85,7 @@ class AdminController extends Controller
 
         // Fetch all buses and drivers
         $buses = Bus::all();  
-        $drivers = Driver::all();
+        $drivers = User::where('usertype', 'driver')->get();;
         $conductors = User::where('usertype', 'conductor')->get();
 
         // Log information for debugging
@@ -113,6 +106,10 @@ class AdminController extends Controller
     ]);
 
     Schedule::create($formFields);
+    $buses = Bus::all();
+    $drivers = User::where('usertype', 'driver')->get();
+    $conductors = User::where('usertype', 'conductor')->get();
+    
 
     return redirect()->route('admin.manage.schedules')->with('success', 'Schedule added successfully!');
 }
@@ -157,17 +154,17 @@ class AdminController extends Controller
         return redirect()->route('admin.manage.schedules')->with('success', 'Schedule updated successfully.');
     }
 
-    // Method to show the registration form
+    
     public function showRegisterDriverForm()
     {
-        // Fetch all users with 'driver' usertype
+        
     $drivers = User::where('usertype', 'driver')->get();
 
-    // Pass the $drivers variable to the view
+   
     return view('admin.register_driver', compact('drivers'));
     }
 
-    // Method to handle the registration form submission
+    
     public function registerDriver(Request $request)
     {
         $request->validate([
@@ -180,7 +177,7 @@ class AdminController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'usertype' => 'driver', // Set the user type to driver
+            'usertype' => 'driver',
         ]);
 
         return redirect()->route('admin.register.driver.form')->with('status', 'Driver registered successfully!');
@@ -189,8 +186,8 @@ class AdminController extends Controller
     public function showSchedules()
     {
         // Fetch schedules for Balanga to Mariveles and Mariveles to Balanga
-        $balangaToMarivelesSchedules = Schedule::where('route', 'Balanga to Mariveles')->with(['bus.driver','conductor'])->get();
-        $marivelesToBalangaSchedules = Schedule::where('route', 'Mariveles to Balanga')->with(['bus.driver','conductor'])->get();
+        $balangaToMarivelesSchedules = Schedule::where('route', 'Balanga to Mariveles')->with(['bus','driver','conductor'])->get();
+        $marivelesToBalangaSchedules = Schedule::where('route', 'Mariveles to Balanga')->with(['bus','driver','conductor'])->get();
     
         // Fetch buses and drivers for the select dropdowns
         $buses = Bus::all();

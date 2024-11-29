@@ -13,20 +13,22 @@ class BusTableSeeder extends Seeder
         // Fetch all drivers
         $drivers = User::where('usertype', 'driver')->get();
 
+        // If no drivers exist, show an error and stop
         if ($drivers->isEmpty()) {
             $this->command->error('No drivers found. Please add users with usertype driver.');
             return;
         }
 
+        // List of buses to be added
         $buses = [
-            'Bus 101',
-
+            ['bus_name' => 'Bus 101', 'plate_number' => 'ABC123'],
+            // Add more buses as needed
         ];
 
-        // Ensure drivers are not reused
+        // To avoid reusing the same driver, we will track the assigned drivers
         $assignedDrivers = [];
 
-        foreach ($buses as $busName) {
+        foreach ($buses as $busData) {
             // Find the first available driver who hasn't been assigned yet
             $driver = $drivers->whereNotIn('id', $assignedDrivers)->first();
 
@@ -36,9 +38,10 @@ class BusTableSeeder extends Seeder
                 break;
             }
 
-            // Create the bus with the driver
+            // Create the bus with the driver and plate number
             Bus::create([
-                'bus_name' => $busName,
+                'bus_name' => $busData['bus_name'],
+                'plate_number' => $busData['plate_number'],
                 'driver_id' => $driver->id,
             ]);
 

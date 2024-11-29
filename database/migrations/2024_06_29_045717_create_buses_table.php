@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('buses', function (Blueprint $table) {
             $table->id();
             $table->string('bus_name');
+            $table->string('plate_number')->unique();
             $table->unsignedBigInteger('driver_id')->nullable();
             $table->foreign('driver_id')->references('id')->on('users')->onDelete('set null');
             $table->unsignedBigInteger('conductor_id')->nullable(); 
