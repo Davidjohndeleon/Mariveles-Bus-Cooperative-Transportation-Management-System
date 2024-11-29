@@ -39,7 +39,7 @@
                             </select>
                         </div>
                         <div>
-                            <label for="conductor" class="block text-sm font-medium">Select Conductor</label>
+                            <label for="conductor_id" class="block text-sm font-medium">Select Conductor</label>
                             <select name="conductor_id" id="conductor-dropdown" required class="w-full border-gray-300 rounded-md">
                                 <option value="" disabled selected>Select a Conductor</option>
                                 @foreach ($conductors as $conductor)
@@ -121,7 +121,7 @@
                             </select>
                         </div>
                         <div>
-                            <label for="conductor" class="block text-sm font-medium">Select Conductor</label>
+                            <label for="conductor_id" class="block text-sm font-medium">Select Conductor</label>
                             <select name="conductor_id" id="conductor-dropdown-2" required class="w-full border-gray-300 rounded-md">
                                 <option value="" disabled selected>Select a Conductor</option>
                                 @foreach ($conductors as $conductor)
