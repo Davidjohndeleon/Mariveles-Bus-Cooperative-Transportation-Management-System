@@ -136,7 +136,7 @@ class AdminController extends Controller
         ]);
     
         
-        $schedule = Schedule::findOrFail($id);
+        $schedule = Schedule::where('id', $id)->where('route', $request->route)->firstOrFail();
         $schedule->update($formFields);
     
         

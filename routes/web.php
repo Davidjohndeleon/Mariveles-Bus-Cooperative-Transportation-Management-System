@@ -66,10 +66,10 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
 
     // Schedules management
     Route::get('/schedules', [AdminController::class, 'manageSchedules'])->name('admin.manage.schedules'); // Manage schedules view
-    Route::post('/schedules', [AdminController::class, 'addSchedule'])->name('admin.add.schedule'); // Add a new schedule
-    Route::get('/schedules/{id}/edit', [AdminController::class, 'editSchedule'])->name('admin.edit.schedule'); // Edit schedule
-    Route::put('/schedules/{id}', [AdminController::class, 'updateSchedule'])->name('admin.update.schedule'); // Update schedule
-    Route::delete('/schedules/{schedule}', [AdminController::class, 'deleteSchedule'])->name('admin.delete.schedule'); // Delete schedule
+    Route::post('/schedules', [AdminController::class, 'addSchedule'])->name('admin.add.schedule'); 
+    Route::get('/schedules/{id}/edit', [AdminController::class, 'editSchedule'])->name('admin.edit.schedule'); 
+    Route::put('/schedules/{id}', [AdminController::class, 'updateSchedule'])->name('admin.update.schedule'); 
+    Route::delete('/schedules/{schedule}', [AdminController::class, 'deleteSchedule'])->name('admin.delete.schedule'); 
     Route::get('/admin/add-default-schedules', [AdminController::class, 'addDefaultBalangaToMarivelesSchedules'])->name('admin.add.default.schedules');
     Route::post('/admin/add-default-schedules', [AdminController::class, 'addDefaultBalangaToMarivelesSchedules'])->name('admin.add.default.schedules');
     // Reports for Admin

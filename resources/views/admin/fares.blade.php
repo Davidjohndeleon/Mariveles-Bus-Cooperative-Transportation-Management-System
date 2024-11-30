@@ -1,4 +1,4 @@
-<x-app-layout> 
+<x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Manage Fares') }}
@@ -8,14 +8,15 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
-                
+
+                <!-- Success Message -->
                 @if(session('success'))
                     <div class="bg-green-200 text-green-800 p-4 rounded mb-4">
                         {{ session('success') }}
                     </div>
                 @endif
 
-                <!-- Balanga to Mariveles Table -->
+                <!-- Balanga to Mariveles Fares -->
                 <h3 class="text-lg font-semibold mt-8 mb-4">Balanga to Mariveles Fares</h3>
                 <table class="min-w-full bg-white border border-gray-300 mb-6">
                     <thead>
@@ -61,10 +62,7 @@
                     </tbody>
                 </table>
 
-                <!-- Space between tables -->
-                <div class="my-8"></div>
-
-                <!-- Mariveles to Balanga Table -->
+                <!-- Mariveles to Balanga Fares -->
                 <h3 class="text-lg font-semibold mt-8 mb-4">Mariveles to Balanga Fares</h3>
                 <table class="min-w-full bg-white border border-gray-300">
                     <thead>
