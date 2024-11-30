@@ -96,23 +96,23 @@ class AdminController extends Controller
     }
 
     public function addSchedule(Request $request)
-{
-    $formFields = $request->validate([
-        'departure_time' => 'required|date_format:H:i',
-        'bus_id' => 'required|exists:buses,id',
-        'driver_id' => 'nullable|exists:users,id',
-        'conductor_id' => 'nullable|exists:users,id',  
-        'route' => 'required|string|max:255',     
-    ]);
+    {
+        $formFields = $request->validate([
+            'departure_time' => 'required|date_format:H:i',
+            'bus_id' => 'required|exists:buses,id',
+            'driver_id' => 'nullable|exists:users,id',
+            'conductor_id' => 'nullable|exists:users,id',  
+            'route' => 'required|string|max:255',     
+        ]);
 
-    Schedule::create($formFields);
-    $buses = Bus::all();
-    $drivers = User::where('usertype', 'driver')->get();
-    $conductors = User::where('usertype', 'conductor')->get();
-    
+        Schedule::create($formFields);
+        $buses = Bus::all();
+        $drivers = User::where('usertype', 'driver')->get();
+        $conductors = User::where('usertype', 'conductor')->get();
+        
 
-    return redirect()->route('admin.manage.schedules')->with('success', 'Schedule added successfully!');
-}
+        return redirect()->route('admin.manage.schedules')->with('success', 'Schedule added successfully!');
+    }
 
     public function editSchedule($id)
     {
@@ -126,26 +126,31 @@ class AdminController extends Controller
 
     public function updateSchedule(Request $request, $id)
     {
-        $request->validate([
+        
+        $formFields = $request->validate([
+            'departure_time' => 'required|date_format:H:i',
             'bus_id' => 'required|exists:buses,id',
-            'driver_id' => 'required|exists:users,id',
+            'driver_id' => 'nullable|exists:users,id',
             'conductor_id' => 'nullable|exists:users,id',
-            'departure_time' => [
-                'required',
-                'regex:/^([01]\d|2[0-3]):([0-5]\d)(:[0-5]\d)?$/', 
-            ],
+            'route' => 'required|string|max:255',
         ]);
-
+    
+        
         $schedule = Schedule::findOrFail($id);
-        $schedule->update([
-            'bus_id' => $request->bus_id,
-            'driver_id' => $request->driver_id,
-            'conductor_id' => $request->conductor_id,
-            'departure_time' => $request->departure_time,
-        ]);
-
-        return redirect()->route('admin.manage.schedules')->with('success', 'Schedule updated successfully.');
+        $schedule->update($formFields);
+    
+        
+        $buses = Bus::all();
+        $drivers = User::where('usertype', 'driver')->get();
+        $conductors = User::where('usertype', 'conductor')->get();
+    
+        
+        return redirect()->route('admin.manage.schedules')->with('success', 'Schedule updated successfully!');
     }
+    
+    
+    
+    
 
     public function deleteSchedule($id)
     {
