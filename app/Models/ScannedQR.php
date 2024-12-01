@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -8,17 +9,20 @@ class ScannedQR extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['driver_id', 'name', 'status'];
-
+ 
     protected $table = 'scanned_qr';
 
-    public function checkpoint()
-{
-    return $this->belongsTo(Checkpoint::class);
-}
+ 
+    protected $fillable = ['driver_id', 'checkpoint_id', 'status'];
 
-public function driver()
-{
-    return $this->belongsTo(User::class, 'driver_id');
-}
+    public function checkpoint()
+    {
+        return $this->belongsTo(Checkpoint::class, 'checkpoint_id');
+    }
+
+
+    public function driver()
+    {
+        return $this->belongsTo(User::class, 'driver_id');
+    }
 }

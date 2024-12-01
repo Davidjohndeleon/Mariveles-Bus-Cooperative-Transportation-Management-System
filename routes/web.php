@@ -11,6 +11,7 @@ use App\Http\Controllers\AdminReportController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FareController;
 use App\Http\Controllers\AdminBusBookingController;
+use App\Http\Controllers\AdminCheckpointController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,7 +46,9 @@ Route::middleware('auth')->group(function () {
 // Admin Routes
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     
-    Route::get('/admin/admin_dashboard', [AdminController::class, 'gps'])->name('admin.admin.dashboard');
+    Route::get('/admin_dashboard', [AdminController::class, 'gps'])->name('admin.admin.dashboard');
+
+    Route::get('/checkpoints/scanned-checkpoints', [AdminCheckpointController::class,'viewScannedCheckpoints'])->name('admin.checkpoints.scanned-checkpoints');
 
     Route::get('/buses', [AdminController::class, 'manageBuses'])->name('admin.manage.buses');
     Route::post('/buses', [AdminController::class, 'addBus'])->name('admin.add.bus');
@@ -103,7 +106,7 @@ Route::middleware(['auth', 'role:driver'])->group(function () {
     Route::resource('drivers', DriverController::class);
     Route::post('/driver/locping', [DriverController::class, 'locPing'])->name('driver.locping');
     Route::get('/driver/qrcode', [DriverController::class, 'generateQRCode'])->name('driver.qrcode');
-    Route::get('/driver/checkpoints', [DriverController::class, 'viewCheckpoints'])->name('driver.checkpoints');
+    Route::get('/driver/checkpoints', [DriverController::class, 'viewCheckpoints'])->name('drivers.checkpoints');
     Route::post('/driver/checkpoints/{checkpoint}', [DriverController::class, 'markCheckpointComplete'])->name('driver.completeCheckpoint');
 });
 

@@ -21,7 +21,7 @@ class Checkpoint extends Model
 
     public function scannedQR()
     {
-        return $this->hasOne(ScannedQR::class);
+        return $this->hasMany(ScannedQR::class, 'checkpoint_id');
     }
 
 }

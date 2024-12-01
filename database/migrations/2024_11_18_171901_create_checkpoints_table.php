@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('checkpoints', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('driver_id');
-            $table->unsignedBigInteger('scanned_qr_id')->nullable(); // Foreign key for scanned QR
+            $table->unsignedBigInteger('scanned_qr_id')->nullable();
+            $table->string('checkpoint_name');
             $table->string('status')->default('pending');
             $table->timestamps();
 

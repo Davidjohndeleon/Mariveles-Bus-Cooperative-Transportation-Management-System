@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('scanned_qr', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('driver_id');
-            $table->unsignedBigInteger('checkpoint_id')->nullable(); // Foreign key for checkpoint
+            $table->string('checkpoint_name');
+            $table->foreignId('driver_id')->constrained('users')->onDelete('cascade');
+            $table->unsignedBigInteger('checkpoint_id')->nullable();
+            $table->foreign('checkpoint_id')->references('id')->on('checkpoints')->onDelete('set null'); 
             $table->string('status')->default('scanned');
             $table->timestamps();
         });

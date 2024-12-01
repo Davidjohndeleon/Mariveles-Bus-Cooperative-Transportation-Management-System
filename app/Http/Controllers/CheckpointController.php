@@ -1,42 +1,59 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\ScannedQR;
+use App\Models\Checkpoint;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class CheckpointController extends Controller
 {
-    // Display the scan form and pass the scanned QR codes to the view
     public function showScanForm()
     {
-        // Fetch all scanned QR codes
+        // Fetch all active checkpoints and scanned QR codes
+        $checkpoints = Checkpoint::all(); // Optionally filter by status, e.g., ->where('status', 'active')
         $scannedQRs = ScannedQR::with('driver')->get();
-        return view('checkpoint.scan', compact('scannedQRs'));
+
+        return view('checkpoint.scan', compact('checkpoints', 'scannedQRs'));
     }
 
-    // Handle QR code scanning logic
     public function scanQRCode(Request $request)
     {
-        $driverId = $request->input('driver_id');
+        
 
-        // Check if the driver has already scanned this QR code
-        $scannedQR = ScannedQR::where('driver_id', $driverId)->first();
+        $driverId = $request->input('driver_id');
+        $request->validate([
+            'driver_id' => 'required|exists:drivers,id',
+            'checkpoint_name' => 'required|string|max:255',
+            
+        ]);
+
+        $scannedQR = ScannedQR::where('driver_id', $driverId)
+            ->latest()
+            ->first();
+
         if ($scannedQR) {
-            return redirect()->route('checkpoint.scan')->with('error', 'This QR code has already been scanned.');
+            $minutesDiff = $scannedQR->created_at->diffInMinutes(Carbon::now());
+
+            if ($minutesDiff < 10) {
+                return redirect()->route('checkpoint.scan')->with('error', 'You must wait 10 minutes before scanning this driver\'s QR code again.');
+            }
         }
 
-        // Otherwise, store the scanned QR code
+        // Store the checkpoint data
         ScannedQR::create([
             'driver_id' => $driverId,
-            'status' => 'scanned', // Set the status as scanned
+            'checkpoint_name' => $request->input('checkpoint_name'), 
+            
         ]);
+
 
         return redirect()->route('checkpoint.scan')->with('success', 'QR code scanned successfully.');
     }
 
-    // Success page after QR code scanning
-    public function success()
-    {
-        return view('checkpoint.success');
-    }
+        public function success()
+        {
+            return view('checkpoint.success');
+        }
 }
