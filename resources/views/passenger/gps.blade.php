@@ -30,10 +30,7 @@
         </div>
     </x-app-layout>
 
-
-    
     <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
-
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -71,24 +68,6 @@
               map.panTo([lat, lng]);
               buses[busId].getPopup().setContent(`<b>Bus #${busId}</b><br>Current location: [${lat.toFixed(5)}, ${lng.toFixed(5)}]`).openOn(map);
             }
-
-
-            // // Simulate GPS data updates
-            // var i = 0;
-            // var gpsData = [
-            //     [14.4331, 120.4852],
-            //     [14.4332, 120.4853],
-            //     [14.4333, 120.4854],
-            //     [14.4334, 120.4855],
-            //     [14.4335, 120.4856]
-            // ];
-            // setInterval(function() {
-            //     if (i >= gpsData.length) {
-            //         i = 0; // Loop back to the start
-            //     }
-            //     updateBusLocation(gpsData[i][0], gpsData[i][1]);
-            //     i++;
-            // }, 2000); // Update every 2 seconds
         });
     </script>
 </body>

@@ -45,16 +45,14 @@ Route::middleware('auth')->group(function () {
 // Admin Routes
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     
+    Route::get('/admin/admin_dashboard', [AdminController::class, 'gps'])->name('admin.admin.dashboard');
+
     Route::get('/buses', [AdminController::class, 'manageBuses'])->name('admin.manage.buses');
     Route::post('/buses', [AdminController::class, 'addBus'])->name('admin.add.bus');
     Route::get('/buses/{bus}/edit', [AdminController::class, 'editBus'])->name('admin.edit.bus');
     Route::put('/buses/{bus}/edit', [AdminController::class, 'updateBus'])->name('admin.update.bus');
     Route::delete('/buses/{id}', [AdminController::class, 'deleteBus'])->name('admin.delete.bus');
     
-    //Route::get('/schedules', [AdminController::class, 'showSchedules'])->name('schedules');
-    Route::get('/admin/admin_dashboard', [AdminController::class, 'gps'])->name('admin.admin.dashboard');
-    Route::post('/admin/schedule/add', [AdminController::class, 'addSchedule'])->name('admin.add.schedule');
-    // Route::put('/admin/schedule/update/{id}', [AdminController::class, 'updateSchedule'])->name('admin.update.schedule');
     
     // Conductor registration
     Route::post('/admin/register/conductor', [AdminController::class, 'registerConductor'])->name('admin.register.conductor');
@@ -65,6 +63,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     Route::post('/register_driver', [AdminController::class, 'registerDriver'])->name('admin.register.driver');
 
     // Schedules management
+    
     Route::get('/schedules', [AdminController::class, 'manageSchedules'])->name('admin.manage.schedules'); // Manage schedules view
     Route::post('/schedules', [AdminController::class, 'addSchedule'])->name('admin.add.schedule'); 
     Route::get('/schedules/{id}/edit', [AdminController::class, 'editSchedule'])->name('admin.edit.schedule'); 
@@ -82,6 +81,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     Route::get('/admin/fares/{id}/edit', [FareController::class, 'edit'])->name('fares.edit');
     Route::put('/admin/fares/{id}', [FareController::class, 'update'])->name('fares.update');
     Route::delete('/admin/fares/{id}', [FareController::class, 'destroy'])->name('fares.destroy');
+    Route::get('/admin/fares/edit-all', [FareController::class, 'editAll'])->name('fares.editAll');
+    Route::put('/admin/fares/update-all', [FareController::class, 'updateAll'])->name('fares.updateAll');
+
 
 
     //Registration for checkpoint users

@@ -100,4 +100,25 @@ class FareController extends Controller
 
         return redirect()->route('fares.index')->with('success', 'Fare deleted successfully!');
     }
+
+    public function editAll()
+    {
+        $balangaToMarivelesFares = Fare::where('route', 'Balanga to Mariveles')->get();
+        $marivelesToBalangaFares = Fare::where('route', 'Mariveles to Balanga')->get();
+
+        return view('admin.edit_fares', compact('balangaToMarivelesFares', 'marivelesToBalangaFares'));
+    }
+
+    public function updateAll(Request $request)
+    {
+        $fares = $request->input('fares');
+
+        foreach ($fares as $fareData) {
+            $fare = Fare::findOrFail($fareData['id']);
+            $fare->update($fareData);
+        }
+
+        return redirect()->route('fares.index')->with('success', 'Fares updated successfully!');
+    }
+
 }

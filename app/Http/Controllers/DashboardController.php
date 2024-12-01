@@ -15,7 +15,7 @@ class DashboardController extends Controller
         // Fetch schedules from the database
         $balangaToMarivelesSchedules = Schedule::where('route', 'Balanga to Mariveles')->get();
         $marivelesToBalangaSchedules = Schedule::where('route', 'Mariveles to Balanga')->get();
-
+        $fares = Fare::all();
         // Assuming you have Bus and Driver models
         $buses = Bus::all();
         $drivers = Driver::all();

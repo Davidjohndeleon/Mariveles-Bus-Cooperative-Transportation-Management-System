@@ -77,12 +77,17 @@ class AdminController extends Controller
         return redirect()->route('admin.dashboard')->with('success', 'Bus deleted successfully.');
     }
 
-    public function manageSchedules()
+    public function manageSchedules(Request $request)
     {
+        $route = $request->get('route', 'Balanga to Mariveles');
         // Fetch schedules based on specific routes
         $balangaToMarivelesSchedules = Schedule::where('route', 'Balanga to Mariveles')->with('bus', 'driver')->get();
         $marivelesToBalangaSchedules = Schedule::where('route', 'Mariveles to Balanga')->with('bus', 'driver')->get();
 
+
+        $schedules = Schedule::where('route', $route)
+        ->with(['bus', 'driver', 'conductor'])
+        ->get();
         // Fetch all buses and drivers
         $buses = Bus::all();  
         $drivers = User::where('usertype', 'driver')->get();;
@@ -92,7 +97,7 @@ class AdminController extends Controller
         Log::info('Balanga to Mariveles Schedules:', $balangaToMarivelesSchedules->toArray());
         Log::info('Mariveles to Balanga Schedules:', $marivelesToBalangaSchedules->toArray());
 
-        return view('admin.schedules', compact('balangaToMarivelesSchedules', 'marivelesToBalangaSchedules', 'buses', 'drivers','conductors'));
+        return view('admin.schedules', compact('balangaToMarivelesSchedules', 'marivelesToBalangaSchedules', 'buses', 'drivers','conductors','route'));
     }
 
     public function addSchedule(Request $request)
@@ -190,6 +195,7 @@ class AdminController extends Controller
 
     public function showSchedules()
     {
+        
         // Fetch schedules for Balanga to Mariveles and Mariveles to Balanga
         $balangaToMarivelesSchedules = Schedule::where('route', 'Balanga to Mariveles')->with(['bus','driver','conductor'])->get();
         $marivelesToBalangaSchedules = Schedule::where('route', 'Mariveles to Balanga')->with(['bus','driver','conductor'])->get();
@@ -207,6 +213,7 @@ class AdminController extends Controller
             'buses' => $buses,
             'drivers' => $drivers,
             'conductors' => $conductors,
+            
         ]);
     }
 
