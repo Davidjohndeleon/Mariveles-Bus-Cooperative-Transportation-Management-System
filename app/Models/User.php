@@ -65,6 +65,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->usertype === 'driver';
     }
 
+    public function driver()
+    {
+        return $this->hasOne(Driver::class); 
+    }
+
     public function isCheckpoint()
     {
         return $this->usertype === 'checkpoint';

@@ -12,12 +12,19 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 class DriverController extends Controller
 {
     
-    public function generateQRCode(Request $request)
+    public function generateQRCode(Request $request, $driverId)
     {
-        $user = $request->user();
-        $qrCode = QrCode::size(600)->generate($user->id);
-
-        return view('drivers.qrcode', compact('qrCode'));
+        // Fetch the driver by their ID
+        $driver = Driver::find($driverId);
+    
+        if (!$driver) {
+            return redirect()->back()->with('error', 'Driver not found.');
+        }
+    
+        // Generate the QR code for the driver's ID
+        $qrCode = QrCode::size(600)->generate($driver->id);
+    
+        return view('drivers.qrcode', compact('qrCode', 'driver'));
     }
 
 

@@ -10,6 +10,9 @@ class AdminCheckpointController extends Controller
 {
     public function viewScannedCheckpoints(Request $request)
     {
+
+        $scannedCheckpoints = ScannedQR::with('checkpoint')->get();
+        
         // Fetch selected checkpoint name from the request
         $selectedCheckpoint = $request->query('checkpoint_name');
     

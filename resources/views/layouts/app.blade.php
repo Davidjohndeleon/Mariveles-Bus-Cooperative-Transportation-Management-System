@@ -257,26 +257,39 @@
                     @endif
 
 
-                        @if(Auth::user()->isDriver())
-                                <div class="space-y-2">
-                                
-                                    <x-nav-link :href="route('driver.qrcode')" :active="request()->routeIs('driver.qrcode')" class="nav-link">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
-                                        </svg>
-                                        <span>{{ __('QR Code') }}</span>
-                                    </x-nav-link>
-                                
-                                    
-                                    <x-nav-link :href="route('drivers.checkpoints')" :active="request()->routeIs('driver.checkpoints')" class="text-lg">
-                                        <svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/>
-                                        </svg>
-                                        {{ __('Checkpoints') }}
-                                    </x-nav-link>
-                                    
-                                </div>
+                     <!-- DRIVER Links -->
+
+                    @if(Auth::user()->isDriver())
+                        <div class="space-y-2">
+                            
+
+                            @php
+                                $user = Auth::user()->load('driver');
+                                $driver = Auth::user()->driver; 
+                                $driverId = $driver ? $driver->id : null; 
+                            @endphp
+
+                            @if($driverId)
+                                <x-nav-link :href="route('drivers.qrcode', $driverId)" :active="request()->routeIs('drivers.qrcode')" class="nav-link">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                                    </svg>
+                                    <span>{{ __('QR Code') }}</span>
+                                </x-nav-link>
+                            @else
+                                <p>{{ __('Driver information not available.') }}</p>
                             @endif
+
+                            <x-nav-link :href="route('drivers.checkpoints')" :active="request()->routeIs('driver.checkpoints')" class="text-lg">
+                                <svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/>
+                                </svg>
+                                {{ __('Checkpoints') }}
+                            </x-nav-link>
+
+                        </div>
+                    @endif
+
 
                             <!-- Checkpoint Links -->
                             @if(Auth::user()->isCheckpoint())

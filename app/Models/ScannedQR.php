@@ -9,20 +9,21 @@ class ScannedQR extends Model
 {
     use HasFactory;
 
- 
     protected $table = 'scanned_qr';
 
- 
-    protected $fillable = ['driver_id', 'checkpoint_id', 'status'];
+    protected $fillable = [
+        'driver_id',
+        'checkpoint_id',
+        'status',
+    ];
 
     public function checkpoint()
     {
-        return $this->belongsTo(Checkpoint::class, 'checkpoint_id');
+        return $this->belongsTo(Checkpoint::class);
     }
-
 
     public function driver()
     {
-        return $this->belongsTo(User::class, 'driver_id');
+        return $this->belongsTo(Driver::class, 'driver_id');
     }
 }

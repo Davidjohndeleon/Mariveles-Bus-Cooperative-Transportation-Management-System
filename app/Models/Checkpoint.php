@@ -10,18 +10,15 @@ class Checkpoint extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id','name', 'status'
+        'driver_id',
+        'scanned_qr_id',
+        'status',
+        'checkpoint_name',
     ];
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-
-    }
 
     public function scannedQR()
     {
         return $this->hasMany(ScannedQR::class, 'checkpoint_id');
     }
-
+    
 }
