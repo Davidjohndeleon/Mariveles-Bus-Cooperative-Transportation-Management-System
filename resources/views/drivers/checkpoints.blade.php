@@ -30,12 +30,12 @@
                     </div>
                 </form>
 
-                <!-- Display scanned checkpoints -->
-                @if($checkpoints->isEmpty())
+                <!-- Display scanned QR codes -->
+                @if($scannedQRs->isEmpty())
                     <p class="text-gray-600">No scanned QR codes found for this checkpoint.</p>
                 @else
                     <h3 class="text-lg font-semibold mb-4">
-                        Scanned Checkpoints 
+                        Scanned QR Codes 
                         @if($selectedCheckpoint) for "{{ $selectedCheckpoint }}" @endif
                     </h3>
                     <div class="overflow-x-auto">
@@ -47,10 +47,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($checkpoints as $checkpoint)
+                                @foreach($scannedQRs as $scannedQR)
                                     <tr class="hover:bg-gray-50">
-                                        <td class="border border-gray-300 px-4 py-2">{{ $checkpoint->checkpoint_name }}</td>
-                                        <td class="border border-gray-300 px-4 py-2">{{ $checkpoint->created_at->format('F j, Y, g:i A') }}</td>
+                                        <td class="border border-gray-300 px-4 py-2">{{ $scannedQR->checkpoint_name ?? 'N/A' }}</td>
+                                        <td class="border border-gray-300 px-4 py-2">{{ $scannedQR->created_at->format('F j, Y, g:i A') }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>

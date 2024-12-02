@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('scanned_qr', function (Blueprint $table) {
             $table->id();
             $table->foreignId('driver_id');
-            $table->unsignedBigInteger('checkpoint_id')->nullable(); 
+            $table->unsignedBigInteger('checkpoint_id')->nullable();
+            $table->string('checkpoint_name'); 
             $table->string('status')->default('scanned');
             $table->timestamps();
 

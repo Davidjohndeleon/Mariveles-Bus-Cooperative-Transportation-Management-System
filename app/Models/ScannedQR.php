@@ -14,6 +14,7 @@ class ScannedQR extends Model
     protected $fillable = [
         'driver_id',
         'checkpoint_id',
+        'checkpoint_name',
         'status',
     ];
 

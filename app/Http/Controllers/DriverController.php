@@ -34,25 +34,14 @@ class DriverController extends Controller
         return response()->json('Ping successful');
     }
 
-    public function viewCheckpoints(Request $request)
-    {
-        $driver = Auth::user();
-        
-        $selectedCheckpoint = $request->query('checkpoint_name', null);
-    
-        $checkpointsQuery = ScannedQR::where('driver_id', $driver->id);
-    
-        if ($selectedCheckpoint) {
-            $checkpointsQuery->where('checkpoint_name', $selectedCheckpoint);
-        }
-    
-        $checkpoints = $checkpointsQuery->get();
-    
-        return view('drivers.checkpoints', [
-            'checkpoints' => $checkpoints,
-            'selectedCheckpoint' => $selectedCheckpoint,
-        ]);
-    }
-    
+    public function viewCheckpoints(Request $request) {
+        $driver = Auth::user(); $selectedCheckpoint = $request->query('checkpoint_name', null);
+        $scannedQRQuery = ScannedQR::where('driver_id', $driver->id); 
+            if ($selectedCheckpoint) {
+                $scannedQRQuery->where('checkpoint_name', $selectedCheckpoint);
+                } 
+                
+                $scannedQRs = $scannedQRQuery->get();
 
+                return view('drivers.checkpoints', [ 'scannedQRs' => $scannedQRs, 'selectedCheckpoint' => $selectedCheckpoint, ]); }
 }

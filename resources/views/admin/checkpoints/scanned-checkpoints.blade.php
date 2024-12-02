@@ -52,7 +52,7 @@
                             <tbody>
                                 @foreach($scannedCheckpoints as $scannedCheckpoint)
                                     <tr class="hover:bg-gray-50">
-                                        <td class="border border-gray-300 px-4 py-2">{{ $scannedCheckpoint->checkpoint->checkpoint_name }}</td>
+                                        <td class="border border-gray-300 px-4 py-2">{{ $scannedCheckpoint->checkpoint_name ?? 'N/A' }}</td>
                                         <td class="border border-gray-300 px-4 py-2">{{ $scannedCheckpoint->driver->name ?? 'N/A' }}</td>
                                         <td class="border border-gray-300 px-4 py-2">{{ $scannedCheckpoint->created_at->format('F j, Y, g:i A') }}</td>
                                     </tr>

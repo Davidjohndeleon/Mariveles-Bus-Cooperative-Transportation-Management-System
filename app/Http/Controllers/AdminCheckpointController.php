@@ -10,9 +10,6 @@ class AdminCheckpointController extends Controller
 {
     public function viewScannedCheckpoints(Request $request)
     {
-
-        $scannedCheckpoints = ScannedQR::with('checkpoint')->get();
-        
         // Fetch selected checkpoint name from the request
         $selectedCheckpoint = $request->query('checkpoint_name');
     
@@ -21,7 +18,9 @@ class AdminCheckpointController extends Controller
     
         // Apply filter if a checkpoint name is selected
         if ($selectedCheckpoint) {
-            $scannedCheckpointsQuery->where('checkpoint_name', $selectedCheckpoint);
+            $scannedCheckpointsQuery->whereHas('checkpoint', function ($query) use ($selectedCheckpoint) {
+                $query->where('checkpoint_name', $selectedCheckpoint);
+            });
         }
     
         // Get the results
@@ -29,5 +28,6 @@ class AdminCheckpointController extends Controller
     
         return view('admin.checkpoints.scanned-checkpoints', compact('scannedCheckpoints', 'selectedCheckpoint'));
     }
+    
     
 }

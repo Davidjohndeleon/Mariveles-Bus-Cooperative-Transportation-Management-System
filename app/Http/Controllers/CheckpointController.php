@@ -46,21 +46,12 @@ class CheckpointController extends Controller
                 );
             }
         }
-    
-        // Store the QR code scan with the checkpoint name
-        $newScannedQR = ScannedQR::create([
-            'driver_id' => $request->driver_id,
-            'checkpoint_name' => $request->checkpoint_name,
-            'status' => 'scanned',
-        ]);
-    
+
+        ScannedQR::create([ 'driver_id' => $request->driver_id, 'checkpoint_name' => $request->checkpoint_name, 'status' => 'scanned', ]);
+
         // Redirect with success message
         return redirect()->route('checkpoint.scan')->with('success', 'QR code scanned and checkpoint saved successfully.');
     }
-    
-    
-    
-    
     
 
     /**
