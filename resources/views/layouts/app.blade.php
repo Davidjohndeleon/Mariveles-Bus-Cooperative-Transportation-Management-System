@@ -243,16 +243,6 @@
                                 </svg>
                                 <span>{{ __('Register Checkpoint User') }}</span>
                             </x-nav-link>
-
-                            <x-nav-link :href="route('admin.bus.bookings')" 
-                                        :active="request()->routeIs('admin.bus.bookings')" 
-                                        class="nav-link">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                        d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/>
-                                </svg>
-                                <span>{{ __('Manage Bus Bookings') }}</span>
-                            </x-nav-link>
                         </div>
                     @endif
 
@@ -313,13 +303,6 @@
                                             {{ __('Report a Bus') }}
                                         </x-nav-link>
                                                                 
-                                        <x-nav-link :href="route('passenger.bookings')" :active="request()->routeIs('passenger.bookings')" class="text-lg">
-                                            <svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
-                                            </svg>
-                                            {{ __('My Bus Bookings') }}
-                                        </x-nav-link>
-
                                         <x-nav-link :href="route('passenger.gps')" :active="request()->routeIs('passenger.gps')" class="text-lg">
                                             <svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
