@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Driver;
 use App\Models\ScannedQR;
 use Illuminate\Http\Request;
@@ -34,14 +35,38 @@ class DriverController extends Controller
         return response()->json('Ping successful');
     }
 
-    public function viewCheckpoints(Request $request) {
-        $driver = Auth::user(); $selectedCheckpoint = $request->query('checkpoint_name', null);
-        $scannedQRQuery = ScannedQR::where('driver_id', $driver->id); 
-            if ($selectedCheckpoint) {
-                $scannedQRQuery->where('checkpoint_name', $selectedCheckpoint);
-                } 
-                
-                $scannedQRs = $scannedQRQuery->get();
-
-                return view('drivers.checkpoints', [ 'scannedQRs' => $scannedQRs, 'selectedCheckpoint' => $selectedCheckpoint, ]); }
+    public function viewCheckpoints(Request $request)
+    {
+        /** @var \App\Models\User $user */
+        $user = Auth::user()->load('driver'); // Load driver relationship
+        $driver = $user->driver;
+    
+        if (!$driver) {
+            // Redirect or show an error if the user is not a driver
+            return redirect()->route('dashboard')->with('error', 'You are not assigned as a driver.');
+        }
+    
+        $selectedCheckpoint = $request->query('checkpoint_name', null);
+        $scannedQRQuery = ScannedQR::where('driver_id', $driver->id);
+    
+        if ($selectedCheckpoint) {
+            $scannedQRQuery->where('checkpoint_name', $selectedCheckpoint);
+        }
+    
+        $scannedQRs = $scannedQRQuery->get();
+    
+        // Fetch unique checkpoint names for dropdown
+        $checkpointNames = ScannedQR::where('driver_id', $driver->id)
+            ->distinct()
+            ->pluck('checkpoint_name');
+    
+        return view('drivers.checkpoints', [
+            'scannedQRs' => $scannedQRs,
+            'selectedCheckpoint' => $selectedCheckpoint,
+            'checkpointNames' => $checkpointNames,
+            'driverId' => $driver->id, 
+        ]);
+    }
+    
+    
 }

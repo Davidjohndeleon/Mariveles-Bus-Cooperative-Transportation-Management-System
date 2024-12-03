@@ -1,33 +1,39 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Checkpoint;
+
 use App\Models\ScannedQR;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class AdminCheckpointController extends Controller
 {
+    /**
+     * View scanned checkpoints with optional filtering by checkpoint name.
+     */
     public function viewScannedCheckpoints(Request $request)
     {
-        // Fetch selected checkpoint name from the request
+        // Fetch the selected checkpoint name from the request
         $selectedCheckpoint = $request->query('checkpoint_name');
-    
-        // Build the query for scanned QR codes
-        $scannedCheckpointsQuery = ScannedQR::with('driver');
-    
-        // Apply filter if a checkpoint name is selected
+
+        // Query all scanned QR records
+        $scannedCheckpointsQuery = ScannedQR::query();
+
+        // Filter by checkpoint name if provided
         if ($selectedCheckpoint) {
-            $scannedCheckpointsQuery->whereHas('checkpoint', function ($query) use ($selectedCheckpoint) {
-                $query->where('checkpoint_name', $selectedCheckpoint);
-            });
+            $scannedCheckpointsQuery->where('checkpoint_name', $selectedCheckpoint);
         }
-    
-        // Get the results
-        $scannedCheckpoints = $scannedCheckpointsQuery->get();
-    
-        return view('admin.checkpoints.scanned-checkpoints', compact('scannedCheckpoints', 'selectedCheckpoint'));
+
+        // Fetch the results
+        $scannedCheckpoints = $scannedCheckpointsQuery->with('driver')->get();
+
+        // Fetch unique checkpoint names from scanned_qr table for the dropdown filter
+        $checkpointNames = ScannedQR::distinct()->pluck('checkpoint_name');
+
+        return view('admin.checkpoints.scanned-checkpoints', [
+            'scannedCheckpoints' => $scannedCheckpoints,
+            'selectedCheckpoint' => $selectedCheckpoint,
+            'checkpointNames' => $checkpointNames,
+        ]);
     }
-    
-    
 }
+

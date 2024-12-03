@@ -12,23 +12,19 @@
 
                 <!-- Dropdown to filter checkpoints -->
                 <form action="{{ route('admin.checkpoints.scanned-checkpoints') }}" method="GET" class="mb-6">
-                    <div class="flex items-center space-x-4">
-                        <div>
-                            <label for="checkpoint_name" class="block text-gray-700">Select Checkpoint</label>
-                            <select name="checkpoint_name" id="checkpoint_name" class="mt-2 block w-64 rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
-                                <option value="" {{ request('checkpoint_name') === null ? 'selected' : '' }}>All Checkpoints</option>
-                                @foreach(\App\Models\Checkpoint::pluck('checkpoint_name') as $checkpointName)
-                                    <option value="{{ $checkpointName }}" {{ request('checkpoint_name') === $checkpointName ? 'selected' : '' }}>
-                                        {{ $checkpointName }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="pt-6">
-                            <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
-                                Filter
-                            </button>
-                        </div>
+                    <div class="mt-4">
+                        <label for="checkpoint_name" class="block text-sm font-medium text-gray-700">Select Checkpoint</label>
+                        <select name="checkpoint_name" id="checkpoint_name" class="mt-2 block w-64 rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                            <option value="" {{ old('checkpoint_name') == '' ? 'selected' : '' }}>Select a checkpoint</option>
+                            @foreach($checkpointNames as $checkpointName)
+                                <option value="{{ $checkpointName }}" {{ old('checkpoint_name') == $checkpointName ? 'selected' : '' }}>{{ $checkpointName }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="pt-6">
+                        <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                            Filter
+                        </button>
                     </div>
                 </form>
 
