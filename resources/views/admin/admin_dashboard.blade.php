@@ -6,9 +6,23 @@
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
         #map {
             height: 500px;
             width: 100%;
+            position: relative; /* Ensure it respects stacking order */
+        }
+        nav {
+            z-index: 1000; /* Make sure it appears above the map */
+            position: relative; /* Ensure proper stacking context */
+        }
+        .content {
+            position: relative; /* Ensure map stays within its container */
+            z-index: 1;
         }
     </style>
 </head>
@@ -24,7 +38,9 @@
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
                     <h3 class="text-lg font-semibold mb-4">Bus GPS Tracking</h3>
-                    <div id="map"></div>
+                    <div class="content">
+                        <div id="map"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -70,7 +86,6 @@
         }
     });
 </script>
-
 
 </body>
 </html>

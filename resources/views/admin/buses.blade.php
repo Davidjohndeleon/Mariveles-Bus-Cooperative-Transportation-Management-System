@@ -8,33 +8,6 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
-                <!-- Bus Listing Section -->
-                <h3 class="text-lg font-semibold mb-4">Buses List</h3>
-                <div class="mb-4">
-                    <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Bus Name</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Plate Number</th>
-                                <th scope="col" class="relative px-6 py-3"></th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
-                            @foreach ($buses as $bus)
-                                <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ $bus->id }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ $bus->bus_name }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ $bus->plate_number }}</td> 
-                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                        <a href="{{ route('admin.edit.bus', $bus->id) }}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-
                 <!-- Add Bus Form Section -->
                 <h3 class="text-lg font-semibold mb-4">Add New Bus</h3>
                 @if ($errors->any())
@@ -80,6 +53,46 @@
                     </div>
                 </form>
             </div>
+
+            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6 mt-6">
+                <!-- Bus Listing Section -->
+                <h3 class="text-lg font-semibold mb-4">Buses List</h3>
+
+                <table id="buses-table"class="min-w-full bg-white border border-gray-200">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Bus Name</th>
+                            <th>Plate Number</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($buses as $bus)
+                            <tr>
+                                <td>{{ $bus->id }}</td>
+                                <td>{{ $bus->bus_name }}</td>
+                                <td>{{ $bus->plate_number }}</td>
+                                <td>
+                                    <a href="{{ route('admin.edit.bus', $bus->id) }}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
+
+    <!-- Include DataTables CSS & JS -->
+    <link href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#buses-table').DataTable(); 
+        });
+    </script>
 </x-app-layout>

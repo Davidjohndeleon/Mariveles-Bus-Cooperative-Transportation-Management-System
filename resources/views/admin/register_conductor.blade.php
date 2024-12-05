@@ -47,7 +47,7 @@
             <!-- Table of Registered Conductors -->
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg mt-8 p-6">
                 <h3 class="text-lg font-semibold mb-4">{{ __('Registered Conductors') }}</h3>
-                <table class="min-w-full bg-white border border-gray-200">
+                <table id="conductors-table" class="min-w-full bg-white border border-gray-200">
                     <thead>
                         <tr>
                             <th class="px-4 py-2 border-b">ID</th>
@@ -74,4 +74,16 @@
             </div>
         </div>
     </div>
+
+    <!-- Include DataTables CSS & JS -->
+    <link href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#conductors-table').DataTable();
+        });
+    </script>    
 </x-app-layout>

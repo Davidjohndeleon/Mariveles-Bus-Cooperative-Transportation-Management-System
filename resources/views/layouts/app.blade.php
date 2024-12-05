@@ -129,6 +129,15 @@
         <!-- Improved Sidebar -->
         <div :class="open ? 'translate-x-0' : '-translate-x-full'" 
         class="fixed inset-y-0 left-0 z-30 w-64 bg-white overflow-y-auto transition-transform duration-300 transform lg:translate-x-0 lg:static lg:inset-0 shadow-lg">
+
+            <!-- Close Button -->
+            <button @click="open = false" 
+                    class="absolute top-4 right-4 text-gray-700 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+
             <!-- Logo Section -->
             <div class="flex items-center justify-center h-16 px-6 border-b border-slate-700/50">
                 <a href="{{ route('dashboard') }}" class="block transition-transform duration-200 hover:scale-105">
@@ -314,9 +323,10 @@
             </nav>
         </div>
 
+        
+
         <!-- Main Content Area -->
         <div class="flex-1 flex flex-col min-h-screen">
-            <!-- Enhanced Header -->
             <header class="bg-white border-b shadow-sm">
                 <div class="px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
                     <!-- Mobile menu button -->
