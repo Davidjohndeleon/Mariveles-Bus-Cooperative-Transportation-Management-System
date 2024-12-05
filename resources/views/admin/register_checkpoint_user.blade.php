@@ -88,16 +88,7 @@
     <script>
         $(document).ready(function () {
             $('#checkpointTable').DataTable({
-                responsive: true,
-                language: {
-                    search: "Search:",
-                    lengthMenu: "Show _MENU_ entries",
-                    info: "Showing _START_ to _END_ of _TOTAL_ entries",
-                }
             });
         });
     </script>
-
-    <!-- DataTables Styles -->
-    <link href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
 </x-app-layout>
