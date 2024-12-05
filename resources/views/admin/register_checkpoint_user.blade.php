@@ -51,26 +51,26 @@
                 <!-- Checkpoint Users Table -->
                 <div class="mt-8">
                     <h3 class="text-lg font-semibold text-gray-800 leading-tight mb-4">{{ __('Registered Checkpoint Users') }}</h3>
-                    <table class="min-w-full bg-white border border-gray-200">
+                    <table id="checkpointTable" class="min-w-full bg-white border border-gray-200">
                         <thead>
                             <tr>
-                                <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-gray-600 uppercase">ID</th>
-                                <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-gray-600 uppercase">Name</th>
-                                <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-gray-600 uppercase">Email</th>
-                                <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-gray-600 uppercase">Registered At</th>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Registered At</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse ($checkpoints as $checkpoint)
                                 <tr>
-                                    <td class="px-6 py-4 border-b border-gray-300 text-sm">{{ $checkpoint->id }}</td>
-                                    <td class="px-6 py-4 border-b border-gray-300 text-sm">{{ $checkpoint->name }}</td>
-                                    <td class="px-6 py-4 border-b border-gray-300 text-sm">{{ $checkpoint->email }}</td>
-                                    <td class="px-6 py-4 border-b border-gray-300 text-sm">{{ $checkpoint->created_at->format('Y-m-d') }}</td>
+                                    <td>{{ $checkpoint->id }}</td>
+                                    <td>{{ $checkpoint->name }}</td>
+                                    <td>{{ $checkpoint->email }}</td>
+                                    <td>{{ $checkpoint->created_at->format('Y-m-d') }}</td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="4" class="px-6 py-4 border-b border-gray-300 text-center text-sm text-gray-600">No checkpoint users found.</td>
+                                    <td colspan="4" class="text-center text-muted">No checkpoint users found.</td>
                                 </tr>
                             @endforelse
                         </tbody>
@@ -80,4 +80,24 @@
             </div>
         </div>
     </div>
+
+    <!-- DataTables Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#checkpointTable').DataTable({
+                responsive: true,
+                language: {
+                    search: "Search:",
+                    lengthMenu: "Show _MENU_ entries",
+                    info: "Showing _START_ to _END_ of _TOTAL_ entries",
+                }
+            });
+        });
+    </script>
+
+    <!-- DataTables Styles -->
+    <link href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
 </x-app-layout>
