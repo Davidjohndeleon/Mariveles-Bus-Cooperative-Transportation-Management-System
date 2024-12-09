@@ -27,4 +27,8 @@ class ScannedQR extends Model
     {
         return $this->belongsTo(Driver::class, 'driver_id');
     }
+    public function schedule()
+    {
+        return $this->hasOne(Schedule::class, 'driver_id', 'driver_id');
+    }
 }

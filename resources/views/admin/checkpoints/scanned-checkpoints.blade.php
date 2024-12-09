@@ -42,7 +42,11 @@
                                 <tr class="bg-gray-100 text-gray-700">
                                     <th class="border border-gray-300 px-4 py-2">Checkpoint Name</th>
                                     <th class="border border-gray-300 px-4 py-2">Driver</th>
-                                    <th class="border border-gray-300 px-4 py-2">Timestamp</th>
+                                    <th class="border border-gray-300 px-4 py-2">Conductor</th>
+                                    <th class="border border-gray-300 px-4 py-2">Bus Name</th>
+                                    <th class="border border-gray-300 px-4 py-2">Route</th>
+                                    <th class="border border-gray-300 px-4 py-2">Departure Time</th>
+                                    <th class="border border-gray-300 px-4 py-2">Arrival Time</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -50,6 +54,10 @@
                                     <tr class="hover:bg-gray-50">
                                         <td class="border border-gray-300 px-4 py-2">{{ $scannedCheckpoint->checkpoint_name ?? 'N/A' }}</td>
                                         <td class="border border-gray-300 px-4 py-2">{{ $scannedCheckpoint->driver->name ?? 'N/A' }}</td>
+                                        <td class="border border-gray-300 px-4 py-2">{{ $scannedCheckpoint->schedule->conductor->name ?? 'N/A' }}</td>
+                                        <td class="border border-gray-300 px-4 py-2">{{ $scannedCheckpoint->schedule->bus->name ?? 'N/A' }}</td>
+                                        <td class="border border-gray-300 px-4 py-2">{{ $scannedCheckpoint->schedule->route ?? 'N/A' }}</td>
+                                        <td class="border border-gray-300 px-4 py-2">{{ $scannedCheckpoint->schedule->departure_time ?? 'N/A' }}</td>
                                         <td class="border border-gray-300 px-4 py-2">{{ $scannedCheckpoint->created_at->format('F j, Y, g:i A') }}</td>
                                     </tr>
                                 @endforeach
