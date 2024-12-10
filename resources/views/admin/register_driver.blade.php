@@ -52,10 +52,9 @@
                 </form>
                 <div class="mt-8">
                     <h3 class="text-lg font-semibold text-gray-800 leading-tight mb-4">{{ __('Registered Drivers') }}</h3>
-                    <table id="drivers-table" class="min-w-full bg-white border border-gray-200">
+                    <table id="drivers-table" class="table table-striped" style="width:100%">
                         <thead>
                             <tr>
-                                <th>ID</th>
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Registered At</th>
@@ -64,7 +63,6 @@
                         <tbody>
                             @forelse ($drivers as $driver)
                                 <tr>
-                                    <td>{{ $driver->id }}</td>
                                     <td>{{ $driver->name }}</td>
                                     <td>{{ $driver->email }}</td>
                                     <td>{{ $driver->created_at->format('Y-m-d') }}</td>
@@ -82,14 +80,14 @@
     </div>
 
     <!-- Include DataTables CSS & JS -->
-    <link href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap5.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js"></script>
 
     <script>
-        $(document).ready(function() {
-            $('#drivers-table').DataTable();
-        });
+        new DataTable('#drivers-table');
     </script>
 </x-app-layout>

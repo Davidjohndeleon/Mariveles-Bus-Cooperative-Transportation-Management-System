@@ -51,10 +51,9 @@
                 <!-- Checkpoint Users Table -->
                 <div class="mt-8">
                     <h3 class="text-lg font-semibold text-gray-800 leading-tight mb-4">{{ __('Registered Checkpoint Users') }}</h3>
-                    <table id="checkpointTable" class="min-w-full bg-white border border-gray-200">
+                    <table id="checkpointTable" class="table table-striped" style="width:100%">
                         <thead>
                             <tr>
-                                <th>ID</th>
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Registered At</th>
@@ -63,7 +62,6 @@
                         <tbody>
                             @forelse ($checkpoints as $checkpoint)
                                 <tr>
-                                    <td>{{ $checkpoint->id }}</td>
                                     <td>{{ $checkpoint->name }}</td>
                                     <td>{{ $checkpoint->email }}</td>
                                     <td>{{ $checkpoint->created_at->format('Y-m-d') }}</td>
@@ -82,13 +80,14 @@
     </div>
 
     <!-- DataTables Scripts -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap5.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js"></script>
+
     <script>
-        $(document).ready(function () {
-            $('#checkpointTable').DataTable({
-            });
-        });
+        new DataTable('#checkpointTable');
     </script>
 </x-app-layout>

@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="{{ asset('app.css') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap5.css" rel="stylesheet">
 
     <style>
         :root {
@@ -209,7 +211,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                         d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/>
                                 </svg>
-                                <span>{{ __('View Reports') }}</span>
+                                <span>{{ __('View Complains') }}</span>
                             </x-nav-link>
 
                             <x-nav-link :href="route('admin.checkpoints.scanned-checkpoints')" 

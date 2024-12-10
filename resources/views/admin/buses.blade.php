@@ -58,7 +58,7 @@
                 <!-- Bus Listing Section -->
                 <h3 class="text-lg font-semibold mb-4">Buses List</h3>
 
-                <table id="buses-table"class="min-w-full bg-white border border-gray-200">
+                <table id="buses-table" class="table table-striped" style="width:100%">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -85,14 +85,14 @@
     </div>
 
     <!-- Include DataTables CSS & JS -->
-    <link href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap5.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js"></script>
 
     <script>
-        $(document).ready(function() {
-            $('#buses-table').DataTable(); 
-        });
+        new DataTable('#buses-table');
     </script>
 </x-app-layout>

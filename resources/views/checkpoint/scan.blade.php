@@ -37,7 +37,6 @@
                             <option value="" {{ old('checkpoint_name') == '' ? 'selected' : '' }}>Select a checkpoint</option>
                             <option value="Batangas Dos" {{ old('checkpoint_name') == 'Batangas Dos' ? 'selected' : '' }}>Batangas Dos</option>
                             <option value="Limay Jollibee" {{ old('checkpoint_name') == 'Limay Jollibee' ? 'selected' : '' }}>Limay Jollibee</option>
-                            <option value="Fab Terminal" {{ old('checkpoint_name') == 'Fab Terminal' ? 'selected' : '' }}>Fab Terminal</option>
                         </select>
                     </div>
                 </form>

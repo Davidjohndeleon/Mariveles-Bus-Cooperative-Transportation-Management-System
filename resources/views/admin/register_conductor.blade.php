@@ -47,10 +47,9 @@
             <!-- Table of Registered Conductors -->
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg mt-8 p-6">
                 <h3 class="text-lg font-semibold mb-4">{{ __('Registered Conductors') }}</h3>
-                <table id="conductors-table" class="min-w-full bg-white border border-gray-200">
+                <table id="conductors-table" class="table table-striped" style="width:100%">
                     <thead>
                         <tr>
-                            <th class="px-4 py-2 border-b">ID</th>
                             <th class="px-4 py-2 border-b">Name</th>
                             <th class="px-4 py-2 border-b">Email</th>
                             <th class="px-4 py-2 border-b">Created At</th>
@@ -59,7 +58,6 @@
                     <tbody>
                         @forelse ($conductors as $conductor)
                             <tr>
-                                <td class="px-4 py-2 border-b">{{ $conductor->id }}</td>
                                 <td class="px-4 py-2 border-b">{{ $conductor->name }}</td>
                                 <td class="px-4 py-2 border-b">{{ $conductor->email }}</td>
                                 <td class="px-4 py-2 border-b">{{ $conductor->created_at->format('Y-m-d H:i') }}</td>
@@ -76,14 +74,14 @@
     </div>
 
     <!-- Include DataTables CSS & JS -->
-    <link href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap5.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js"></script>
 
     <script>
-        $(document).ready(function() {
-            $('#conductors-table').DataTable();
-        });
-    </script>    
+        new DataTable('#conductors-table');
+    </script>  
 </x-app-layout>

@@ -37,7 +37,7 @@
                         @if(request('checkpoint_name')) for "{{ request('checkpoint_name') }}" @endif
                     </h3>
                     <div class="overflow-x-auto">
-                        <table class="table-auto w-full border-collapse border border-gray-300 text-left">
+                        <table id="qr-table" class="table table-striped" style="width:100%">
                             <thead>
                                 <tr class="bg-gray-100 text-gray-700">
                                     <th class="border border-gray-300 px-4 py-2">Checkpoint Name</th>
@@ -68,4 +68,15 @@
             </div>
         </div>
     </div>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap5.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js"></script>
+
+    <script>
+        new DataTable('#qr-table');
+    </script>
 </x-app-layout>
