@@ -55,7 +55,7 @@
                                         <td class="border border-gray-300 px-4 py-2">{{ $scannedCheckpoint->checkpoint_name ?? 'N/A' }}</td>
                                         <td class="border border-gray-300 px-4 py-2">{{ $scannedCheckpoint->driver->name ?? 'N/A' }}</td>
                                         <td class="border border-gray-300 px-4 py-2">{{ $scannedCheckpoint->schedule->conductor->name ?? 'N/A' }}</td>
-                                        <td class="border border-gray-300 px-4 py-2">{{ $scannedCheckpoint->schedule->bus->name ?? 'N/A' }}</td>
+                                        <td class="border border-gray-300 px-4 py-2">{{ $scannedCheckpoint->schedule->bus->bus_name ?? 'N/A' }}</td>
                                         <td class="border border-gray-300 px-4 py-2">{{ $scannedCheckpoint->schedule->route ?? 'N/A' }}</td>
                                         <td class="border border-gray-300 px-4 py-2">{{ $scannedCheckpoint->schedule->departure_time ?? 'N/A' }}</td>
                                         <td class="border border-gray-300 px-4 py-2">{{ $scannedCheckpoint->created_at->format('F j, Y, g:i A') }}</td>

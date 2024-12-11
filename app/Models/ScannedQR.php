@@ -16,6 +16,7 @@ class ScannedQR extends Model
         'checkpoint_id',
         'checkpoint_name',
         'status',
+        'schedule_id',
     ];
 
     public function checkpoint()
@@ -29,6 +30,17 @@ class ScannedQR extends Model
     }
     public function schedule()
     {
-        return $this->hasOne(Schedule::class, 'driver_id', 'driver_id');
+        return $this->hasOne(Schedule::class,'driver_id', 'driver_id');
     }
+    public function bus()
+{
+    return $this->hasOneThrough(
+        Bus::class,
+        Driver::class,
+        'id',          
+        'id',         
+        'driver_id',   
+        'bus_id'  
+    );
+}
 }
