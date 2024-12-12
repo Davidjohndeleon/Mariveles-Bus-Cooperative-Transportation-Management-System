@@ -153,10 +153,6 @@ class AdminController extends Controller
         return redirect()->route('admin.manage.schedules')->with('success', 'Schedule updated successfully!');
     }
     
-    
-    
-    
-
     public function deleteSchedule($id)
     {
         $schedule = Schedule::findOrFail($id);
@@ -190,7 +186,7 @@ class AdminController extends Controller
             'usertype' => 'driver',
         ]);
 
-        return redirect()->route('admin.register.driver.form')->with('status', 'Driver registered successfully!');
+        return redirect()->route('admin.register.driver.form')->with('success', 'Driver registered successfully!');
     }
 
     public function showSchedules()
@@ -240,7 +236,7 @@ public function registerConductor(Request $request)
             'usertype' => 'conductor', 
         ]);
 
-        return redirect()->route('admin.register.conductor.form')->with('status', 'Conductor registered successfully!');
+        return redirect()->route('admin.register.conductor.form')->with('success', 'Conductor registered successfully!');
     }
 
     public function showRegisterCheckpointForm()
@@ -265,7 +261,7 @@ public function registerConductor(Request $request)
             'usertype' => 'checkpoint', 
         ]);
 
-        return redirect()->route('admin.register.checkpoint.user.form')->with('status', 'Checkpoint user registered successfully!');
+        return redirect()->route('admin.register.checkpoint.user.form')->with('success', 'Checkpoint user registered successfully!');
     }
     public function manageFares()
     {

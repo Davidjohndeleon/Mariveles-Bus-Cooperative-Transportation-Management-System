@@ -14,14 +14,14 @@
         #map {
             height: 500px;
             width: 100%;
-            position: relative; /* Ensure it respects stacking order */
+            position: relative; 
         }
         nav {
-            z-index: 1000; /* Make sure it appears above the map */
-            position: relative; /* Ensure proper stacking context */
+            z-index: 1000; 
+            position: relative; 
         }
         .content {
-            position: relative; /* Ensure map stays within its container */
+            position: relative; 
             z-index: 1;
         }
     </style>

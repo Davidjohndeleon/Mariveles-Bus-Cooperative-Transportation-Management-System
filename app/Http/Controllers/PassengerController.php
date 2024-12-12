@@ -49,8 +49,8 @@ class PassengerController extends Controller
         $booking = new BusBooking();
         $booking->user_id = $user->id;
         $booking->bus_id = $bus->id;
-        $booking->status = 'pending'; // Set the status to pending initially
-        $booking->remarks = $request->remarks; // Save the remarks from the form
+        $booking->status = 'pending';
+        $booking->remarks = $request->remarks; 
         $booking->save();
 
         return redirect()->route('passenger.bookings')->with('success', 'Booking request submitted successfully. Please wait for approval.');
