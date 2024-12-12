@@ -63,7 +63,7 @@ class FareController extends Controller
     public function edit($id)
     {
         $fare = Fare::findOrFail($id);
-        return view('admin.edit_fare', compact('fare'));
+        return view('admin.edit_fares', compact('fare'));
     }
 
     /**
