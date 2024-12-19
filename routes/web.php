@@ -109,6 +109,8 @@ Route::middleware(['auth', 'role:driver'])->group(function () {
     Route::get('/driver/{driverId}/qrcode', [DriverController::class, 'generateQRCode'])->name('drivers.qrcode');
     Route::get('/driver/checkpoints', [DriverController::class, 'viewCheckpoints'])->name('drivers.checkpoints');
     Route::post('/driver/checkpoints/{checkpoint}', [DriverController::class, 'markCheckpointComplete'])->name('driver.completeCheckpoint');
+
+    Route::get('/driver/schedule', [DriverController::class, 'viewSchedule'])->name('drivers.schedule');
 });
 
 // Checkpoint Routes

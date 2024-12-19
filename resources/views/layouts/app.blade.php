@@ -288,6 +288,14 @@
                                 {{ __('Checkpoints') }}
                             </x-nav-link>
 
+                            <x-nav-link :href="route('drivers.schedule')" :active="request()->routeIs('drivers.schedule')" class="text-lg">
+                                <svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                    d="M19 4h-1m0 0a2 2 0 11-4 0H8a2 2 0 11-4 0H3m16 0v18M3 4v18m4-6h.01M7 8h.01M7 12h.01M11 8h.01M11 12h.01M11 16h.01M15 8h.01M15 12h.01M15 16h.01"/>
+                                </svg>
+                                {{ __('Your Schedule') }}
+                            </x-nav-link>
+
                         </div>
                     @endif
 

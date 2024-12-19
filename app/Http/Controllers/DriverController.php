@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Schedule;
 use App\Models\Driver;
 use App\Models\ScannedQR;
 use Illuminate\Http\Request;
@@ -67,6 +68,24 @@ class DriverController extends Controller
             'driverId' => $driver->id, 
         ]);
     }
+
+    public function viewSchedule()
+    {
+        $user = Auth::user();  // Get the logged-in user
+        
+        // Ensure that the user is a driver
+        if (!$user->isDriver() || !$user->driver) {
+            return redirect()->route('drivers.qrcode')->with('error', 'Driver information not found.');
+        }
+    
+        // Fetch schedules assigned to the driver
+        $schedules = Schedule::where('driver_id', $user->driver->user_id)->get();
+    
+        return view('drivers.schedule', compact('schedules'));
+    }
+    
+    
+    
     
     
 }
